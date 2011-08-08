@@ -3,6 +3,9 @@ class LogsController extends DatabaseLoggerAppController {
 
 	var $name = 'Logs';
 	var $helpers = array('Time');
+	var $paginate = array(
+		'order' => 'Log.created DESC'
+	);
 
 	function admin_index($filter = null) {
 		if(!empty($this->data)){
