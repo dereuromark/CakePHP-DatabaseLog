@@ -15,6 +15,7 @@ CakeLog::config('database', array(
 ));
 
 */
+App::import('Core', 'ClassRegistry');
 class DatabaseLogger {
 	
 	/**
@@ -32,12 +33,7 @@ class DatabaseLogger {
 	*/
 	function __construct($options = array()){
 		$this->model = isset($options['model']) ? $options['model'] : 'DatabaseLogger.Log';
-		
-		App::import('Model', $this->model);
-		if(strpos($this->model, ".")){
-			list($ignore, $this->model) = explode(".", $this->model);
-		}
-		eval("\$this->Log = new {$this->model}();");
+		$this->Log = ClassRegistry::init($this->model);
 	}
 	
 	/**

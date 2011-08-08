@@ -23,6 +23,7 @@
 			<td><?php echo $log['Log']['type']; ?>&nbsp;</td>
 			<td><?php echo $log['Log']['message']; ?>&nbsp;</td>
 			<td class="actions">
+				<?php echo $this->Html->link(__('View Details', true), array('action' => 'view', $log['Log']['id'])); ?>
 				<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $log['Log']['id']), null, sprintf(__('Are you sure you want to delete this log # %s?', true), $log['Log']['id'])); ?>
 			</td>
 		</tr>

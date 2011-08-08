@@ -15,6 +15,14 @@ class LogsController extends DatabaseLoggerAppController {
 		$this->set('logs',$this->paginate($conditions));
 		$this->set('filter', $filter);
 	}
+	
+	function admin_view($id = null) {
+		if (!$id) {
+			$this->Session->setFlash(__('Invalid log', true));
+			$this->redirect(array('action' => 'index'));
+		}
+		$this->set('log', $this->Log->read(null, $id));
+	}
 
 	function admin_delete($id = null) {
 		if (!$id) {
