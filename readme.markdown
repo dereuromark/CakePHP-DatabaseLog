@@ -1,6 +1,6 @@
 # Database CakePHP Plugin
 * Author: Nick Baker
-* Version: 1,0
+* Version: 1.1
 * License: MIT
 * Website: <http://www.webtechnick.com>
 
@@ -10,6 +10,7 @@ Database CakeLogger for CakePHP 1.3 applications.  Easy setup.  Ideal for multi 
 is just not convinient.  Simple admin interface to view/delete logs included.
 
 ## Changelog
+* 1.1.0 Adding new fields URI, hostname, referrer, and IP automatically logged on each log call. (only applys to default Log model)
 * 1.0.0 Initial Release
 
 ## Install
