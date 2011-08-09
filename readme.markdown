@@ -27,9 +27,8 @@ Run the schema into your database:
 
 Update the file `app/config/bootstrap.php` with the following configurations like so:
 
-		CakeLog::config('database', array(
-			'engine' => 'DatabaseLogger.DatabaseLogger',
-		));
+	App::import('Core','CakeLog');
+	CakeLog::config('default', array('engine' => 'DatabaseLogger.DatabaseLogger',));
 
 ## Usage
 
