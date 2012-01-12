@@ -16,7 +16,8 @@ CakeLog::config('database', array(
 
 */
 App::import('Core', 'ClassRegistry');
-class DatabaseLogger {
+App::uses('CakeLogInterface','Log');
+class DatabaseLogger implements CakeLogInterface{
 	
 	/**
 	* Model name placeholder
