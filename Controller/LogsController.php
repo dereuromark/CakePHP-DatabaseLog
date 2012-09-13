@@ -18,7 +18,7 @@ class LogsController extends DatabaseLoggerAppController {
 	
 	function admin_view($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid log', true));
+			$this->Session->setFlash(__('Invalid log'));
 			$this->redirect(array('action' => 'index'));
 		}
 		$this->set('log', $this->Log->read(null, $id));
@@ -26,14 +26,14 @@ class LogsController extends DatabaseLoggerAppController {
 
 	function admin_delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for log', true));
+			$this->Session->setFlash(__('Invalid id for log'));
 			$this->redirect(array('action'=>'index'));
 		}
 		if ($this->Log->delete($id)) {
-			$this->Session->setFlash(__('Log deleted', true));
+			$this->Session->setFlash(__('Log deleted'));
 			$this->redirect(array('action'=>'index'));
 		}
-		$this->Session->setFlash(__('Log was not deleted', true));
+		$this->Session->setFlash(__('Log was not deleted'));
 		$this->redirect(array('action' => 'index'));
 	}
 }
