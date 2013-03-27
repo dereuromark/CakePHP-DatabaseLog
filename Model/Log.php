@@ -27,4 +27,21 @@ class Log extends DatabaseLoggerAppModel {
 		}
 		return array();
 	}
+	
+	/**
+	* Return all the unique types
+	*/
+	function getTypes(){
+		$cache_key = 'database_log_types';
+		if($retval = Cache::read($cache_key)){
+			return $retval;
+		}
+		$retval = $this->find('all', array(
+			'fields' => array('DISTINCT Log.type'),
+			'order' => array('Log.type ASC')
+		));
+		$retval = Hash::extract($retval,'{n}.Log.type');
+		Cache::write($cache_key, $retval);
+		return $retval;
+	}
 }
