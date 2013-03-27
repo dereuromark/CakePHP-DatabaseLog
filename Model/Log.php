@@ -17,8 +17,8 @@ class Log extends DatabaseLoggerAppModel {
 	*/
 	function textSearch($query = null){
 		if($query){
-			if(strpos($query, 'type:') === 0){
-				$query = str_replace('type:','', $query);
+			if(strpos($query, 'type@') === 0){
+				$query = str_replace('type@','', $query);
 				return $this->generateFilterConditions($query);
 			} else {
 				$escapedQuery = $this->getDataSource()->value($query);
