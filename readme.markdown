@@ -17,9 +17,9 @@ is just not convinient.  Simple admin interface to view/delete logs included.
 
 ## Install
 
-Clone the repository into your `app/plugins/database_logger` directory:
+Clone the repository into your `app/Plugin/DatabaseLogger` directory:
 
-	$ git clone git://github.com/webtechnick/CakePHP-DatabaseLogger-Plugin.git app/plugins/database_logger
+	$ git clone git://github.com/webtechnick/CakePHP-DatabaseLogger-Plugin.git app/Plugin/DatabaseLogger
 
 Run the schema into your database:
 
@@ -32,7 +32,7 @@ Create a config file in `app/Config/database_logger` with the following (example
 	$config = array(
 		'DatabaseLogger' => array(
 			'write' => 'default', //DataSource to write to.
-			'read' => 'default', //Dadtasource to read from.
+			'read' => 'default', //Datasource to read from.
 		)
 	);
 	
