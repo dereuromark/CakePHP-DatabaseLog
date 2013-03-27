@@ -1,15 +1,16 @@
 # Database CakePHP Plugin
 * Author: Nick Baker
-* Version: 1.1
+* Version: 1.2
 * License: MIT
 * Website: <http://www.webtechnick.com>
 
 ## Features
 
-Database CakeLogger for CakePHP 1.3 applications.  Easy setup.  Ideal for multi app applications where logging to a file
+Database CakeLogger for CakePHP 2.x applications.  Easy setup.  Ideal for multi app applications where logging to a file
 is just not convinient.  Simple admin interface to view/delete logs included.
 
 ## Changelog
+* 1.2.0 Now using FULLTEXT search on messages, better indexes.  Update your schema.
 * 1.1.0 Adding new fields URI, hostname, referrer, and IP automatically logged on each log call. (only applys to default Log model)
 * 1.0.0 Initial Release
 
@@ -21,7 +22,7 @@ Clone the repository into your `app/plugins/database_logger` directory:
 
 Run the schema into your database:
 
-	$ cake schema create database_logger -plugin database_logger
+	$ cake schema create --plugin DataBaseLogger
 	
 ## Setup
 
