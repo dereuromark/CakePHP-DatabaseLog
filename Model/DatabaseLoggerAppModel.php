@@ -86,8 +86,6 @@ class DatabaseLoggerAppModel extends AppModel {
 	private function setDataSourceRead(){
 		if($this->useDbConfig != 'test'){
 			$this->setDataSource($this->configs['read']);
-		} else {
-			$this->setDataSource('test');
 		}
 	}
 	
@@ -98,8 +96,6 @@ class DatabaseLoggerAppModel extends AppModel {
 	private function setDataSourceWrite(){
 		if($this->useDbConfig != 'test'){
 			$this->setDataSource($this->configs['write']);
-		} else {
-			$this->setDataSource('test');
 		}
 	}
 }
