@@ -22,16 +22,16 @@ class DatabaseLoggerAppModel extends AppModel {
 			$this->configs = Configure::read('DatabaseLogger');
 		}
 		parent::__construct($id, $table, $ds);
-		$this->setDataSource($this->configs['read']);
+		$this->setDataSourceRead();
 	}
 	
 	/**
 	* Overwrite save to write to the datasource defined in config
 	*/
 	public function save($data = null, $validate = true, $fieldList = array()) {
-		$this->setDataSource($this->configs['write']);
+		$this->setDataSourceWrite();
 		$retval = parent::save($data, $validate, $fieldList);
-		$this->setDataSource($this->configs['read']);
+		$this->setDataSourceRead();
 		return $retval;
 	}
 	
@@ -39,9 +39,9 @@ class DatabaseLoggerAppModel extends AppModel {
 	* Overwrite delete to delete to the datasource defined in config
 	*/
 	public function delete($id = null, $cascade = true) {
-		$this->setDataSource($this->configs['write']);
+		$this->setDataSourceWrite();
 		$retval = parent::delete($id, $cascade);
-		$this->setDataSource($this->configs['read']);
+		$this->setDataSourceRead();
 		return $retval;
 	}
 	
@@ -77,5 +77,29 @@ class DatabaseLoggerAppModel extends AppModel {
 			}
 		}
 		return $retval;
+	}
+	
+	/**
+	* Set the datasource to be read
+	* if being tested, don't change, otherwise change to what we read
+	*/
+	private function setDataSourceRead(){
+		if($this->useDbConfig != 'test'){
+			$this->setDataSource($this->configs['read']);
+		} else {
+			$this->setDataSource('test');
+		}
+	}
+	
+	/**
+	* Set the datasource to be write
+	* if being tested, don't change, otherwise change to what we config
+	*/
+	private function setDataSourceWrite(){
+		if($this->useDbConfig != 'test'){
+			$this->setDataSource($this->configs['write']);
+		} else {
+			$this->setDataSource('test');
+		}
 	}
 }
