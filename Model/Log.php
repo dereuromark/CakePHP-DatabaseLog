@@ -2,11 +2,11 @@
 App::uses('DatabaseLoggerAppModel', 'DatabaseLogger.Model');
 class Log extends DatabaseLoggerAppModel {
 
-	var $displayField = 'type';
+	public $displayField = 'type';
 
-	var $searchFields = array('Log.type');
+	public $searchFields = array('Log.type');
 
-	function beforeSave($options = array()) {
+	public function beforeSave($options = array()) {
 		$this->data[$this->alias]['ip'] = env('REMOTE_ADDR');
 		$this->data[$this->alias]['hostname'] = env('HTTP_HOST');
 		$this->data[$this->alias]['uri'] = env('REQUEST_URI');
@@ -20,7 +20,7 @@ class Log extends DatabaseLoggerAppModel {
 	*
 	* @return array Results
 	*/
-	function textSearch($query = null){
+	public function textSearch($query = null){
 		if($query){
 			if(strpos($query, 'type@') === 0){
 				$query = str_replace('type@','', $query);
@@ -38,7 +38,7 @@ class Log extends DatabaseLoggerAppModel {
 	*
 	* @return array Types
 	*/
-	function getTypes(){
+	public function getTypes(){
 		$cache_key = 'database_log_types';
 		if($retval = Cache::read($cache_key)){
 			return $retval;

@@ -3,11 +3,11 @@
 App::import('Model', 'database_logger.Log');
 
 class LogTest extends CakeTestCase {
-	function startTest() {
-		$this->Log =& ClassRegistry::init('Log');
+	public function startTest() {
+		$this->Log = ClassRegistry::init('Log');
 	}
 
-	function endTest() {
+	public function endTest() {
 		unset($this->Log);
 		ClassRegistry::flush();
 	}

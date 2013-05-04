@@ -2,12 +2,12 @@
 App::uses('AppModel', 'Model');
 class DatabaseLoggerAppModel extends AppModel {
 
-	var $recursive = -1;
+	public $recursive = -1;
 
 	/**
 	* Filter fields
 	*/
-	var $searchFields = array();
+	public $searchFields = array();
 
 	/**
 	* Configurations
@@ -54,7 +54,7 @@ class DatabaseLoggerAppModel extends AppModel {
 	* - last : find last record by created date
 	* @param array of options
 	*/
-	function find($type, $options = array()){
+	public function find($type, $options = array()){
 		switch($type){
 		case 'last':
 			$options = array_merge(
@@ -72,7 +72,7 @@ class DatabaseLoggerAppModel extends AppModel {
 	* @param string filter
 	* @return conditions array
 	*/
-	function generateFilterConditions($filter = null){
+	public function generateFilterConditions($filter = null){
 		$retval = array();
 		if($filter){
 			foreach($this->searchFields as $field){
@@ -86,7 +86,7 @@ class DatabaseLoggerAppModel extends AppModel {
 	* Set the datasource to be read
 	* if being tested, don't change, otherwise change to what we read
 	*/
-	private function setDataSourceRead(){
+	protected function setDataSourceRead(){
 		if($this->useDbConfig != 'test'){
 			$this->setDataSource($this->configs['read']);
 		}
@@ -96,7 +96,7 @@ class DatabaseLoggerAppModel extends AppModel {
 	* Set the datasource to be write
 	* if being tested, don't change, otherwise change to what we config
 	*/
-	private function setDataSourceWrite(){
+	protected function setDataSourceWrite(){
 		if($this->useDbConfig != 'test'){
 			$this->setDataSource($this->configs['write']);
 		}

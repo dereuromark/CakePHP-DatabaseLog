@@ -2,9 +2,9 @@
 App::uses('DatabaseLoggerAppController', 'DatabaseLogger.Controller');
 class LogsController extends DatabaseLoggerAppController {
 
-	var $helpers = array('Time');
+	public $helpers = array('Time');
 
-	var $paginate = array(
+	public $paginate = array(
 		'order' => array('Log.id' => 'DESC'),
 		'fields' => array(
 			'Log.created',
@@ -14,7 +14,7 @@ class LogsController extends DatabaseLoggerAppController {
 		)
 	);
 
-	function admin_index($filter = null) {
+	public function admin_index($filter = null) {
 		if(!empty($this->data)){
 			$filter = $this->data['Log']['filter'];
 		}
@@ -24,7 +24,7 @@ class LogsController extends DatabaseLoggerAppController {
 		$this->set('filter', $filter);
 	}
 
-	function admin_view($id = null) {
+	public function admin_view($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid log'));
 			$this->redirect(array('action' => 'index'));
@@ -32,7 +32,7 @@ class LogsController extends DatabaseLoggerAppController {
 		$this->set('log', $this->Log->read(null, $id));
 	}
 
-	function admin_delete($id = null) {
+	public function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for log'));
 			$this->redirect(array('action'=>'index'));

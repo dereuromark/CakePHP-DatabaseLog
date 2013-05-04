@@ -23,17 +23,17 @@ class DatabaseLogger implements CakeLogInterface{
 	/**
 	* Model name placeholder
 	*/
-	var $model = null;
+	public $model = null;
 
 	/**
 	* Model object placeholder
 	*/
-	var $Log = null;
+	public $Log = null;
 
 	/**
 	* Contruct the model class
 	*/
-	function __construct($options = array()){
+	public function __construct($options = array()){
 		$this->model = isset($options['model']) ? $options['model'] : 'DatabaseLogger.Log';
 		$this->Log = ClassRegistry::init($this->model);
 	}
@@ -43,7 +43,7 @@ class DatabaseLogger implements CakeLogInterface{
 	*
 	* @return boolean Success
 	*/
-	function write($type, $message){
+	public function write($type, $message){
 		$this->Log->create();
 		return (bool)$this->Log->save(array(
 			'type' => $type,
