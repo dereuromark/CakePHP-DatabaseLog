@@ -1,4 +1,4 @@
-<?php 
+<?php
 class DatabaseLoggerSchema extends CakeSchema {
 
 	public function before($event = array()) {
