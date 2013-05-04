@@ -5,6 +5,8 @@ class LogsControllerTest extends CakeTestCase {
 
 	public $Logs;
 
+	public $fixtures = array('plugin.database_log.log');
+
 	public function setUp() {
 		$this->Logs = new TestLogsController(new CakeRequest(), new CakeResponse());
 		$this->Logs->constructClasses();

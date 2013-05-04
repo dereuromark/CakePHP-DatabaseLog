@@ -1,9 +1,11 @@
 <?php
-App::import('Model', 'database_log.Log');
+App::uses('Log', 'DatabaseLog.Model');
 
 class LogTest extends CakeTestCase {
 
 	public $Log;
+
+	public $fixtures = array('plugin.database_log.log');
 
 	public function setUp() {
 		$this->Log = ClassRegistry::init('Log');
