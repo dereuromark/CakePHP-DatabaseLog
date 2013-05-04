@@ -1,6 +1,6 @@
 <?php
-App::uses('DatabaseLoggerAppModel', 'DatabaseLogger.Model');
-class Log extends DatabaseLoggerAppModel {
+App::uses('DatabaseLogAppModel', 'DatabaseLog.Model');
+class Log extends DatabaseLogAppModel {
 
 	public $displayField = 'type';
 

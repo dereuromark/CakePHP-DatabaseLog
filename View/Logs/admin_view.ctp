@@ -1,5 +1,5 @@
-<?php echo $this->Html->css('/database_logger/css/style'); ?>
-<div class="database_logger_plugin">
+<?php echo $this->Html->css('/database_log/css/style'); ?>
+<div class="database_log_plugin">
 	<div class="logs view">
 	<h2><?php echo __('Log');?></h2>
 		<dl><?php $i = 0; $class = ' class="altrow"';?>

@@ -1,5 +1,5 @@
 <?php
-class DatabaseLoggerSchema extends CakeSchema {
+class DatabaseLogSchema extends CakeSchema {
 
 	public function before($event = array()) {
 		return true;

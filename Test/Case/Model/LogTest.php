@@ -1,15 +1,24 @@
 <?php
-/* Log Test cases generated on: 2011-08-08 13:46:32 : 1312832792*/
-App::import('Model', 'database_logger.Log');
+App::import('Model', 'database_log.Log');
 
 class LogTest extends CakeTestCase {
-	public function startTest() {
+
+	public $Log;
+
+	public function setUp() {
 		$this->Log = ClassRegistry::init('Log');
+
+		parent::setUp();
 	}
 
-	public function endTest() {
-		unset($this->Log);
-		ClassRegistry::flush();
+	public function testTextSearch() {
+		$res = $this->Log->save();
+
+	}
+
+	public function testGetTypes() {
+		$res = $this->Log->save();
+
 	}
 
 }

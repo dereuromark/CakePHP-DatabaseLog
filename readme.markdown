@@ -17,20 +17,20 @@ is just not convinient.  Simple admin interface to view/delete logs included.
 
 ## Install
 
-Clone the repository into your `app/Plugin/DatabaseLogger` directory:
+Clone the repository into your `app/Plugin/DatabaseLog` directory:
 
 	$ git clone git://github.com/webtechnick/CakePHP-DatabaseLogger-Plugin.git app/Plugin/DatabaseLogger
 
 Run the schema into your database:
 
-	$ cake schema create --plugin DatabaseLogger
+	$ cake schema create --plugin DatabaseLog
 	
 ## Setup
 
-Create a config file in `app/Config/database_logger` with the following (example file in plugin.)
+Create a config file in `app/Config/database_log` with the following (example file in plugin.)
 
 	$config = array(
-		'DatabaseLogger' => array(
+		'DatabaseLog' => array(
 			'write' => 'default', //DataSource to write to.
 			'read' => 'default', //Datasource to read from.
 		)
@@ -41,7 +41,7 @@ Pro Tip: You can read from a different datasource than you write to, and they bo
 Update the file `app/Config/bootstrap.php` with the following configurations like so:
 
 	App::uses('CakeLog','Log');
-	CakeLog::config('default', array('engine' => 'DatabaseLogger.DatabaseLogger'));
+	CakeLog::config('default', array('engine' => 'DatabaseLog.DatabaseLog'));
 
 ## Usage
 
@@ -50,4 +50,4 @@ Anywhere in your app where you call log() or CakeLog::write the database logger 
 		$this->log('This is a detailed message logged to the database','error');
 		CakeLog::write('error', 'This is a detailed message logged to the database');
 		
-Navigate to `http://www.example.com/admin/database_logger/logs` to view/search/delete your logs.
+Navigate to `http://www.example.com/admin/database_log/logs` to view/search/delete your logs.

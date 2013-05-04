@@ -10,15 +10,15 @@
 in app/config/bootstrap.php add the following
 
 CakeLog::config('database', array(
-	'engine' => 'DatabaseLogger.DatabaseLogger',
-	'model' => 'CustomLogModel' //'DatabaseLogger.Log' by default
+	'engine' => 'DatabaseLog.DatabaseLog',
+	'model' => 'CustomLogModel' //'DatabaseLog.Log' by default
 ));
 
 */
 App::uses('ClassRegistry', 'Utility');
 App::uses('CakeLogInterface','Log');
 
-class DatabaseLogger implements CakeLogInterface{
+class DatabaseLog implements CakeLogInterface{
 
 	/**
 	* Model name placeholder
@@ -34,7 +34,7 @@ class DatabaseLogger implements CakeLogInterface{
 	* Contruct the model class
 	*/
 	public function __construct($options = array()) {
-		$this->model = isset($options['model']) ? $options['model'] : 'DatabaseLogger.Log';
+		$this->model = isset($options['model']) ? $options['model'] : 'DatabaseLog.Log';
 		$this->Log = ClassRegistry::init($this->model);
 	}
 

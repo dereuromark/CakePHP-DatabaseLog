@@ -1,6 +1,6 @@
-<?php echo $this->Html->css('/database_logger/css/style'); ?>
-<div class="database_logger_plugin">
-	<?php echo $this->element('admin_filter', array('plugin' => 'database_logger', 'model' => 'Log')); ?>
+<?php echo $this->Html->css('/database_log/css/style'); ?>
+<div class="database_log_plugin">
+	<?php echo $this->element('admin_filter', array('plugin' => 'database_log', 'model' => 'Log')); ?>
 	<div class="logs index">
 		<h2><?php echo __('Logs');?></h2>
 		<table cellpadding="0" cellspacing="0">
@@ -29,6 +29,6 @@
 		</tr>
 	<?php endforeach; ?>
 		</table>
-		<?php echo $this->element('paging', array('plugin' => 'database_logger')); ?>
+		<?php echo $this->element('paging', array('plugin' => 'database_log')); ?>
 	</div>
 </div>
