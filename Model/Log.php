@@ -20,9 +20,9 @@ class Log extends DatabaseLoggerAppModel {
 	*
 	* @return array Results
 	*/
-	public function textSearch($query = null){
-		if($query){
-			if(strpos($query, 'type@') === 0){
+	public function textSearch($query = null) {
+		if ($query) {
+			if (strpos($query, 'type@') === 0) {
 				$query = str_replace('type@','', $query);
 				return array('Log.type' => $query);
 			} else {
@@ -38,9 +38,9 @@ class Log extends DatabaseLoggerAppModel {
 	*
 	* @return array Types
 	*/
-	public function getTypes(){
+	public function getTypes() {
 		$cache_key = 'database_log_types';
-		if($retval = Cache::read($cache_key)){
+		if ($retval = Cache::read($cache_key)) {
 			return $retval;
 		}
 		$retval = $this->find('all', array(

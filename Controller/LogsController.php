@@ -15,7 +15,7 @@ class LogsController extends DatabaseLoggerAppController {
 	);
 
 	public function admin_index($filter = null) {
-		if(!empty($this->data)){
+		if (!empty($this->data)) {
 			$filter = $this->data['Log']['filter'];
 		}
 		$conditions = $this->Log->textSearch($filter);

@@ -21,7 +21,7 @@ class DatabaseLoggerAppModel extends AppModel {
 	* Set the default datasource to the read setup in config
 	*/
 	public function __construct($id = false, $table = null, $ds = null) {
-		if(Configure::load('database_logger')){
+		if (Configure::load('database_logger')) {
 			$this->configs = Configure::read('DatabaseLogger');
 		}
 		parent::__construct($id, $table, $ds);
@@ -54,8 +54,8 @@ class DatabaseLoggerAppModel extends AppModel {
 	* - last : find last record by created date
 	* @param array of options
 	*/
-	public function find($type, $options = array()){
-		switch($type){
+	public function find($type, $options = array()) {
+		switch ($type) {
 		case 'last':
 			$options = array_merge(
 				$options,
@@ -72,10 +72,10 @@ class DatabaseLoggerAppModel extends AppModel {
 	* @param string filter
 	* @return conditions array
 	*/
-	public function generateFilterConditions($filter = null){
+	public function generateFilterConditions($filter = null) {
 		$retval = array();
-		if($filter){
-			foreach($this->searchFields as $field){
+		if ($filter) {
+			foreach ($this->searchFields as $field) {
 				$retval['OR']["$field LIKE"] =  '%' . $filter . '%';
 			}
 		}
@@ -86,8 +86,8 @@ class DatabaseLoggerAppModel extends AppModel {
 	* Set the datasource to be read
 	* if being tested, don't change, otherwise change to what we read
 	*/
-	protected function setDataSourceRead(){
-		if($this->useDbConfig != 'test'){
+	protected function setDataSourceRead() {
+		if ($this->useDbConfig != 'test') {
 			$this->setDataSource($this->configs['read']);
 		}
 	}
@@ -96,8 +96,8 @@ class DatabaseLoggerAppModel extends AppModel {
 	* Set the datasource to be write
 	* if being tested, don't change, otherwise change to what we config
 	*/
-	protected function setDataSourceWrite(){
-		if($this->useDbConfig != 'test'){
+	protected function setDataSourceWrite() {
+		if ($this->useDbConfig != 'test') {
 			$this->setDataSource($this->configs['write']);
 		}
 	}
