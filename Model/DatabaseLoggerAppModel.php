@@ -76,7 +76,7 @@ class DatabaseLoggerAppModel extends AppModel {
 		$retval = array();
 		if ($filter) {
 			foreach ($this->searchFields as $field) {
-				$retval['OR']["$field LIKE"] =  '%' . $filter . '%';
+				$retval['OR']["$field LIKE"] = '%' . $filter . '%';
 			}
 		}
 		return $retval;

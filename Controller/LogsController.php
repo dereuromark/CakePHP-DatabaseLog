@@ -19,7 +19,7 @@ class LogsController extends DatabaseLoggerAppController {
 			$filter = $this->data['Log']['filter'];
 		}
 		$conditions = $this->Log->textSearch($filter);
-		$this->set('logs',$this->paginate($conditions));
+		$this->set('logs', $this->paginate($conditions));
 		$this->set('types', $this->Log->getTypes());
 		$this->set('filter', $filter);
 	}
