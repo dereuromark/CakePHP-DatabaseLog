@@ -1,19 +1,23 @@
 <?php
 class Log extends DatabaseLoggerAppModel {
-	var $name = 'Log';
+
 	var $displayField = 'type';
+
 	var $searchFields = array('Log.type');
-	
-	function beforeSave(){
+
+	function beforeSave($options = array()) {
 		$this->data[$this->alias]['ip'] = env('REMOTE_ADDR');
 		$this->data[$this->alias]['hostname'] = env('HTTP_HOST');
 		$this->data[$this->alias]['uri'] = env('REQUEST_URI');
 		$this->data[$this->alias]['refer'] = env('HTTP_REFERER');
-		return true;
+
+		return parent::beforeSave($options);
 	}
-	
+
 	/**
 	* Return a text search on message
+	*
+	* @return array Results
 	*/
 	function textSearch($query = null){
 		if($query){
@@ -27,9 +31,11 @@ class Log extends DatabaseLoggerAppModel {
 		}
 		return array();
 	}
-	
+
 	/**
 	* Return all the unique types
+	*
+	* @return array Types
 	*/
 	function getTypes(){
 		$cache_key = 'database_log_types';
@@ -44,4 +50,5 @@ class Log extends DatabaseLoggerAppModel {
 		Cache::write($cache_key, $retval);
 		return $retval;
 	}
+
 }

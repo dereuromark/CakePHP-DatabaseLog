@@ -1,7 +1,7 @@
 <?php
 /**
 * Database logger
-* @author Nick Baker 
+* @author Nick Baker
 * @version 1.0
 * @license MIT
 
@@ -17,18 +17,19 @@ CakeLog::config('database', array(
 */
 App::uses('ClassRegistry', 'Utility');
 App::uses('CakeLogInterface','Log');
+
 class DatabaseLogger implements CakeLogInterface{
-	
+
 	/**
 	* Model name placeholder
 	*/
 	var $model = null;
-	
+
 	/**
 	* Model object placeholder
 	*/
 	var $Log = null;
-	
+
 	/**
 	* Contruct the model class
 	*/
@@ -36,15 +37,17 @@ class DatabaseLogger implements CakeLogInterface{
 		$this->model = isset($options['model']) ? $options['model'] : 'DatabaseLogger.Log';
 		$this->Log = ClassRegistry::init($this->model);
 	}
-	
+
 	/**
 	* Write the log to database
+	*
+	* @return boolean Success
 	*/
 	function write($type, $message){
-		$this->Log->save(array(
+		$this->Log->create();
+		return (bool)$this->Log->save(array(
 			'type' => $type,
 			'message' => $message
 		));
 	}
 }
-?>

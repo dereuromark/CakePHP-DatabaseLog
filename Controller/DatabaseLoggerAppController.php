@@ -3,5 +3,3 @@
 class DatabaseLoggerAppController extends AppController {
 
 }
-
-?>

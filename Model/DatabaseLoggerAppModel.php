@@ -1,11 +1,13 @@
 <?php
 class DatabaseLoggerAppModel extends AppModel {
+
 	var $recursive = -1;
+
 	/**
 	* Filter fields
 	*/
 	var $searchFields = array();
-	
+
 	/**
 	* Configurations
 	*/
@@ -13,7 +15,7 @@ class DatabaseLoggerAppModel extends AppModel {
 		'write' => 'default',
 		'read' => 'default',
 	);
-	
+
 	/**
 	* Set the default datasource to the read setup in config
 	*/
@@ -24,7 +26,7 @@ class DatabaseLoggerAppModel extends AppModel {
 		parent::__construct($id, $table, $ds);
 		$this->setDataSourceRead();
 	}
-	
+
 	/**
 	* Overwrite save to write to the datasource defined in config
 	*/
@@ -34,7 +36,7 @@ class DatabaseLoggerAppModel extends AppModel {
 		$this->setDataSourceRead();
 		return $retval;
 	}
-	
+
 	/**
 	* Overwrite delete to delete to the datasource defined in config
 	*/
@@ -44,7 +46,7 @@ class DatabaseLoggerAppModel extends AppModel {
 		$this->setDataSourceRead();
 		return $retval;
 	}
-	
+
 	/**
 	* Overwrite find so I can do some nice things with it.
 	* @param string find type
@@ -58,12 +60,12 @@ class DatabaseLoggerAppModel extends AppModel {
 				$options,
 				array('order' => "{$this->alias}.{$this->primaryKey} DESC")
 				);
-			return parent::find('first', $options);    
-		default: 
+			return parent::find('first', $options);
+		default:
 			return parent::find($type, $options);
 		}
 	}
-	
+
 	/**
 	* return conditions based on searchable fields and filter
 	* @param string filter
@@ -73,12 +75,12 @@ class DatabaseLoggerAppModel extends AppModel {
 		$retval = array();
 		if($filter){
 			foreach($this->searchFields as $field){
-				$retval['OR']["$field LIKE"] =  '%' . $filter . '%'; 
+				$retval['OR']["$field LIKE"] =  '%' . $filter . '%';
 			}
 		}
 		return $retval;
 	}
-	
+
 	/**
 	* Set the datasource to be read
 	* if being tested, don't change, otherwise change to what we read
@@ -88,7 +90,7 @@ class DatabaseLoggerAppModel extends AppModel {
 			$this->setDataSource($this->configs['read']);
 		}
 	}
-	
+
 	/**
 	* Set the datasource to be write
 	* if being tested, don't change, otherwise change to what we config

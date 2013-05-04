@@ -1,7 +1,5 @@
 <?php
-/* Log Fixture generated on: 2011-08-08 13:46:28 : 1312832788 */
 class LogFixture extends CakeTestFixture {
-	var $name = 'Log';
 
 	var $fields = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => NULL, 'key' => 'primary'),

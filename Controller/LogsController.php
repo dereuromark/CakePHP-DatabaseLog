@@ -1,10 +1,10 @@
 <?php
 class LogsController extends DatabaseLoggerAppController {
 
-	var $name = 'Logs';
 	var $helpers = array('Time');
+
 	var $paginate = array(
-		'order' => 'Log.id DESC',
+		'order' => array('Log.id' => 'DESC'),
 		'fields' => array(
 			'Log.created',
 			'Log.type',
@@ -22,7 +22,7 @@ class LogsController extends DatabaseLoggerAppController {
 		$this->set('types', $this->Log->getTypes());
 		$this->set('filter', $filter);
 	}
-	
+
 	function admin_view($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid log'));
@@ -43,4 +43,5 @@ class LogsController extends DatabaseLoggerAppController {
 		$this->Session->setFlash(__('Log was not deleted'));
 		$this->redirect(array('action' => 'index'));
 	}
+
 }
