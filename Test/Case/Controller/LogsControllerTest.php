@@ -1,8 +1,8 @@
 <?php
-/* Logs Test cases generated on: 2011-08-08 13:47:23 : 1312832843*/
-App::import('Controller', 'database_logger.Logs');
+App::uses('LogsController', 'DatabaseLogger.Controller');
 
 class TestLogsController extends LogsController {
+
 	var $autoRender = false;
 
 	function redirect($url, $status = null, $exit = true) {
@@ -11,14 +11,11 @@ class TestLogsController extends LogsController {
 }
 
 class LogsControllerTest extends CakeTestCase {
-	function startTest() {
+
+	function setUp() {
 		$this->Logs =& new TestLogsController();
 		$this->Logs->constructClasses();
 	}
 
-	function endTest() {
-		unset($this->Logs);
-		ClassRegistry::flush();
-	}
 
 }

@@ -1,4 +1,5 @@
 <?php
+App::uses('DatabaseLoggerAppController', 'DatabaseLogger.Controller');
 class LogsController extends DatabaseLoggerAppController {
 
 	var $helpers = array('Time');
