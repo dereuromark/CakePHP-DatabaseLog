@@ -13,6 +13,20 @@ class LogTest extends CakeTestCase {
 		parent::setUp();
 	}
 
+	public function testSave() {
+		$data = array(
+			'type' => 'Foo',
+			'message' => 'some text'
+		);
+		$this->Log->create();
+		$res = $this->Log->save($data);
+		$this->assertTrue(!empty($res));
+		$this->assertTrue(!empty($res['Log']['hostname']));
+		$this->assertTrue(!empty($res['Log']['uri']));
+		$this->assertTrue(!empty($res['Log']['refer']));
+		$this->assertTrue(!empty($res['Log']['user_agent']));
+	}
+
 	public function testTextSearch() {
 		$res = $this->Log->textSearch('interesting');
 		$this->assertEquals(array('MATCH (Log.message) AGAINST (\'interesting\')'), $res);
