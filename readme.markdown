@@ -1,4 +1,5 @@
-# Database CakePHP Plugin
+# DatabaseLog CakePHP Plugin
+
 * Author: Nick Baker
 * Modified: Mark Scherer
 * Version: 1.4
@@ -7,7 +8,7 @@
 
 ## Features
 
-Database CakeLog engine for CakePHP 2.x applications.  Easy setup.  Ideal for multi app applications where logging to a file
+DatabaseLog engine for CakePHP 2.x applications.  Easy setup.  Ideal for multi app applications where logging to a file
 is just not convenient.  Simple admin interface to view/delete logs included.
 
 ## Changelog
@@ -29,7 +30,7 @@ Run the schema into your database:
 
 ## Setup
 
-Create a config file in `app/Config/database_log` with the following (example file in plugin.)
+Create a config file in `app/Config/database_log` with the following (example file in plugin):
 
 	$config = array(
 		'DatabaseLog' => array(
@@ -40,14 +41,14 @@ Create a config file in `app/Config/database_log` with the following (example fi
 
 Pro Tip: You can read from a different datasource than you write to, and they both can be different than your default.
 
-Update the file `app/Config/bootstrap.php` with the following configurations like so:
+Update the file `app/Config/bootstrap.php` with the following configuration:
 
 	App::uses('CakeLog','Log');
 	CakeLog::config('default', array('engine' => 'DatabaseLog.DatabaseLog'));
 
 ## Usage
 
-Anywhere in your app where you call log() or CakeLog::write the database log engine will be used.
+Anywhere in your app where you call log() or CakeLog::write the DatabaseLog engine will be used.
 
 	$this->log('This is a detailed message logged to the database','error');
 	CakeLog::write('error', 'This is a detailed message logged to the database');

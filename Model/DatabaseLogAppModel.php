@@ -1,5 +1,6 @@
 <?php
 App::uses('AppModel', 'Model');
+
 class DatabaseLogAppModel extends AppModel {
 
 	public $recursive = -1;
@@ -54,7 +55,7 @@ class DatabaseLogAppModel extends AppModel {
 	* - last : find last record by created date
 	* @param array of options
 	*/
-	public function find($type, $options = array()) {
+	public function find($type = 'first', $options = array()) {
 		switch ($type) {
 		case 'last':
 			$options = array_merge(
