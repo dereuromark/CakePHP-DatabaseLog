@@ -20,6 +20,10 @@ class LogsController extends DatabaseLogAppController {
 			$filter = $this->data['Log']['filter'];
 		}
 		$conditions = $this->Log->textSearch($filter);
+		if ($type = $this->request->query('type')) {
+			$conditions['type'] = $type;
+		}
+
 		$this->set('logs', $this->paginate($conditions));
 		$this->set('types', $this->Log->getTypes());
 		$this->set('filter', $filter);
