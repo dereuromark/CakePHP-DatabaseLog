@@ -1,6 +1,7 @@
 # Database CakePHP Plugin
 * Author: Nick Baker
-* Version: 1.3
+* Modified: Mark Scherer
+* Version: 1.4
 * License: MIT
 * Website: <http://www.webtechnick.com>
 
@@ -10,6 +11,7 @@ Database CakeLogger for CakePHP 2.x applications.  Easy setup.  Ideal for multi 
 is just not convinient.  Simple admin interface to view/delete logs included.
 
 ## Changelog
+* 1.4.0 Fixed issues, renamed DatabaseLogger to DatabaseLog to unify naming according to other core log class names and added tests.
 * 1.3.0 New configuration file to change default read, write datasources.
 * 1.2.0 Now using FULLTEXT search on messages, better indexes.  Update your schema.
 * 1.1.0 Adding new fields URI, hostname, referrer, and IP automatically logged on each log call. (only applys to default Log model)
@@ -24,7 +26,7 @@ Clone the repository into your `app/Plugin/DatabaseLog` directory:
 Run the schema into your database:
 
 	$ cake schema create --plugin DatabaseLog
-	
+
 ## Setup
 
 Create a config file in `app/Config/database_log` with the following (example file in plugin.)
@@ -35,7 +37,7 @@ Create a config file in `app/Config/database_log` with the following (example fi
 			'read' => 'default', //Datasource to read from.
 		)
 	);
-	
+
 Pro Tip: You can read from a different datasource than you write to, and they both can be different than your default.
 
 Update the file `app/Config/bootstrap.php` with the following configurations like so:
@@ -49,5 +51,5 @@ Anywhere in your app where you call log() or CakeLog::write the database logger 
 
 		$this->log('This is a detailed message logged to the database','error');
 		CakeLog::write('error', 'This is a detailed message logged to the database');
-		
+
 Navigate to `http://www.example.com/admin/database_log/logs` to view/search/delete your logs.
