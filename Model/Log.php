@@ -26,7 +26,7 @@ class Log extends DatabaseLogAppModel {
 	public function textSearch($query = null) {
 		if ($query) {
 			if (strpos($query, 'type@') === 0) {
-				$query = str_replace('type@','', $query);
+				$query = str_replace('type@', '', $query);
 				return array('Log.type' => $query);
 			} else {
 				$escapedQuery = $this->getDataSource()->value($query);
@@ -66,7 +66,7 @@ class Log extends DatabaseLogAppModel {
 			'fields' => array('id', 'type', 'message', 'count'),
 			'conditions' => array(),
 			'group' => array('type', 'message'),
-		//'having' => $this->alias . '__count > 0',
+			//'having' => $this->alias . '__count > 0',
 			'order' => array('created' => 'DESC')
 		);
 		$logs = $this->find('all', $options);
