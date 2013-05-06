@@ -10,7 +10,7 @@
 			</dd>
 			<dt<?php if ($i % 2 == 0) echo $class;?>><?php echo __('Message'); ?></dt>
 			<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-				<?php echo h($log['Log']['message']); ?>
+				<?php echo nl2br(h($log['Log']['message'])); ?>
 				&nbsp;
 			</dd>
 			<dt<?php if ($i % 2 == 0) echo $class;?>><?php echo __('Uri'); ?></dt>

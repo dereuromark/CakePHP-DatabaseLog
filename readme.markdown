@@ -43,7 +43,7 @@ Pro Tip: You can read from a different datasource than you write to, and they bo
 
 Update the file `app/Config/bootstrap.php` with the following configuration:
 
-	App::uses('CakeLog','Log');
+	App::uses('CakeLog', 'Log');
 	CakeLog::config('default', array('engine' => 'DatabaseLog.DatabaseLog'));
 
 ## Usage
