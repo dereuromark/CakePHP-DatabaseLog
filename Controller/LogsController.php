@@ -46,4 +46,11 @@ class LogsController extends DatabaseLogAppController {
 		$this->redirect(array('action' => 'index'));
 	}
 
+	public function admin_remove_duplicates() {
+		$this->Log->removeDuplicates();
+
+		$this->Session->setFlash(__('Duplicates have been removed.'));
+		$this->redirect(array('action' => 'index'));
+	}
+
 }

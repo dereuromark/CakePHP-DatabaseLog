@@ -1,5 +1,7 @@
 <?php
 App::uses('DatabaseLogAppModel', 'DatabaseLog.Model');
+App::uses('Hash', 'Utility');
+
 class Log extends DatabaseLogAppModel {
 
 	public $displayField = 'type';
@@ -18,7 +20,8 @@ class Log extends DatabaseLogAppModel {
 	/**
 	* Return a text search on message
 	*
-	* @return array Results
+	* @param string $query search string or `type@...`
+	* @return array Conditions
 	*/
 	public function textSearch($query = null) {
 		if ($query) {
@@ -50,6 +53,42 @@ class Log extends DatabaseLogAppModel {
 		$retval = Hash::extract($retval,'{n}.Log.type');
 		Cache::write($cache_key, $retval);
 		return $retval;
+	}
+
+	/**
+	 * Remove duplicates and leave only the newest entry
+	 *
+	 * @return void
+	 */
+	public function removeDuplicates() {
+		$this->virtualFields['count'] = 'COUNT(*)';
+		$options = array(
+			'fields' => array('id', 'type', 'message', 'count'),
+			'conditions' => array(),
+			'group' => array('type', 'message'),
+		//'having' => $this->alias . '__count > 0',
+			'order' => array('created' => 'DESC')
+		);
+		$logs = $this->find('all', $options);
+
+		foreach ($logs as $key => $log) {
+			if ($log['Log']['count'] <= 1) {
+				continue;
+			}
+			$options = array(
+				'fields' => array('id'),
+				'conditions' => array(
+					'type' => $log['Log']['type'],
+					'message' => $log['Log']['message'],
+				),
+				'order' => array('created' => 'DESC')
+			);
+			$entries = $this->find('list', $options);
+
+			// keep the newest entry
+			array_shift($entries);
+			$this->deleteAll(array('id' => $entries));
+		}
 	}
 
 }
