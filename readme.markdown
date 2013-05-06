@@ -7,8 +7,8 @@
 
 ## Features
 
-Database CakeLogger for CakePHP 2.x applications.  Easy setup.  Ideal for multi app applications where logging to a file
-is just not convinient.  Simple admin interface to view/delete logs included.
+Database CakeLog engine for CakePHP 2.x applications.  Easy setup.  Ideal for multi app applications where logging to a file
+is just not convenient.  Simple admin interface to view/delete logs included.
 
 ## Changelog
 * 1.4.0 Fixed issues, renamed DatabaseLogger to DatabaseLog to unify naming according to other core log class names and added tests.
@@ -21,7 +21,7 @@ is just not convinient.  Simple admin interface to view/delete logs included.
 
 Clone the repository into your `app/Plugin/DatabaseLog` directory:
 
-	$ git clone git://github.com/webtechnick/CakePHP-DatabaseLogger-Plugin.git app/Plugin/DatabaseLogger
+	$ git clone git://github.com/dereuromark/CakePHP-DatabaseLog.git app/Plugin/DatabaseLog
 
 Run the schema into your database:
 
@@ -47,7 +47,7 @@ Update the file `app/Config/bootstrap.php` with the following configurations lik
 
 ## Usage
 
-Anywhere in your app where you call log() or CakeLog::write the database logger will be used.
+Anywhere in your app where you call log() or CakeLog::write the database log engine will be used.
 
 		$this->log('This is a detailed message logged to the database','error');
 		CakeLog::write('error', 'This is a detailed message logged to the database');
