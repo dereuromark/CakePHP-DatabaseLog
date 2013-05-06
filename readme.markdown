@@ -49,7 +49,7 @@ Update the file `app/Config/bootstrap.php` with the following configurations lik
 
 Anywhere in your app where you call log() or CakeLog::write the database log engine will be used.
 
-		$this->log('This is a detailed message logged to the database','error');
-		CakeLog::write('error', 'This is a detailed message logged to the database');
+	$this->log('This is a detailed message logged to the database','error');
+	CakeLog::write('error', 'This is a detailed message logged to the database');
 
 Navigate to `http://www.example.com/admin/database_log/logs` to view/search/delete your logs.
