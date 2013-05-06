@@ -34,6 +34,7 @@ class LogsController extends DatabaseLogAppController {
 	}
 
 	public function admin_delete($id = null) {
+		$this->request->onlyAllow('post');
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for log'));
 			$this->redirect(array('action'=>'index'));
@@ -43,6 +44,13 @@ class LogsController extends DatabaseLogAppController {
 			$this->redirect(array('action'=>'index'));
 		}
 		$this->Session->setFlash(__('Log was not deleted'));
+		$this->redirect(array('action' => 'index'));
+	}
+
+	public function admin_reset() {
+		$this->request->onlyAllow('post');
+
+		$this->Log->deleteAll('1 = 1');
 		$this->redirect(array('action' => 'index'));
 	}
 

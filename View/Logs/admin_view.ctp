@@ -3,11 +3,6 @@
 	<div class="logs view">
 	<h2><?php echo __('Log');?></h2>
 		<dl><?php $i = 0; $class = ' class="altrow"';?>
-			<dt<?php if ($i % 2 == 0) echo $class;?>><?php echo __('Id'); ?></dt>
-			<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-				<?php echo $log['Log']['id']; ?>
-				&nbsp;
-			</dd>
 			<dt<?php if ($i % 2 == 0) echo $class;?>><?php echo __('type'); ?></dt>
 			<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 				<?php echo $log['Log']['type']; ?>
@@ -15,22 +10,22 @@
 			</dd>
 			<dt<?php if ($i % 2 == 0) echo $class;?>><?php echo __('Message'); ?></dt>
 			<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-				<?php echo $log['Log']['message']; ?>
+				<?php echo h($log['Log']['message']); ?>
 				&nbsp;
 			</dd>
 			<dt<?php if ($i % 2 == 0) echo $class;?>><?php echo __('Uri'); ?></dt>
 			<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-				<?php echo $log['Log']['uri']; ?>
+				<?php echo h($log['Log']['uri']); ?>
 				&nbsp;
 			</dd>
 			<dt<?php if ($i % 2 == 0) echo $class;?>><?php echo __('Referrer'); ?></dt>
 			<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-				<?php echo $log['Log']['refer']; ?>
+				<?php echo h($log['Log']['refer']); ?>
 				&nbsp;
 			</dd>
 			<dt<?php if ($i % 2 == 0) echo $class;?>><?php echo __('Hostname'); ?></dt>
 			<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-				<?php echo $log['Log']['hostname']; ?>
+				<?php echo h($log['Log']['hostname']); ?>
 				&nbsp;
 			</dd>
 			<dt<?php if ($i % 2 == 0) echo $class;?>><?php echo __('IP'); ?></dt>
@@ -44,5 +39,12 @@
 				&nbsp;
 			</dd>
 		</dl>
+	</div>
+
+	<div class="actions">
+		<ul>
+			<li><?php echo $this->Form->postLink(__('Delete %s', __('Log')), array('action' => 'delete', $log['Log']['id']), array(), __('Are you sure?')); ?></li>
+			<li><?php echo $this->Html->link(__('List %s', __('Logs')), array('action' => 'index')); ?></li>
+		</ul>
 	</div>
 </div>

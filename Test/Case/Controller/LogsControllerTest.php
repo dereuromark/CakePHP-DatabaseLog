@@ -32,7 +32,18 @@ class LogsControllerTest extends CakeTestCase {
 		$this->assertEquals('some more text', $this->Logs->viewVars['log']['Log']['message']);
 	}
 
+	/**
+	 * LogsControllerTest::testDeleteWithoutPost()
+	 *
+	 * @return void
+	 * @expectedException MethodNotAllowedException
+	 */
+	public function testDeleteWithoutPost() {
+		$this->Logs->admin_delete($this->Logs->Log->id);
+	}
+
 	public function testDelete() {
+		$_SERVER['REQUEST_METHOD'] = 'POST';
 		$data = array(
 			'type' => 'Bar',
 			'message' => 'some more text'
@@ -40,6 +51,20 @@ class LogsControllerTest extends CakeTestCase {
 		$this->Logs->Log->create();
 		$res = $this->Logs->Log->save($data);
 		$this->Logs->admin_delete($this->Logs->Log->id);
+	}
+
+	public function testReset() {
+		$_SERVER['REQUEST_METHOD'] = 'POST';
+		$data = array(
+			'type' => 'Bar',
+			'message' => 'some more text'
+		);
+		$this->Logs->Log->create();
+		$res = $this->Logs->Log->save($data);
+		$this->Logs->admin_reset();
+
+		$count = $this->Logs->Log->find('count');
+		$this->assertSame(0, $count);
 	}
 
 	public function testRemoveDuplicates() {
