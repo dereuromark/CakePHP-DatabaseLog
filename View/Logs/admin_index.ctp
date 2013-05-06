@@ -1,4 +1,4 @@
-<?php echo $this->Html->css('/database_log/css/style'); ?>
+<?php //echo $this->Html->css('/database_log/css/style'); ?>
 <div class="database_log_plugin">
 	<?php echo $this->element('admin_filter', array('plugin' => 'database_log', 'model' => 'Log')); ?>
 	<div class="logs index">

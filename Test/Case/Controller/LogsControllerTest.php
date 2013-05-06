@@ -39,7 +39,7 @@ class LogsControllerTest extends CakeTestCase {
 	 * @expectedException MethodNotAllowedException
 	 */
 	public function testDeleteWithoutPost() {
-		$this->Logs->admin_delete($this->Logs->Log->id);
+		$this->Logs->admin_delete(123);
 	}
 
 	public function testDelete() {
@@ -51,6 +51,16 @@ class LogsControllerTest extends CakeTestCase {
 		$this->Logs->Log->create();
 		$res = $this->Logs->Log->save($data);
 		$this->Logs->admin_delete($this->Logs->Log->id);
+	}
+
+	/**
+	 * LogsControllerTest::testResetWithoutPost()
+	 *
+	 * @return void
+	 * @expectedException MethodNotAllowedException
+	 */
+	public function testResetWithoutPost() {
+		$this->Logs->admin_reset();
 	}
 
 	public function testReset() {
