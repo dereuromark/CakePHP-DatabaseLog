@@ -46,11 +46,15 @@ Update the file `app/Config/bootstrap.php` with the following configuration:
 	App::uses('CakeLog', 'Log');
 	CakeLog::config('default', array('engine' => 'DatabaseLog.DatabaseLog'));
 
+Note that 2.4 drops the suffix, so for all those who use the newest version of cake, its just `Database`:
+
+	CakeLog::config('default', array('engine' => 'DatabaseLog.Database'));
+
 ## Usage
 
 Anywhere in your app where you call log() or CakeLog::write the DatabaseLog engine will be used.
 
-	$this->log('This is a detailed message logged to the database','error');
+	$this->log('This is a detailed message logged to the database', 'error');
 	CakeLog::write('error', 'This is a detailed message logged to the database');
 
 Navigate to `http://www.example.com/admin/database_log/logs` to view/search/delete your logs.
