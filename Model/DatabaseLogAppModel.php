@@ -88,7 +88,7 @@ class DatabaseLogAppModel extends AppModel {
 	* if being tested, don't change, otherwise change to what we read
 	*/
 	protected function setDataSourceRead() {
-		if ($this->useDbConfig != 'test') {
+		if ($this->useDbConfig !== 'test') {
 			$this->setDataSource($this->configs['read']);
 		}
 	}
@@ -98,7 +98,7 @@ class DatabaseLogAppModel extends AppModel {
 	* if being tested, don't change, otherwise change to what we config
 	*/
 	protected function setDataSourceWrite() {
-		if ($this->useDbConfig != 'test') {
+		if ($this->useDbConfig !== 'test') {
 			$this->setDataSource($this->configs['write']);
 		}
 	}

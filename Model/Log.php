@@ -43,8 +43,8 @@ class Log extends DatabaseLogAppModel {
 	* @return array Types
 	*/
 	public function getTypes() {
-		$cache_key = 'database_log_types';
-		if ($retval = Cache::read($cache_key)) {
+		$cacheKey = 'database_log_types';
+		if ($retval = Cache::read($cacheKey)) {
 			return $retval;
 		}
 		$retval = $this->find('all', array(
@@ -52,7 +52,7 @@ class Log extends DatabaseLogAppModel {
 			'order' => array('Log.type ASC')
 		));
 		$retval = Hash::extract($retval,'{n}.Log.type');
-		Cache::write($cache_key, $retval);
+		Cache::write($cacheKey, $retval);
 		return $retval;
 	}
 
