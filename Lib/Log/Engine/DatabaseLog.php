@@ -16,7 +16,7 @@ CakeLog::config('database', array(
 
 */
 App::uses('ClassRegistry', 'Utility');
-App::uses('CakeLogInterface','Log');
+App::uses('CakeLogInterface', 'Log');
 
 class DatabaseLog implements CakeLogInterface{
 

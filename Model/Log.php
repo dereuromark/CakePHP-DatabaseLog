@@ -51,7 +51,7 @@ class Log extends DatabaseLogAppModel {
 			'fields' => array('DISTINCT Log.type'),
 			'order' => array('Log.type ASC')
 		));
-		$retval = Hash::extract($retval,'{n}.Log.type');
+		$retval = Hash::extract($retval, '{n}.Log.type');
 		Cache::write($cacheKey, $retval);
 		return $retval;
 	}
