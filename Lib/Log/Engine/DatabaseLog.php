@@ -31,7 +31,7 @@ class DatabaseLog implements CakeLogInterface{
 	public $Log = null;
 
 	/**
-	* Contruct the model class
+	* Construct the model class
 	*/
 	public function __construct($options = array()) {
 		$this->model = isset($options['model']) ? $options['model'] : 'DatabaseLog.Log';
@@ -39,10 +39,12 @@ class DatabaseLog implements CakeLogInterface{
 	}
 
 	/**
-	* Write the log to database
-	*
-	* @return boolean Success
-	*/
+	 * Write the log to database
+	 *
+	 * @param $type
+	 * @param $message
+	 * @return boolean Success
+	 */
 	public function write($type, $message) {
 		$this->Log->create();
 		return (bool)$this->Log->save(array(
