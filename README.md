@@ -26,21 +26,17 @@ DatabaseLog engine for CakePHP 2.x applications.
 
 Add `"dereuromark/cakephp-databaselog": "dev-master"` and run `composer install`.
 
-Run the schema into your database:
-
-	$ cake schema create --plugin DatabaseLog
-
 ###  Manually
 
 Clone the repository into your `app/Plugin/DatabaseLog` directory:
 
 	$ git clone git://github.com/dereuromark/CakePHP-DatabaseLog.git app/Plugin/DatabaseLog
 
+## Setup
+
 Run the schema into your database:
 
 	$ cake schema create --plugin DatabaseLog
-
-## Setup
 
 Create a config file in `app/Config/database_log` with the following (example file in plugin):
 ```php
