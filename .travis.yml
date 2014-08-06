@@ -9,7 +9,7 @@ php:
 
 before_script:
   - git clone git://github.com/cakephp/cakephp ../cakephp && cd ../cakephp
-  - mv ../DatabaseLog plugins/DatabaseLog
+  - mv ../CakePHP-DatabaseLog app/Plugin/DatabaseLog
   - chmod -R 777 ../cakephp/app/tmp
   - sh -c "mysql -e 'CREATE DATABASE cakephp_test;'"
   - echo "<?php
