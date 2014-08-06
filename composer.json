@@ -1,0 +1,35 @@
+{
+    "name": "dereuromark/cakephp-databaselog",
+    "description": "CakePHP DatabaseLog Plugin",
+    "type": "cakephp-plugin",
+    "keywords": ["cakephp", "database", "logging", "logs", "plugin"],
+    "homepage": "https://github.com/dereuromark/CakePHP-DatabaseLog/",
+    "minimum-stability": "dev",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nick Baker",
+            "homepage": "http://www.webtechnick.com",
+            "role": "Original author"
+        },
+        {
+            "name": "Mark Scherer",
+            "homepage": "http://www.dereuromark.de",
+            "role": "Author"
+        },
+        {
+            "name": "Other contributors",
+            "homepage": "https://github.com/dereuromark/CakePHP-DatabaseLog/graphs/contributors"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/webtechnick/CakePHP-DatabaseLogger-Plugin/issues",
+        "source": "https://github.com/webtechnick/CakePHP-DatabaseLogger-Plugin/"
+    },
+    "require": {
+        "php": ">=5.2.8"
+    },
+    "extra": {
+        "installer-name": "DatabaseLog"
+    }
+}
