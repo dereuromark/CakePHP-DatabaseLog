@@ -1,0 +1,30 @@
+language: php
+
+php:
+  - 5.2
+  - 5.3
+  - 5.4
+  - 5.5
+  - 5.6
+
+before_script:
+  - git clone git://github.com/cakephp/cakephp ../cakephp && cd ../cakephp
+  - mv ../DatabaseLog plugins/DatabaseLog
+  - chmod -R 777 ../cakephp/app/tmp
+  - sh -c "mysql -e 'CREATE DATABASE cakephp_test;'"
+  - echo "<?php
+      class DATABASE_CONFIG {
+      public \$test = array(
+        'datasource' => 'Database/Mysql',
+        'database' => 'cakephp_test',
+        'host' => '0.0.0.0',
+        'login' => 'travis',
+        'persistent' => false,
+      );
+      }" > ../cakephp/app/Config/database.php
+
+script:
+  - ./lib/Cake/Console/cake test DatabaseLog AllTests --stderr
+
+notifications:
+  email: false
