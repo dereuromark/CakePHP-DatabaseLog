@@ -1,9 +1,11 @@
 <?php
 class DatabaseLogSchema extends CakeSchema {
 
+	/**
+	 * @param array $options
+	 * @todo Get schema from fixture or vice versa to remove redundancy
+	 */
 	public function __construct($options = array()) {
-		//TODO: get schema from fixture or vice versa to remove redundancy
-
 		parent::__construct();
 	}
 
