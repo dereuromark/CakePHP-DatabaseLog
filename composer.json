@@ -23,8 +23,8 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/webtechnick/CakePHP-DatabaseLogger-Plugin/issues",
-        "source": "https://github.com/webtechnick/CakePHP-DatabaseLogger-Plugin/"
+        "issues": "https://github.com/dereuromark/CakePHP-DatabaseLog/issues",
+        "source": "https://github.com/dereuromark/CakePHP-DatabaseLog/"
     },
     "require": {
         "php": ">=5.2.8"
