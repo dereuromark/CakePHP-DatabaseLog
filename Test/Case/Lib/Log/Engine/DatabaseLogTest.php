@@ -37,7 +37,6 @@ class DatabaseLogTest extends CakeTestCase {
 		CakeLog::write('info', 'z');
 
 		$countAfter = $this->Log->find('count');
-		debug($countAfter);
 		$this->assertSame($countBefore + 3, $countAfter);
 	}
 

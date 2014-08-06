@@ -13,6 +13,7 @@ class Log extends DatabaseLogAppModel {
 		$this->data[$this->alias]['hostname'] = env('HTTP_HOST');
 		$this->data[$this->alias]['uri'] = env('REQUEST_URI');
 		$this->data[$this->alias]['refer'] = env('HTTP_REFERER');
+		$this->data[$this->alias]['user_agent'] = env('HTTP_USER_AGENT');
 
 		return parent::beforeSave($options);
 	}
@@ -42,21 +43,22 @@ class Log extends DatabaseLogAppModel {
 	* @return array Types
 	*/
 	public function getTypes() {
-		$cache_key = 'database_log_types';
-		if ($retval = Cache::read($cache_key)) {
+		$cacheKey = 'database_log_types';
+		if ($retval = Cache::read($cacheKey)) {
 			return $retval;
 		}
 		$retval = $this->find('all', array(
 			'fields' => array('DISTINCT Log.type'),
 			'order' => array('Log.type ASC')
 		));
-		$retval = Hash::extract($retval,'{n}.Log.type');
-		Cache::write($cache_key, $retval);
+		$retval = Hash::extract($retval, '{n}.Log.type');
+		Cache::write($cacheKey, $retval);
 		return $retval;
 	}
 
 	/**
 	 * Remove duplicates and leave only the newest entry
+	 * Also stores the new total "number" of this message in the remaining one
 	 *
 	 * @return void
 	 */
@@ -86,8 +88,9 @@ class Log extends DatabaseLogAppModel {
 			$entries = $this->find('list', $options);
 
 			// keep the newest entry
-			array_shift($entries);
+			$keep = array_shift($entries);
 			$this->deleteAll(array('id' => $entries));
+			$this->updateAll(array('number = number + ' . count($entries)), array('id' => $keep));
 		}
 	}
 

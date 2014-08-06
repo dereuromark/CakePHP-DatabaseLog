@@ -20,6 +20,10 @@ class LogsController extends DatabaseLogAppController {
 			$filter = $this->data['Log']['filter'];
 		}
 		$conditions = $this->Log->textSearch($filter);
+		if ($type = $this->request->query('type')) {
+			$conditions['type'] = $type;
+		}
+
 		$this->set('logs', $this->paginate($conditions));
 		$this->set('types', $this->Log->getTypes());
 		$this->set('filter', $filter);
@@ -37,11 +41,11 @@ class LogsController extends DatabaseLogAppController {
 		$this->request->onlyAllow('post');
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for log'));
-			$this->redirect(array('action'=>'index'));
+			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->Log->delete($id)) {
 			$this->Session->setFlash(__('Log deleted'));
-			$this->redirect(array('action'=>'index'));
+			$this->redirect(array('action' => 'index'));
 		}
 		$this->Session->setFlash(__('Log was not deleted'));
 		$this->redirect(array('action' => 'index'));
