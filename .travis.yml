@@ -8,9 +8,9 @@ php:
   - 5.6
 
 before_script:
+  - git clone git://github.com/cakephp/cakephp ../cakephp && cd ../cakephp
   - sh -c "if [ '$TRAVIS_PHP_VERSION' != '5.2' ]; then composer global require 'phpunit/phpunit=3.7.33'; fi"
   - sh -c "if [ '$TRAVIS_PHP_VERSION' != '5.2' ]; then ln -s ~/.composer/vendor/phpunit/phpunit/PHPUnit ./vendors/PHPUnit; fi"
-  - git clone git://github.com/cakephp/cakephp ../cakephp && cd ../cakephp
   - mv ../CakePHP-DatabaseLog app/Plugin/DatabaseLog
   - chmod -R 777 ../cakephp/app/tmp
   - sh -c "mysql -e 'CREATE DATABASE cakephp_test;'"
