@@ -38,12 +38,12 @@ Run the schema into your database:
 
 	$ cake schema create --plugin DatabaseLog
 
-Create a config file in `app/Config/database_log` with the following (example file in plugin):
+Create a config file in `app/Config/database_log.php` with the following (example file in plugin):
 ```php
 $config = array(
 	'DatabaseLog' => array(
-		'write' => 'default', //DataSource to write to.
-		'read' => 'default', //Datasource to read from.
+		'write' => 'default', // DataSource to write to.
+		'read' => 'default', // DataSource to read from.
 	)
 );
 ```
