@@ -30,7 +30,6 @@ class DatabaseLogSchema extends CakeSchema {
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1),
 			'type' => array('column' => 'type', 'unique' => 0),
-			'message' => array('column' => 'message', 'type' => 'fulltext')
 		),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'MyISAM')
 	);
