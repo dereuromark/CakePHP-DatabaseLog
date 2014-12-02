@@ -102,7 +102,7 @@ class LogsControllerTest extends ControllerTestCase {
 		$logModel = ClassRegistry::init('DatabaseLog.Log');
 		$count = $logModel->find('count');
 
-		$this->assertEquals(0, $count);
+		$this->assertSame(0, $count);
 	}
 
 	/**
