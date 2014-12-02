@@ -1,4 +1,13 @@
-/** containers **/
+/**
+ * CakePHP DatabaseLog Plugin
+ *
+ * Licensed under The MIT License.
+ *
+ * @license http://www.opensource.org/licenses/mit-license.php MIT License
+ * @link https://github.com/dereuromark/CakePHP-DatabaseLog
+ */
+
+ /** containers **/
 div.database_log_plugin div.form,
 div.database_log_plugin div.index,
 div.database_log_plugin div.view {

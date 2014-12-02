@@ -1,4 +1,13 @@
-<?php //echo $this->Html->css('/database_log/css/style'); ?>
+<?php
+/**
+ * CakePHP DatabaseLog Plugin
+ *
+ * Licensed under The MIT License.
+ *
+ * @license http://www.opensource.org/licenses/mit-license.php MIT License
+ * @link https://github.com/dereuromark/CakePHP-DatabaseLog
+ */
+?>
 <div class="database_log_plugin">
 	<div class="logs view">
 	<h2><?php echo __('Log');?></h2>

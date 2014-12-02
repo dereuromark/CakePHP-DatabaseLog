@@ -1,6 +1,23 @@
 <?php
+/**
+ * CakePHP DatabaseLog Plugin
+ *
+ * Licensed under The MIT License.
+ *
+ * @license http://www.opensource.org/licenses/mit-license.php MIT License
+ * @link https://github.com/dereuromark/CakePHP-DatabaseLog
+ */
+
+/**
+ * Log fixtures
+ */
 class LogFixture extends CakeTestFixture {
 
+	/**
+	 * Fields
+	 *
+	 * @var array
+	 */
 	public $fields = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
 		'type' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 50, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
@@ -16,6 +33,11 @@ class LogFixture extends CakeTestFixture {
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'MyISAM')
 	);
 
+	/**
+	 * Records
+	 *
+	 * @var array
+	 */
 	public $records = array(
 		array(
 			'id' => 1,

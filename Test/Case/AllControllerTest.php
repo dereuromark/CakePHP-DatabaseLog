@@ -1,13 +1,24 @@
 <?php
 /**
- * group test - DatabaseLog
+ * CakePHP DatabaseLog Plugin
+ *
+ * Licensed under The MIT License.
+ *
+ * @license http://www.opensource.org/licenses/mit-license.php MIT License
+ * @link https://github.com/dereuromark/CakePHP-DatabaseLog
+ */
+
+/**
+ * All controller tests
+ *
+ * This test suite will run all controller tests.
  */
 class AllControllerTest extends PHPUnit_Framework_TestSuite {
 
 	/**
-	 * suite method, defines tests for this suite.
+	 * Defines tests for this suite
 	 *
-	 * @return void
+	 * @return CakeTestSuite The test suite.
 	 */
 	public static function suite() {
 		$Suite = new CakeTestSuite('All Controller tests');

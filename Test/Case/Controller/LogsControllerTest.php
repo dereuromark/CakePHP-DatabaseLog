@@ -1,95 +1,156 @@
 <?php
+/**
+ * CakePHP DatabaseLog Plugin
+ *
+ * Licensed under The MIT License.
+ *
+ * @license http://www.opensource.org/licenses/mit-license.php MIT License
+ * @link https://github.com/dereuromark/CakePHP-DatabaseLog
+ */
+
 App::uses('LogsController', 'DatabaseLog.Controller');
 
-class LogsControllerTest extends CakeTestCase {
+/**
+ * LogsController Test
+ *
+ * @coversDefaultClass LogsController
+ */
+class LogsControllerTest extends ControllerTestCase {
 
-	public $Logs;
+	/**
+	 * Fixtures
+	 *
+	 * @var array
+	 */
+	public $fixtures = array(
+		'plugin.database_log.log',
+		'core.cake_session'
+	);
 
-	public $fixtures = array('plugin.database_log.log', 'core.cake_session');
-
+	/**
+	 * Setup
+	 *
+	 * @return void
+	 */
 	public function setUp() {
-		$this->Logs = new TestLogsController(new CakeRequest(), new CakeResponse());
-		$this->Logs->constructClasses();
+		$this->generate('DatabaseLog.Logs', array(
+			'components' => array(
+				'Auth',
+				'Session' => array('setFlash')
+			)
+		));
 
 		parent::setUp();
 	}
 
+	/**
+	 * Tests the index action
+	 *
+	 * @return void
+	 * @covers ::admin_index
+	 */
 	public function testIndex() {
-		$this->Logs->admin_index();
-
-		$this->assertTrue(!empty($this->Logs->viewVars['logs']));
-	}
-
-	public function testView() {
-		$data = array(
-			'type' => 'Bar',
-			'message' => 'some more text'
+		$this->testAction(
+			'/logs/admin_index/',
+			array('method' => 'get')
 		);
-		$this->Logs->Log->create();
-		$res = $this->Logs->Log->save($data);
-		$this->Logs->admin_view($this->Logs->Log->id);
 
-		$this->assertEquals('some more text', $this->Logs->viewVars['log']['Log']['message']);
+		$this->assertNotEmpty($this->vars['logs']);
 	}
 
 	/**
-	 * LogsControllerTest::testDeleteWithoutPost()
+	 * Tests the view action
+	 *
+	 * @return void
+	 * @covers ::admin_view
+	 */
+	public function testView() {
+		$this->testAction(
+			'/logs/admin_view/1',
+			array('method' => 'get')
+		);
+
+		$this->assertEquals('Lorem ipsum dolor sit amet', $this->vars['log']['Log']['type']);
+	}
+
+	/**
+	 * Tests the delete action without POST
 	 *
 	 * @return void
 	 * @expectedException MethodNotAllowedException
+	 * @covers ::admin_delete
 	 */
 	public function testDeleteWithoutPost() {
-		$this->Logs->admin_delete(123);
+		$this->testAction(
+			'/logs/admin_delete/1',
+			array('method' => 'get')
+		);
 	}
 
-	public function testDelete() {
-		$_SERVER['REQUEST_METHOD'] = 'POST';
-		$data = array(
-			'type' => 'Bar',
-			'message' => 'some more text'
-		);
-		$this->Logs->Log->create();
-		$res = $this->Logs->Log->save($data);
-		$this->Logs->admin_delete($this->Logs->Log->id);
-	}
 
 	/**
-	 * LogsControllerTest::testResetWithoutPost()
+	 * Tests the delete action
 	 *
 	 * @return void
-	 * @expectedException MethodNotAllowedException
+	 * @covers ::admin_delete
 	 */
-	public function testResetWithoutPost() {
-		$this->Logs->admin_reset();
-	}
-
-	public function testReset() {
-		$_SERVER['REQUEST_METHOD'] = 'POST';
-		$data = array(
-			'type' => 'Bar',
-			'message' => 'some more text'
+	public function testDelete() {
+		$this->testAction(
+			'/logs/admin_delete/1',
+			array('method' => 'post')
 		);
-		$this->Logs->Log->create();
-		$res = $this->Logs->Log->save($data);
-		$this->Logs->admin_reset();
+		$logModel = ClassRegistry::init('DatabaseLog.Log');
+		$count = $logModel->find('count');
 
-		$count = $this->Logs->Log->find('count');
 		$this->assertSame(0, $count);
 	}
 
+	/**
+	 * Tests the reset action without POST
+	 *
+	 * @return void
+	 * @expectedException MethodNotAllowedException
+	 * @covers ::admin_reset
+	 */
+	public function testResetWithoutPost() {
+		$this->testAction(
+			'/logs/admin_reset/',
+			array('method' => 'get')
+		);
+	}
+
+	/**
+	 * Tests the reset action
+	 *
+	 * @return void
+	 * @covers ::admin_reset
+	 */
+	public function testReset() {
+		$this->testAction(
+			'/logs/admin_reset/',
+			array('method' => 'post')
+		);
+		$logModel = ClassRegistry::init('DatabaseLog.Log');
+		$count = $logModel->find('count');
+
+		$this->assertSame(0, $count);
+	}
+
+	/**
+	 * Tests the remove duplicates action
+	 *
+	 * @return void
+	 * @covers ::admin_remove_duplicates
+	 */
 	public function testRemoveDuplicates() {
-		$this->Logs->admin_remove_duplicates();
+		$this->testAction(
+			'/logs/admin_remove_duplicates/',
+			array('method' => 'post')
+		);
+		$logModel = ClassRegistry::init('DatabaseLog.Log');
+		$count = $logModel->find('count');
+
+		$this->assertSame(1, $count);
 	}
 
-}
-
-class TestLogsController extends LogsController {
-
-	public $uses = array('DatabaseLog.Log');
-
-	public $autoRender = false;
-
-	public function redirect($url, $status = null, $exit = true) {
-		$this->redirectUrl = $url;
-	}
 }

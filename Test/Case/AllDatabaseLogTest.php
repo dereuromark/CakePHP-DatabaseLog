@@ -1,20 +1,33 @@
 <?php
 /**
- * group test - DatabaseLog
+ * CakePHP DatabaseLog Plugin
+ *
+ * Licensed under The MIT License.
+ *
+ * @license http://www.opensource.org/licenses/mit-license.php MIT License
+ * @link https://github.com/dereuromark/CakePHP-DatabaseLog
+ */
+
+/**
+ * All Plugin tests
+ *
+ * This test suite will run all tests.
  */
 class AllPluginTest extends PHPUnit_Framework_TestSuite {
 
 	/**
-	 * suite method, defines tests for this suite.
+	 * Defines tests for this suite
 	 *
-	 * @return void
+	 * @return CakeTestSuite The test suite.
 	 */
 	public static function suite() {
-		$Suite = new CakeTestSuite('All Plugin tests');
-		$path = dirname(__FILE__);
-		$Suite->addTestDirectory($path . DS . 'Lib' . DS . 'Log' . DS . 'Engine');
-		$Suite->addTestDirectory($path . DS . 'Model');
-		$Suite->addTestDirectory($path . DS . 'Controller');
-		return $Suite;
+		$suite = new CakeTestSuite('All DatabaseLog tests');
+
+		$path = dirname(__FILE__) . DS;
+		$suite->addTestDirectory($path . 'Lib' . DS . 'Log' . DS . 'Engine');
+		$suite->addTestDirectory($path . 'Model');
+		$suite->addTestDirectory($path . 'Controller');
+
+		return $suite;
 	}
 }

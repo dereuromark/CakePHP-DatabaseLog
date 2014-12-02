@@ -1,13 +1,30 @@
 <?php
+/**
+ * CakePHP DatabaseLog Plugin
+ *
+ * Licensed under The MIT License.
+ *
+ * @license http://www.opensource.org/licenses/mit-license.php MIT License
+ * @link https://github.com/dereuromark/CakePHP-DatabaseLog
+ */
+
 App::uses('AppModel', 'Model');
 
+/**
+ * DatabaseLog App Model
+ */
 class DatabaseLogAppModel extends AppModel {
 
+	/**
+	 * Set Recursive to -1
+	 *
+	 * @var int
+	 */
 	public $recursive = -1;
 
 	/**
-	* Filter fields
-	*/
+	 * Filter fields
+	 */
 	public $searchFields = array();
 
 	/**
@@ -19,8 +36,10 @@ class DatabaseLogAppModel extends AppModel {
 	);
 
 	/**
-	* Set the default datasource to the read setup in config
-	*/
+	 * Set the default datasource to the read setup in config
+	 *
+	 * {@inheritDoc}
+	 */
 	public function __construct($id = false, $table = null, $ds = null) {
 		if (Configure::load('database_log')) {
 			$this->configs = Configure::read('DatabaseLog');
@@ -30,8 +49,10 @@ class DatabaseLogAppModel extends AppModel {
 	}
 
 	/**
-	* Overwrite save to write to the datasource defined in config
-	*/
+	 * Overwrite save to write to the datasource defined in config
+	 *
+	 * {@inheritDoc}
+	 */
 	public function save($data = null, $validate = true, $fieldList = array()) {
 		$this->setDataSourceWrite();
 		$retval = parent::save($data, $validate, $fieldList);
@@ -40,8 +61,10 @@ class DatabaseLogAppModel extends AppModel {
 	}
 
 	/**
-	* Overwrite delete to delete to the datasource defined in config
-	*/
+	 * Overwrite delete to delete to the datasource defined in config
+	 *
+	 * {@inheritDoc}
+	 */
 	public function delete($id = null, $cascade = true) {
 		$this->setDataSourceWrite();
 		$retval = parent::delete($id, $cascade);
@@ -50,11 +73,12 @@ class DatabaseLogAppModel extends AppModel {
 	}
 
 	/**
-	* Overwrite find so I can do some nice things with it.
-	* @param string find type
-	* - last : find last record by created date
-	* @param array of options
-	*/
+	 * Overwrite find so I can do some nice things with it.
+	 *
+	 * Type 'last' finds the last record by created date.
+	 *
+	 * {@inheritDoc}
+	 */
 	public function find($type = 'first', $options = array()) {
 		switch ($type) {
 		case 'last':
@@ -69,10 +93,11 @@ class DatabaseLogAppModel extends AppModel {
 	}
 
 	/**
-	* return conditions based on searchable fields and filter
-	* @param string filter
-	* @return conditions array
-	*/
+	 * Return conditions based on searchable fields and filter
+	 *
+	 * @param string $filter The filter string.
+	 * @return array The generated filter conditions array.
+	 */
 	public function generateFilterConditions($filter = null) {
 		$retval = array();
 		if ($filter) {
