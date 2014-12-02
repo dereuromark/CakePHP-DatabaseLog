@@ -3,6 +3,15 @@ App::uses('DatabaseLogAppController', 'DatabaseLog.Controller');
 
 class LogsController extends DatabaseLogAppController {
 
+	/**
+	 * Explicitly use the Log model.
+	 *
+	 * Fixes problems with the controller test.
+	 *
+	 * @var array
+	 */
+	public $uses = array('DatabaseLog.Log');
+
 	public $helpers = array('Time');
 
 	public $paginate = array(
