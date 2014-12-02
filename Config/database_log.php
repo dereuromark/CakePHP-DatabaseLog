@@ -11,11 +11,10 @@
 /**
  * DatabaseLog (Default) Configuration
  *
- * Either load the default config by calling
- * ``Configure::load('DatabaseLog.database_log', 'default')``
- * or copy this file to app/Config/database_log.php
- * and load the customizable config by calling
- * ``Configure::load('database_log', 'default')``
+ * Copy this file to app/Config/database_log.php
+ * and customize it to your needs.
+ *
+ * @see DatabaseLogAppModel::__construct()
  */
 $config = array(
 	'DatabaseLog' => array(
