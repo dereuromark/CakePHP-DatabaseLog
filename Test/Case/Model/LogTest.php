@@ -1,14 +1,41 @@
 <?php
+/**
+ * CakePHP DatabaseLog Plugin
+ *
+ * Licensed under The MIT License.
+ *
+ * @license http://www.opensource.org/licenses/mit-license.php MIT License
+ * @link https://github.com/dereuromark/CakePHP-DatabaseLog
+ */
+
 App::uses('Log', 'DatabaseLog.Model');
 
+/**
+ * Log Test
+ *
+ *
+ * @coversDefaultClass Log
+ */
 class LogTest extends CakeTestCase {
 
+	/**
+	 * Model under test
+	 *
+	 * @var
+	 */
 	public $Log;
 
-	public $fixtures = array('plugin.database_log.log');
+	/**
+	 * Fixtures
+	 *
+	 * @var array
+	 */
+	public $fixtures = array(
+		'plugin.database_log.log'
+	);
 
 	/**
-	 * LogTest::setUp()
+	 * Setup
 	 *
 	 * @return void
 	 */
@@ -19,9 +46,10 @@ class LogTest extends CakeTestCase {
 	}
 
 	/**
-	 * LogTest::testSave()
+	 * Tests the save method
 	 *
 	 * @return void
+	 * @covers ::save
 	 */
 	public function testSave() {
 		$data = array(
@@ -31,16 +59,13 @@ class LogTest extends CakeTestCase {
 		$this->Log->create();
 		$res = $this->Log->save($data);
 		$this->assertTrue(!empty($res));
-		//$this->assertTrue(!empty($res['Log']['hostname']));
-		//$this->assertTrue(!empty($res['Log']['uri']));
-		//$this->assertTrue(!empty($res['Log']['refer']));
-		//$this->assertTrue(!empty($res['Log']['user_agent']));
 	}
 
 	/**
-	 * LogTest::testTextSearch()
+	 * Tests the textSearch method
 	 *
 	 * @return void
+	 * @covers ::textSearch
 	 */
 	public function testTextSearch() {
 		$res = $this->Log->textSearch('interesting');
@@ -51,9 +76,10 @@ class LogTest extends CakeTestCase {
 	}
 
 	/**
-	 * LogTest::testGetTypes()
+	 * Tests the getTypes method
 	 *
 	 * @return void
+	 * @covers ::getTypes
 	 */
 	public function testGetTypes() {
 		Cache::delete('database_log_types');
@@ -81,9 +107,10 @@ class LogTest extends CakeTestCase {
 	}
 
 	/**
-	 * LogTest::testRemoveDuplicates()
+	 * Tests the removeDuplicates method
 	 *
 	 * @return void
+	 * @covers ::removeDuplicates
 	 */
 	public function testRemoveDuplicates() {
 		$data = array(
