@@ -1,35 +1,45 @@
 <?php
 App::uses('LogsController', 'DatabaseLog.Controller');
 
-class LogsControllerTest extends CakeTestCase {
+class LogsControllerTest extends ControllerTestCase {
 
-	public $Logs;
-
-	public $fixtures = array('plugin.database_log.log', 'core.cake_session');
+	/**
+	 * Fixtures
+	 *
+	 * @var array
+	 */
+	public $fixtures = array(
+		'plugin.database_log.log',
+		'core.cake_session'
+	);
 
 	public function setUp() {
-		$this->Logs = new TestLogsController(new CakeRequest(), new CakeResponse());
-		$this->Logs->constructClasses();
+		$this->generate('DatabaseLog.Logs', array(
+			'components' => array(
+				'Auth',
+				'Session' => array('setFlash')
+			)
+		));
 
 		parent::setUp();
 	}
 
 	public function testIndex() {
-		$this->Logs->admin_index();
+		$this->testAction(
+			'/logs/admin_index/',
+			array('method' => 'get')
+		);
 
-		$this->assertTrue(!empty($this->Logs->viewVars['logs']));
+		$this->assertNotEmpty($this->vars['logs']);
 	}
 
 	public function testView() {
-		$data = array(
-			'type' => 'Bar',
-			'message' => 'some more text'
+		$this->testAction(
+			'/logs/admin_view/1',
+			array('method' => 'get')
 		);
-		$this->Logs->Log->create();
-		$res = $this->Logs->Log->save($data);
-		$this->Logs->admin_view($this->Logs->Log->id);
 
-		$this->assertEquals('some more text', $this->Logs->viewVars['log']['Log']['message']);
+		$this->assertEquals('Lorem ipsum dolor sit amet', $this->vars['log']['Log']['type']);
 	}
 
 	/**
@@ -39,18 +49,21 @@ class LogsControllerTest extends CakeTestCase {
 	 * @expectedException MethodNotAllowedException
 	 */
 	public function testDeleteWithoutPost() {
-		$this->Logs->admin_delete(123);
+		$this->testAction(
+			'/logs/admin_delete/1',
+			array('method' => 'get')
+		);
 	}
 
 	public function testDelete() {
-		$_SERVER['REQUEST_METHOD'] = 'POST';
-		$data = array(
-			'type' => 'Bar',
-			'message' => 'some more text'
+		$this->testAction(
+			'/logs/admin_delete/1',
+			array('method' => 'post')
 		);
-		$this->Logs->Log->create();
-		$res = $this->Logs->Log->save($data);
-		$this->Logs->admin_delete($this->Logs->Log->id);
+		$logModel = ClassRegistry::init('DatabaseLog.Log');
+		$count = $logModel->find('count');
+
+		$this->assertEquals(0, $count);
 	}
 
 	/**
@@ -60,36 +73,32 @@ class LogsControllerTest extends CakeTestCase {
 	 * @expectedException MethodNotAllowedException
 	 */
 	public function testResetWithoutPost() {
-		$this->Logs->admin_reset();
+		$this->testAction(
+			'/logs/admin_reset/',
+			array('method' => 'get')
+		);
 	}
 
 	public function testReset() {
-		$_SERVER['REQUEST_METHOD'] = 'POST';
-		$data = array(
-			'type' => 'Bar',
-			'message' => 'some more text'
+		$this->testAction(
+			'/logs/admin_reset/',
+			array('method' => 'post')
 		);
-		$this->Logs->Log->create();
-		$res = $this->Logs->Log->save($data);
-		$this->Logs->admin_reset();
+		$logModel = ClassRegistry::init('DatabaseLog.Log');
+		$count = $logModel->find('count');
 
-		$count = $this->Logs->Log->find('count');
-		$this->assertSame(0, $count);
+		$this->assertEquals(0, $count);
 	}
 
 	public function testRemoveDuplicates() {
-		$this->Logs->admin_remove_duplicates();
+		$this->testAction(
+			'/logs/admin_remove_duplicates/',
+			array('method' => 'post')
+		);
+		$logModel = ClassRegistry::init('DatabaseLog.Log');
+		$count = $logModel->find('count');
+
+		$this->assertEquals(1, $count);
 	}
 
-}
-
-class TestLogsController extends LogsController {
-
-	public $uses = array('DatabaseLog.Log');
-
-	public $autoRender = false;
-
-	public function redirect($url, $status = null, $exit = true) {
-		$this->redirectUrl = $url;
-	}
 }
