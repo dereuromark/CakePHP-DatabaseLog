@@ -1,21 +1,15 @@
 <?php
+
+/**
+ * DatabaseLog schema
+ */
 class DatabaseLogSchema extends CakeSchema {
 
 	/**
-	 * @param array $options
-	 * @todo Get schema from fixture or vice versa to remove redundancy
+	 * The logs table
+	 *
+	 * @var array
 	 */
-	public function __construct($options = array()) {
-		parent::__construct();
-	}
-
-	public function before($event = array()) {
-		return true;
-	}
-
-	public function after($event = array()) {
-	}
-
 	public $logs = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
 		'type' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 50, 'key' => 'index', 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),

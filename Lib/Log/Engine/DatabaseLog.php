@@ -1,38 +1,26 @@
 <?php
-/**
-* Database logger
-* @author Nick Baker
-* @version 1.0
-* @license MIT
 
-# Setup
-
-in app/config/bootstrap.php add the following
-
-CakeLog::config('database', array(
-	'engine' => 'DatabaseLog.DatabaseLog',
-	'model' => 'CustomLogModel' //'DatabaseLog.Log' by default
-));
-
-*/
 App::uses('ClassRegistry', 'Utility');
 App::uses('CakeLogInterface', 'Log');
 
+/**
+ * DatabaseLog Engine
+ */
 class DatabaseLog implements CakeLogInterface{
 
 	/**
-	* Model name placeholder
-	*/
+	 * Model name placeholder
+	 */
 	public $model = null;
 
 	/**
-	* Model object placeholder
-	*/
+	 * Model object placeholder
+	 */
 	public $Log = null;
 
 	/**
-	* Construct the model class
-	*/
+	 * Construct the model class
+	 */
 	public function __construct($options = array()) {
 		$this->model = isset($options['model']) ? $options['model'] : 'DatabaseLog.Log';
 		$this->Log = ClassRegistry::init($this->model);

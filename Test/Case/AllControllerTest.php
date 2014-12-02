@@ -1,13 +1,16 @@
 <?php
+
 /**
- * group test - DatabaseLog
+ * All controller tests
+ *
+ * This test suite will run all controller tests.
  */
 class AllControllerTest extends PHPUnit_Framework_TestSuite {
 
 	/**
-	 * suite method, defines tests for this suite.
+	 * Defines tests for this suite
 	 *
-	 * @return void
+	 * @return CakeTestSuite The test suite.
 	 */
 	public static function suite() {
 		$Suite = new CakeTestSuite('All Controller tests');

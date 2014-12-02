@@ -1,6 +1,12 @@
 <?php
+
 App::uses('LogsController', 'DatabaseLog.Controller');
 
+/**
+ * LogsController Test
+ *
+ * @coversDefaultClass LogsController
+ */
 class LogsControllerTest extends ControllerTestCase {
 
 	/**
@@ -13,6 +19,11 @@ class LogsControllerTest extends ControllerTestCase {
 		'core.cake_session'
 	);
 
+	/**
+	 * Setup
+	 *
+	 * @return void
+	 */
 	public function setUp() {
 		$this->generate('DatabaseLog.Logs', array(
 			'components' => array(
@@ -24,6 +35,12 @@ class LogsControllerTest extends ControllerTestCase {
 		parent::setUp();
 	}
 
+	/**
+	 * Tests the index action
+	 *
+	 * @return void
+	 * @covers ::admin_index
+	 */
 	public function testIndex() {
 		$this->testAction(
 			'/logs/admin_index/',
@@ -33,6 +50,12 @@ class LogsControllerTest extends ControllerTestCase {
 		$this->assertNotEmpty($this->vars['logs']);
 	}
 
+	/**
+	 * Tests the view action
+	 *
+	 * @return void
+	 * @covers ::admin_view
+	 */
 	public function testView() {
 		$this->testAction(
 			'/logs/admin_view/1',
@@ -43,10 +66,11 @@ class LogsControllerTest extends ControllerTestCase {
 	}
 
 	/**
-	 * LogsControllerTest::testDeleteWithoutPost()
+	 * Tests the delete action without POST
 	 *
 	 * @return void
 	 * @expectedException MethodNotAllowedException
+	 * @covers ::admin_delete
 	 */
 	public function testDeleteWithoutPost() {
 		$this->testAction(
@@ -55,6 +79,13 @@ class LogsControllerTest extends ControllerTestCase {
 		);
 	}
 
+
+	/**
+	 * Tests the delete action
+	 *
+	 * @return void
+	 * @covers ::admin_delete
+	 */
 	public function testDelete() {
 		$this->testAction(
 			'/logs/admin_delete/1',
@@ -67,10 +98,11 @@ class LogsControllerTest extends ControllerTestCase {
 	}
 
 	/**
-	 * LogsControllerTest::testResetWithoutPost()
+	 * Tests the reset action without POST
 	 *
 	 * @return void
 	 * @expectedException MethodNotAllowedException
+	 * @covers ::admin_reset
 	 */
 	public function testResetWithoutPost() {
 		$this->testAction(
@@ -79,6 +111,12 @@ class LogsControllerTest extends ControllerTestCase {
 		);
 	}
 
+	/**
+	 * Tests the reset action
+	 *
+	 * @return void
+	 * @covers ::admin_reset
+	 */
 	public function testReset() {
 		$this->testAction(
 			'/logs/admin_reset/',
@@ -90,6 +128,12 @@ class LogsControllerTest extends ControllerTestCase {
 		$this->assertEquals(0, $count);
 	}
 
+	/**
+	 * Tests the remove duplicates action
+	 *
+	 * @return void
+	 * @covers ::admin_remove_duplicates
+	 */
 	public function testRemoveDuplicates() {
 		$this->testAction(
 			'/logs/admin_remove_duplicates/',
