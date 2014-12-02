@@ -1,4 +1,15 @@
-<?php echo $this->Html->script('/database_log/js/clear_default'); ?>
+<?php
+/**
+ * CakePHP DatabaseLog Plugin
+ *
+ * Licensed under The MIT License.
+ *
+ * @license http://www.opensource.org/licenses/mit-license.php MIT License
+ * @link https://github.com/dereuromark/CakePHP-DatabaseLog
+ */
+
+echo $this->Html->script('/database_log/js/clear_default');
+?>
 <div id="admin_filter">
 <?php
 $model = isset($model) ? $model : false;
