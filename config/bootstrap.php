@@ -18,3 +18,4 @@ if (!$hasDatabaseLogConfig) {
 		'quoteIdentifiers' => false,
 	]);
 }
+

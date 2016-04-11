@@ -24,19 +24,12 @@ composer require "dereuromark/cakephp-databaselog":"dev-master"
 ```
 
 ## Setup
-Enable the plugin in your bootstrap or call
+Enable the plugin in your `config/bootstrap.php` or call
 ```
 bin\cake plugin load DatabaseLog
 ```
 
-Update the file `config/bootstrap.php` with the following configuration:
-```php
-use Cake\Log\Log
-
-Log::config('default', ['className' => 'DatabaseLog.Database']);
-```
-
-Alternatively, you can simply modify the existing config entries in your `config/app.php`:
+You can simply modify the existing config entries in your `config/app.php`:
  ```php
 	'Log' => [
 		'debug' => [
@@ -59,12 +52,11 @@ bin\cake schema create --plugin DatabaseLog
 Optionally create a config setting in your `config/app.php` if you want to use the DB logging approach:
 ```php
 'DatabaseLog' => [
-	'datasource' => 'database_log', // DataSource to use
+	'datasource' => 'my_datasource', // DataSource to use
 ]
 ```
-It is recommended to not use the same datasource as your production server because when the DB is not reachable logging to it will
+It is recommended to not use the same datasource as your production server (`default`) because when the DB is not reachable logging to it will
 also not be possible. In that case it will fallback to SQLite file logging on this server instance, though.
-
 
 ## Usage
 

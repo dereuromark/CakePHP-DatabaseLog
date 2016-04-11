@@ -8,43 +8,61 @@
  * @link https://github.com/dereuromark/CakePHP-DatabaseLog
  */
 ?>
-<div class="database_log_plugin">
-	<?php echo $this->element('admin_filter', array('plugin' => 'database_log', 'model' => 'Log')); ?>
-	<div class="logs index">
-		<h2><?php echo __('Logs');?></h2>
-		<table cellpadding="0" cellspacing="0">
+<div class="database-log-plugin">
+
+<div class="logs index">
+<h1>Logs</h1>
+
+<ul class="list-inline">
+<?php
+foreach ($types as $type) {
+	echo '<li>';
+	echo $this->Html->link($type, array('controller' => 'Logs', 'action' => 'index', '?' => array('type' => $type)));
+	echo '</li>';
+}
+?>
+</ul>
+
+<?php echo $this->element('DatabaseLog.admin_filter'); ?>
+
+	<table class="table list">
 		<tr>
-				<th><?php echo $this->Paginator->sort('created');?></th>
-				<th><?php echo $this->Paginator->sort('type');?></th>
-				<th><?php echo $this->Paginator->sort('message');?></th>
-				<th class="actions"><?php echo __('Actions');?></th>
+			<th><?php echo $this->Paginator->sort('created');?></th>
+			<th><?php echo $this->Paginator->sort('type');?></th>
+			<th><?php echo $this->Paginator->sort('message');?></th>
+			<th class="actions"><?php echo __('Actions');?></th>
 		</tr>
 		<?php
-		$i = 0;
 		foreach ($logs as $log):
-			$class = null;
-			if ($i++ % 2 == 0) {
-				$class = ' class="altrow"';
+			$message = $log['message'];
+			$pos = strpos($message, 'Stack Trace:');
+			if ($pos) {
+				$message = trim(substr($message, 0, $pos));
 			}
-		?>
-		<tr<?php echo $class;?>>
-			<td><?php echo $this->Time->niceShort($log['created']); ?>&nbsp;</td>
-			<td><?php echo $log['type']; ?>&nbsp;</td>
-			<td><?php echo nl2br(h($log['message'])); ?>&nbsp;</td>
-			<td class="actions">
-				<?php echo $this->Html->link(__('View Details'), array('action' => 'view', $log['id'])); ?>
-				<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $log['id']), null, __('Are you sure you want to delete this log # {0}?', $log['id'])); ?>
-			</td>
-		</tr>
-	<?php endforeach; ?>
-		</table>
-		<?php echo $this->element('paging', array('plugin' => 'database_log')); ?>
-	</div>
+			$pos = strpos($message, 'Trace:');
+			if ($pos) {
+				$message = trim(substr($message, 0, $pos));
+			}
+			?>
+			<tr>
+				<td><?php echo $this->Time->nice($log['created']); ?>&nbsp;</td>
+				<td><?php echo h($log['type']); ?>&nbsp;</td>
+				<td><?php echo nl2br(h($message)); ?>&nbsp;</td>
+				<td class="actions">
+					<?php echo $this->Html->link(__('Details'), array('action' => 'view', $log['id'], '?' => $this->request->query)); ?>
+					<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $log['id']), ['confirm' => __('Are you sure you want to delete this log # {0}?', $log['id'])]); ?>
+				</td>
+			</tr>
+		<?php endforeach; ?>
+	</table>
+	<?php echo $this->element('DatabaseLog.paging'); ?>
 
-	<div class="actions">
-		<ul>
-			<li><?php echo $this->Html->link(__('Remove {0}', __('Duplicates')), array('action' => 'remove_duplicates')); ?></li>
-			<li><?php echo $this->Form->postLink(__('Reset {0}', __('Logs')), array('action' => 'reset')); ?></li>
-		</ul>
-	</div>
+</div>
+<div class="actions">
+	<ul>
+		<li><?php echo $this->Html->link(__('Remove {0}', __('Duplicates')), array('action' => 'removeDuplicates')); ?></li>
+		<li><?php echo $this->Form->postLink(__('Reset {0}', __('Logs')), array('action' => 'reset')); ?></li>
+	</ul>
+</div>
+
 </div>

@@ -42,8 +42,8 @@ class DatabaseLogTest extends TestCase {
 	 * Setup
 	 */
 	public function setUp() {
-		Log::drop('default');
-		Log::config('default', array('className' => 'DatabaseLog.Database'));
+		//Log::drop('default');
+		//Log::config('default', array('className' => 'DatabaseLog.Database'));
 		$this->Logs = TableRegistry::get('DatabaseLog.Logs');
 
 		parent::setUp();
@@ -53,8 +53,8 @@ class DatabaseLogTest extends TestCase {
 	 * Teardown
 	 */
 	public function tearDown() {
-		Log::drop('default');
-		Log::config('default', array('className' => 'FileLog'));
+		//Log::drop('default');
+		//Log::config('default', array('className' => 'FileLog'));
 		parent::tearDown();
 	}
 
@@ -69,11 +69,12 @@ class DatabaseLogTest extends TestCase {
 		$countBefore = $this->Logs->find()->count();
 
 		$View->log('x');
-		Log::write('warning', 'y');
-		Log::write('info', 'z');
+		$View->log('warning', LOG_WARNING);
+		Log::write(LOG_ERROR, 'y');
+		Log::write(LOG_INFO, 'z');
 
 		$countAfter = $this->Logs->find()->count();
-		$this->assertSame($countBefore + 3, $countAfter);
+		$this->assertSame($countBefore + 4, $countAfter);
 	}
 
 }

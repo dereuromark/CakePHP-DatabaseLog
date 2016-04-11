@@ -6,18 +6,18 @@
  *
  * @license http://www.opensource.org/licenses/mit-license.php MIT License
  * @link https://github.com/dereuromark/CakePHP-DatabaseLog
- */namespace DatabaseLog\Test\Case\Controller;
+ */
+namespace DatabaseLog\TestCase\Controller;
 
-
-
-use DatabaseLog\Controller\LogsController;
+use Cake\Network\Exception\MethodNotAllowedException;
+use Cake\ORM\TableRegistry;
+use Cake\TestSuite\IntegrationTestCase;
+use DatabaseLog\Controller\Admin\LogsController;
 
 /**
- * LogsController Test
- *
  * @coversDefaultClass LogsController
  */
-class LogsControllerTest extends ControllerTestCase {
+class LogsControllerTest extends IntegrationTestCase {
 
 	/**
 	 * Fixtures
@@ -26,7 +26,7 @@ class LogsControllerTest extends ControllerTestCase {
 	 */
 	public $fixtures = array(
 		'plugin.database_log.logs',
-		'core.cake_sessions'
+		'core.sessions'
 	);
 
 	/**
@@ -35,13 +35,6 @@ class LogsControllerTest extends ControllerTestCase {
 	 * @return void
 	 */
 	public function setUp() {
-		$this->generate('DatabaseLog.Logs', array(
-			'components' => array(
-				'Auth',
-				'Session' => array('setFlash')
-			)
-		));
-
 		parent::setUp();
 	}
 
@@ -49,43 +42,34 @@ class LogsControllerTest extends ControllerTestCase {
 	 * Tests the index action
 	 *
 	 * @return void
-	 * @covers ::admin_index
 	 */
 	public function testIndex() {
-		$this->testAction(
-			'/logs/admin_index/',
-			array('method' => 'get')
-		);
+		$this->get(['prefix' => 'admin', 'plugin' => 'DatabaseLog', 'controller' => 'Logs']);
 
-		$this->assertNotEmpty($this->vars['logs']);
+		$this->assertResponseNotEmpty();
 	}
 
 	/**
 	 * Tests the view action
 	 *
 	 * @return void
-	 * @covers ::admin_view
 	 */
 	public function testView() {
-		$this->testAction(
-			'/logs/admin_view/1',
-			array('method' => 'get')
-		);
+		$this->get(['prefix' => 'admin', 'plugin' => 'DatabaseLog', 'controller' => 'Logs', 'action' => 'view', '1']);
 
-		$this->assertEquals('Lorem ipsum dolor sit amet', $this->vars['log']['Log']['type']);
+		$this->assertResponseNotEmpty();
+		//$this->assertEquals('Lorem ipsum dolor sit amet', $this->vars['log']['Log']['type']);
 	}
 
 	/**
 	 * Tests the delete action without POST
 	 *
 	 * @return void
-	 * @expectedException MethodNotAllowedException
-	 * @covers ::admin_delete
+	 * @expectedException \Cake\Network\Exception\MethodNotAllowedException
 	 */
 	public function testDeleteWithoutPost() {
-		$this->testAction(
-			'/logs/admin_delete/1',
-			array('method' => 'get')
+		$this->get(
+			'/admin/database-log/logs/delete/1'
 		);
 	}
 
@@ -94,15 +78,13 @@ class LogsControllerTest extends ControllerTestCase {
 	 * Tests the delete action
 	 *
 	 * @return void
-	 * @covers ::admin_delete
 	 */
 	public function testDelete() {
-		$this->testAction(
-			'/logs/admin_delete/1',
-			array('method' => 'post')
+		$this->post(
+			'/admin/database-log/logs/delete/1'
 		);
-		$logModel = ClassRegistry::init('DatabaseLog.Log');
-		$count = $logModel->find('count');
+		$logModel = TableRegistry::get('DatabaseLog.Logs');
+		$count = $logModel->find()->count();
 
 		$this->assertSame(0, $count);
 	}
@@ -111,29 +93,27 @@ class LogsControllerTest extends ControllerTestCase {
 	 * Tests the reset action without POST
 	 *
 	 * @return void
-	 * @expectedException MethodNotAllowedException
-	 * @covers ::admin_reset
+	 * @expectedException \Cake\Network\Exception\MethodNotAllowedException
 	 */
 	public function testResetWithoutPost() {
-		$this->testAction(
-			'/logs/admin_reset/',
-			array('method' => 'get')
-		);
+		$this->get(['prefix' => 'admin', 'plugin' => 'DatabaseLog', 'controller' => 'Logs', 'action' => 'reset']);
+
+		//die(debug($this->_response->body()));
 	}
 
 	/**
 	 * Tests the reset action
 	 *
 	 * @return void
-	 * @covers ::admin_reset
 	 */
 	public function testReset() {
-		$this->testAction(
-			'/logs/admin_reset/',
-			array('method' => 'post')
-		);
-		$logModel = ClassRegistry::init('DatabaseLog.Log');
-		$count = $logModel->find('count');
+		$logModel = TableRegistry::get('DatabaseLog.Logs');
+		$count = $logModel->find()->count();
+		$this->assertSame(1, $count);
+
+		$this->post(['prefix' => 'admin', 'plugin' => 'DatabaseLog', 'controller' => 'Logs', 'action' => 'reset']);
+		$this->assertResponseSuccess();
+		$this->assertRedirect();
 
 		$this->assertSame(0, $count);
 	}
@@ -142,15 +122,12 @@ class LogsControllerTest extends ControllerTestCase {
 	 * Tests the remove duplicates action
 	 *
 	 * @return void
-	 * @covers ::admin_remove_duplicates
 	 */
 	public function testRemoveDuplicates() {
-		$this->testAction(
-			'/logs/admin_remove_duplicates/',
-			array('method' => 'post')
-		);
-		$logModel = ClassRegistry::init('DatabaseLog.Log');
-		$count = $logModel->find('count');
+		$this->post(['prefix' => 'admin', 'plugin' => 'DatabaseLog', 'controller' => 'Logs', 'action' => 'removeDuplicates']);
+
+		$logModel = TableRegistry::get('DatabaseLog.Logs');
+		$count = $logModel->find()->count();
 
 		$this->assertSame(1, $count);
 	}

@@ -10,14 +10,12 @@
 ?>
 <p>
 <?php
-echo $this->Paginator->counter(array(
-'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%')
-));
+echo $this->Paginator->counter();
 if (isset($filter)) {
 	$this->Paginator->options(array('url' => array($filter)));
 }
 ?>	</p>
 
 <div class="pagination-container">
-		<?php echo $this->element('Tools.pagination'); ?>
-	</div>
+	<?php echo $this->element('Tools.pagination'); ?>
+</div>

@@ -49,7 +49,7 @@ class DatabaseLogAppTable extends Table {
 	 */
 	public static function defaultConnectionName()
 	{
-		return Configure::read('DatabaseLog.datasource');
+		return Configure::read('DatabaseLog.datasource') ?: 'default';
 	}
 
 }

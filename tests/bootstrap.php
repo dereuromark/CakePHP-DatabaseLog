@@ -57,9 +57,21 @@ $cache = [
 	]
 ];
 
+$config = [
+	'Log' => [
+		'debug' => [
+			'className' => 'DatabaseLog.Database'
+		],
+		'error' => [
+			'className' => 'DatabaseLog.Database'
+		],
+	],
+];
+Cake\Log\Log::config($config);
+
 Cake\Cache\Cache::config($cache);
 
-Cake\Core\Plugin::load('DatabaseLog', ['path' => ROOT . DS, 'autoload' => true]);
+Cake\Core\Plugin::load('DatabaseLog', ['path' => ROOT . DS, 'autoload' => true, 'bootstrap' => true, 'routes' => true]);
 
 // Ensure default test connection is defined
 if (!getenv('db_class')) {
