@@ -36,7 +36,7 @@ Run the schema into your database:
 Optionally create a config setting in your `config/app.php` if you want to use the DB logging approach:
 ```php
 'DatabaseLog' => [
-	'log' => 'default', // DataSource to read from.
+	'datasource' => 'default', // DataSource to read from.
 ]
 ```
 It is recommended to not use the same datasource as your production server because when the DB is not reachable logging to it will

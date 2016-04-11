@@ -26,7 +26,7 @@ class DatabaseLogAppTable extends Table {
 	* Configurations
 	*/
 	public $configs = array(
-		'log' => 'default',
+		'datasource' => 'default',
 	);
 
 	/**
@@ -66,7 +66,7 @@ class DatabaseLogAppTable extends Table {
 	*/
 	protected function setDataSource() {
 		if ($this->connection() !== 'test') {
-			$this->connection($this->configs['log']);
+			$this->connection($this->configs['datasource']);
 		}
 	}
 
