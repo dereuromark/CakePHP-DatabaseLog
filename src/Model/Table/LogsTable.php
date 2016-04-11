@@ -50,8 +50,8 @@ class LogsTable extends DatabaseLogAppTable {
 			'message' => is_string($message) ? $message : print_r($message, true),
 			'context' => is_string($context) ? $context : print_r($context, true),
 		];
-		$log = $this->Logs->newEntity($data);
-		return (bool)$this->Logs->save($log);
+		$log = $this->newEntity($data);
+		return (bool)$this->save($log);
 	}
 
 	/**

@@ -119,6 +119,8 @@ class LogsController extends AppController {
 	 * @return \Cake\Network\Response|null
 	 */
 	public function removeDuplicates() {
+		$this->request->allowMethod('post');
+		
 		$this->Logs->removeDuplicates();
 
 		$this->Flash->success(__('Duplicates have been removed.'));

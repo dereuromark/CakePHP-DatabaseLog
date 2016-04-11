@@ -61,8 +61,8 @@ foreach ($types as $type) {
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $this->Html->link(__('Remove {0}', __('Duplicates')), ['action' => 'removeDuplicates']); ?></li>
-		<li><?php echo $this->Form->postLink(__('Reset {0}', __('Logs')), ['action' => 'reset']); ?></li>
+		<li><?php echo $this->Form->postLink(__('Remove {0}', __('Duplicates')), ['action' => 'removeDuplicates']); ?></li>
+		<li><?php echo $this->Form->postLink(__('Reset {0}', __('Logs')), ['action' => 'reset'], ['confirm' => 'Sure?']); ?></li>
 	</ul>
 </div>
 

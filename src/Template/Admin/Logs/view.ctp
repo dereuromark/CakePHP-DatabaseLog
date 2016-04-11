@@ -6,7 +6,7 @@
  *
  * @license http://www.opensource.org/licenses/mit-license.php MIT License
  * @link https://github.com/dereuromark/CakePHP-DatabaseLog
- */
+ */ 
 ?>
 <div class="database-log-plugin">
 	<div class="logs view">
@@ -15,37 +15,35 @@
 			<dt><?php echo __('type'); ?></dt>
 			<dd>
 				<?php echo h($log['type']); ?>
-				&nbsp;
 			</dd>
 			<dt><?php echo __('Message'); ?></dt>
 			<dd>
-				<?php echo nl2br(h($log['message'])); ?>
+				<?php echo trim(nl2br(h($log['message']))); ?>
+			</dd>
+			<dt><?php echo __('Context'); ?></dt>
+			<dd>
+				<?php echo nl2br(h($log['context'])); ?>
 				&nbsp;
 			</dd>
 			<dt><?php echo __('Uri'); ?></dt>
 			<dd>
 				<?php echo h($log['uri']); ?>
-				&nbsp;
 			</dd>
 			<dt><?php echo __('Referrer'); ?></dt>
 			<dd>
 				<?php echo h($log['refer']); ?>
-				&nbsp;
 			</dd>
 			<dt><?php echo __('Hostname'); ?></dt>
 			<dd>
 				<?php echo h($log['hostname']); ?>
-				&nbsp;
 			</dd>
 			<dt><?php echo __('IP'); ?></dt>
 			<dd>
 				<?php echo h($log['ip']); ?>
-				&nbsp;
 			</dd>
 			<dt><?php echo __('Created'); ?></dt>
 			<dd>
 				<?php echo $this->Time->nice($log['created']); ?>
-				&nbsp;
 			</dd>
 		</dl>
 	</div>
