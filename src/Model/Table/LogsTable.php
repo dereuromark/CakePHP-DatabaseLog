@@ -37,6 +37,24 @@ class LogsTable extends DatabaseLogAppTable {
 	}
 
 	/**
+	 * Write the log to database
+	 *
+	 * @param mixed $level
+	 * @param string $message
+	 * @param array $context
+	 * @return bool Success
+	 */
+	public function log($level, $message, array $context = []) {
+		$data = [
+			'type' => $level,
+			'message' => is_string($message) ? $message : print_r($message, true),
+			'context' => is_string($context) ? $context : print_r($context, true),
+		];
+		$log = $this->Logs->newEntity($data);
+		return (bool)$this->Logs->save($log);
+	}
+
+	/**
 	 * @param \Cake\Event\Event $event
 	 * @param \Cake\Datasource\EntityInterface $entity
 	 * @param \ArrayObject $options

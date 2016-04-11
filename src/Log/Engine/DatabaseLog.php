@@ -18,13 +18,6 @@ use Cake\ORM\TableRegistry;
 class DatabaseLog extends BaseLog {
 
 	/**
-	 * Model name placeholder
-	 *
-	 * @var string
-	 */
-	public $model;
-
-	/**
 	 * Model object placeholder
 	 *
 	 * @var \DatabaseLog\Model\Table\LogsTable
@@ -38,25 +31,20 @@ class DatabaseLog extends BaseLog {
 	 */
 	public function __construct($config = []) {
 		parent::__construct($config);
-		$this->model = !empty($config['model']) ? $config['model'] : 'DatabaseLog.Logs';
-		$this->Logs = TableRegistry::get($this->model);
+		$model = !empty($config['model']) ? $config['model'] : 'DatabaseLog.Logs';
+		$this->Logs = TableRegistry::get($model);
 	}
 
 	/**
 	 * Write the log to database
 	 *
-	 * @param mixed $type
+	 * @param mixed $level
 	 * @param string $message
 	 * @param array $context
 	 * @return bool Success
 	 */
-	public function log($type, $message, array $context = []) {
-		$data = [
-			'type' => $type,
-			'message' => $message
-		];
-		$log = $this->Logs->newEntity($data);
-		return (bool)$this->Logs->save($log);
+	public function log($level, $message, array $context = []) {
+		return $this->Logs->log($level, $message, $context);
 	}
 
 }
