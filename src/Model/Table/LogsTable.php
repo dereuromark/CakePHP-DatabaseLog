@@ -49,6 +49,7 @@ class LogsTable extends DatabaseLogAppTable {
 			'type' => $level,
 			'message' => is_string($message) ? $message : print_r($message, true),
 			'context' => is_string($context) ? $context : print_r($context, true),
+			'count' => 1
 		];
 		$log = $this->newEntity($data);
 		return (bool)$this->save($log);
@@ -113,13 +114,14 @@ class LogsTable extends DatabaseLogAppTable {
 			'order' => ['created' => 'DESC']
 		];
 		$logs = $query->find('all', $options);
-
 		foreach ($logs as $key => $log) {
 			if ($log['count'] <= 1) {
 				continue;
 			}
 			$options = [
 				'fields' => ['id'],
+				'keyField' => 'id',
+				'valueField' => 'id',
 				'conditions' => [
 					'type' => $log['type'],
 					'message' => $log['message'],
@@ -133,7 +135,7 @@ class LogsTable extends DatabaseLogAppTable {
 			if (!empty($entries)) {
 				$this->deleteAll(['id IN' => $entries]);
 			}
-			$this->updateAll(['number = number + ' . count($entries)], ['id' => $keep]);
+			$this->updateAll(['count = count + ' . count($entries)], ['id' => $keep]);
 		}
 	}
 

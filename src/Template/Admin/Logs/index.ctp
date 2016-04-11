@@ -47,7 +47,8 @@ foreach ($types as $type) {
 			?>
 			<tr>
 				<td><?php echo $this->Time->nice($log['created']); ?>&nbsp;</td>
-				<td><?php echo h($log['type']); ?>&nbsp;</td>
+				<td><?php echo h($log['type']); ?><br>
+					<small>(<?php echo h($log['count']); ?>x)</small></td>
 				<td><?php echo nl2br(h($message)); ?>&nbsp;</td>
 				<td class="actions">
 					<?php echo $this->Html->link(__('Details'), ['action' => 'view', $log['id'], '?' => $this->request->query]); ?>
