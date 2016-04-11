@@ -36,7 +36,7 @@ class DatabaseLog extends BaseLog {
 	 *
 	 * @param array $config
 	 */
-	public function __construct($config = array()) {
+	public function __construct($config = []) {
 		parent::__construct($config);
 		$this->model = !empty($config['model']) ? $config['model'] : 'DatabaseLog.Logs';
 		$this->Logs = TableRegistry::get($this->model);
@@ -51,10 +51,10 @@ class DatabaseLog extends BaseLog {
 	 * @return bool Success
 	 */
 	public function log($type, $message, array $context = []) {
-		$data = array(
+		$data = [
 			'type' => $type,
 			'message' => $message
-		);
+		];
 		$log = $this->Logs->newEntity($data);
 		return (bool)$this->Logs->save($log);
 	}

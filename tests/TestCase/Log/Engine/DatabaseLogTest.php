@@ -12,10 +12,7 @@ namespace DatabaseLog\TestCase\Log\Engine;
 use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
-
-
 use Cake\View\View;
-use DatabaseLog\Log\Engine\DatabaseLog;
 
 /**
  * DatabaseLog Test
@@ -34,12 +31,14 @@ class DatabaseLogTest extends TestCase {
 	 *
 	 * @var array
 	 */
-	public $fixtures = array(
+	public $fixtures = [
 		'plugin.database_log.logs'
-	);
+	];
 
 	/**
 	 * Setup
+	 *
+	 * @return void
 	 */
 	public function setUp() {
 		//Log::drop('default');
@@ -51,6 +50,8 @@ class DatabaseLogTest extends TestCase {
 
 	/**
 	 * Teardown
+	 *
+	 * @return void
 	 */
 	public function tearDown() {
 		//Log::drop('default');

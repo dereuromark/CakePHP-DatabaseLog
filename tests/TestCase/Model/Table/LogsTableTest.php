@@ -13,11 +13,8 @@ use Cake\Cache\Cache;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
-use DatabaseLog\Model\Table\LogsTable;
-
 /**
  * Log Test
- *
  *
  * @coversDefaultClass Log
  */
@@ -31,9 +28,9 @@ class LogsTableTest extends TestCase {
 	/**
 	 * @var array
 	 */
-	public $fixtures = array(
+	public $fixtures = [
 		'plugin.database_log.logs'
-	);
+	];
 
 	/**
 	 * Setup
@@ -53,10 +50,10 @@ class LogsTableTest extends TestCase {
 	 * @covers ::save
 	 */
 	public function testSave() {
-		$data = array(
+		$data = [
 			'type' => 'Foo',
 			'message' => 'some text'
-		);
+		];
 		$log = $this->Logs->newEntity($data);
 		$res = $this->Logs->save($log);
 		$this->assertTrue(!empty($res));
@@ -70,10 +67,10 @@ class LogsTableTest extends TestCase {
 	 */
 	public function testTextSearch() {
 		$res = $this->Logs->textSearch('interesting');
-		$this->assertEquals(array('MATCH (Logs.message) AGAINST (\'interesting\')'), $res);
+		$this->assertEquals(['MATCH (Logs.message) AGAINST (\'interesting\')'], $res);
 
 		$res = $this->Logs->textSearch('type@foo');
-		$this->assertEquals(array('Log.type' => 'foo'), $res);
+		$this->assertEquals(['Log.type' => 'foo'], $res);
 	}
 
 	/**
@@ -87,24 +84,24 @@ class LogsTableTest extends TestCase {
 
 		$this->Logs->deleteAll('1=1');
 
-		$data = array(
+		$data = [
 			'type' => 'Foo',
 			'message' => 'some text'
-		);
+		];
 		$log = $this->Logs->newEntity($data);
 		$res = $this->Logs->save($log);
 		$this->assertTrue(!empty($res));
 
-		$data = array(
+		$data = [
 			'type' => 'Bar',
 			'message' => 'some more text'
-		);
+		];
 		$log = $this->Logs->newEntity($data);
 		$res = $this->Logs->save($log);
 		$this->assertTrue(!empty($res));
 
 		$res = $this->Logs->getTypes();
-		$this->assertSame(array('Bar', 'Foo'), $res);
+		$this->assertSame(['Bar', 'Foo'], $res);
 	}
 
 	/**
@@ -114,18 +111,18 @@ class LogsTableTest extends TestCase {
 	 * @covers ::removeDuplicates
 	 */
 	public function testRemoveDuplicates() {
-		$data = array(
+		$data = [
 			'type' => 'Foo',
 			'message' => 'some text'
-		);
+		];
 		$log = $this->Logs->newEntity($data);
 		$res = $this->Logs->save($log);
 		$this->assertTrue(!empty($res));
 
-		$data = array(
+		$data = [
 			'type' => 'Bar',
 			'message' => 'some more text'
-		);
+		];
 		$log = $this->Logs->newEntity($data);
 		$res = $this->Logs->save($log);
 		$this->assertTrue(!empty($res));

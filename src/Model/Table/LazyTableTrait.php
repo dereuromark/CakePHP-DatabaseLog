@@ -13,6 +13,7 @@
 namespace DatabaseLog\Model\Table;
 
 use Cake\Core\App;
+use RuntimeException;
 
 /**
  * A set of methods for building a database table when it is missing.
@@ -22,35 +23,34 @@ use Cake\Core\App;
  *
  * This trait lets us dump fixture schema into a given database at runtime.
  */
-trait LazyTableTrait
-{
+trait LazyTableTrait {
 
-    /**
-     * Ensures the tables for the given fixtures exist in the schema.
-     *
-     * If the tables do not exist, they will be created on the current model's connection.
-     *
-     * @param array $fixtures The fixture names to check and/or insert.
-     * @return void
-     * @throws \RuntimeException When fixtures are missing/unknown/fail.
-     */
-    public function ensureTables(array $fixtures)
-    {
-        $connection = $this->connection();
-        $schema = $connection->schemaCollection();
-        $existing = $schema->listTables();
+	/**
+	 * Ensures the tables for the given fixtures exist in the schema.
+	 *
+	 * If the tables do not exist, they will be created on the current model's connection.
+	 *
+	 * @param array $fixtures The fixture names to check and/or insert.
+	 * @return void
+	 * @throws \RuntimeException When fixtures are missing/unknown/fail.
+	 */
+	public function ensureTables(array $fixtures) {
+		$connection = $this->connection();
+		$schema = $connection->schemaCollection();
+		$existing = $schema->listTables();
 
-        foreach ($fixtures as $name) {
-            $class = App::className($name, 'Test/Fixture', 'Fixture');
-            if ($class === false) {
-                throw new \RuntimeException("Unknown fixture '$name'.");
-            }
-            $fixture = new $class($this->connection()->configName());
-            $table = $fixture->table;
-            if (in_array($table, $existing)) {
-                continue;
-            }
-            $fixture->create($connection);
-        }
-    }
+		foreach ($fixtures as $name) {
+			$class = App::className($name, 'Test/Fixture', 'Fixture');
+			if ($class === false) {
+				throw new RuntimeException("Unknown fixture '$name'.");
+			}
+			$fixture = new $class($this->connection()->configName());
+			$table = $fixture->table;
+			if (in_array($table, $existing)) {
+				continue;
+			}
+			$fixture->create($connection);
+		}
+	}
+
 }

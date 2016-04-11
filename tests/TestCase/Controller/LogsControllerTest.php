@@ -9,10 +9,8 @@
  */
 namespace DatabaseLog\TestCase\Controller;
 
-use Cake\Network\Exception\MethodNotAllowedException;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestCase;
-use DatabaseLog\Controller\Admin\LogsController;
 
 /**
  * @coversDefaultClass LogsController
@@ -24,10 +22,10 @@ class LogsControllerTest extends IntegrationTestCase {
 	 *
 	 * @var array
 	 */
-	public $fixtures = array(
+	public $fixtures = [
 		'plugin.database_log.logs',
 		'core.sessions'
-	);
+	];
 
 	/**
 	 * Setup

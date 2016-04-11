@@ -21,7 +21,7 @@ class LogsFixture extends TestFixture {
 	 *
 	 * @var array
 	 */
-	public $fields = array(
+	public $fields = [
 		'id' => ['type' => 'integer', 'null' => false, 'default' => null],
 		'type' => ['type' => 'string', 'null' => false, 'default' => null, 'length' => 50, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'],
 		'message' => ['type' => 'text', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'],
@@ -34,19 +34,20 @@ class LogsFixture extends TestFixture {
 		'number' => ['type' => 'integer', 'null' => false, 'default' => 0],
 		'_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']]],
 		'_options' => ['charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'MyISAM']
-	);
+	];
 
 	/**
 	 * Records
 	 *
 	 * @var array
 	 */
-	public $records = array(
-		array(
+	public $records = [
+		[
 			'id' => 1,
 			'type' => 'Lorem ipsum dolor sit amet',
 			'message' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
 			'created' => '2011-08-08 13:46:28'
-		),
-	);
+		],
+	];
+
 }

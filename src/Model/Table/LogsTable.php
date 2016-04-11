@@ -19,9 +19,10 @@ class LogsTable extends DatabaseLogAppTable {
 
 	use LazyTableTrait;
 
-	public $displayField = 'type';
-
-	public $searchFields = array('Logs.type');
+	/**
+	 * @var array
+	 */
+	public $searchFields = ['Logs.type'];
 
 	/**
 	 * initialize method
@@ -30,6 +31,7 @@ class LogsTable extends DatabaseLogAppTable {
 	 * @return void
 	 */
 	public function initialize(array $config) {
+		$this->displayField('type');
 		$this->addBehavior('Timestamp', ['modified' => false]);
 		$this->ensureTables(['DatabaseLog.Logs']);
 	}
@@ -39,7 +41,7 @@ class LogsTable extends DatabaseLogAppTable {
 	 * @param \Cake\Datasource\EntityInterface $entity
 	 * @param \ArrayObject $options
 	 * @return void
-     */
+	 */
 	public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options) {
 		$entity['ip'] = env('REMOTE_ADDR');
 		$entity['hostname'] = env('HTTP_HOST');
@@ -51,20 +53,20 @@ class LogsTable extends DatabaseLogAppTable {
 	/**
 	* Return a text search on message
 	*
-	* @param string $query search string or `type@...`
+	* @param string|null $query search string or `type@...`
 	* @return array Conditions
 	*/
 	public function textSearch($query = null) {
 		if ($query) {
 			if (strpos($query, 'type@') === 0) {
 				$query = str_replace('type@', '', $query);
-				return array('Log.type' => $query);
+				return ['Log.type' => $query];
 			}
 
 			$escapedQuery = "'" . $query . "'"; // for now - $this->getDataSource()->value($query);
-			return array("MATCH ({$this->alias()}.message) AGAINST ($escapedQuery)");
+			return ["MATCH ({$this->alias()}.message) AGAINST ($escapedQuery)"];
 		}
-		return array();
+		return [];
 	}
 
 	/**
@@ -95,35 +97,35 @@ class LogsTable extends DatabaseLogAppTable {
 	 */
 	public function removeDuplicates() {
 		$query = $this->find();
-		$options = array(
-			'fields' => array('id', 'type', 'message', 'count' => $query->func()->count('*')),
-			'conditions' => array(),
-			'group' => array('type', 'message'),
+		$options = [
+			'fields' => ['id', 'type', 'message', 'count' => $query->func()->count('*')],
+			'conditions' => [],
+			'group' => ['type', 'message'],
 			//'having' => $this->alias . '__count > 0',
-			'order' => array('created' => 'DESC')
-		);
+			'order' => ['created' => 'DESC']
+		];
 		$logs = $query->find('all', $options);
 
 		foreach ($logs as $key => $log) {
 			if ($log['count'] <= 1) {
 				continue;
 			}
-			$options = array(
-				'fields' => array('id'),
-				'conditions' => array(
+			$options = [
+				'fields' => ['id'],
+				'conditions' => [
 					'type' => $log['type'],
 					'message' => $log['message'],
-				),
-				'order' => array('created' => 'DESC')
-			);
+				],
+				'order' => ['created' => 'DESC']
+			];
 			$entries = $this->find('list', $options)->toArray();
 
 			// keep the newest entry
 			$keep = array_shift($entries);
 			if (!empty($entries)) {
-				$this->deleteAll(array('id IN' => $entries));
+				$this->deleteAll(['id IN' => $entries]);
 			}
-			$this->updateAll(array('number = number + ' . count($entries)), array('id' => $keep));
+			$this->updateAll(['number = number + ' . count($entries)], ['id' => $keep]);
 		}
 	}
 

@@ -15,8 +15,8 @@ namespace DatabaseLog\Config;
  * Copy this content to your config/app.php
  * and customize it to your needs.
  */
-$config = array(
-	'DatabaseLog' => array(
+$config = [
+	'DatabaseLog' => [
 		'datasource' => 'default', // DataSource to use
-	)
-);
+	]
+];

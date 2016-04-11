@@ -21,7 +21,7 @@ class LogsController extends AppController {
 	 *
 	 * Fixes problems with the controller test.
 	 *
-	 * @var array
+	 * @var string
 	 */
 	public $modelClass = 'DatabaseLog.Logs';
 
@@ -30,22 +30,22 @@ class LogsController extends AppController {
 	 *
 	 * @var array
 	 */
-	public $helpers = array('Time');
+	public $helpers = ['Time'];
 
 	/**
 	 * Setup pagination
 	 *
 	 * @var array
 	 */
-	public $paginate = array(
-		'order' => array('Logs.id' => 'DESC'),
-		'fields' => array(
+	public $paginate = [
+		'order' => ['Logs.id' => 'DESC'],
+		'fields' => [
 			'Logs.created',
 			'Logs.type',
 			'Logs.message',
 			'Logs.id'
-		)
-	);
+		]
+	];
 
 	/**
 	 * Index/Overview action
@@ -93,10 +93,10 @@ class LogsController extends AppController {
 
 		if ($this->Logs->delete($log)) {
 			$this->Flash->success(__('Log deleted'));
-			return $this->redirect(array('action' => 'index'));
+			return $this->redirect(['action' => 'index']);
 		}
 		$this->Flash->error(__('Log was not deleted'));
-		return $this->redirect(array('action' => 'index'));
+		return $this->redirect(['action' => 'index']);
 	}
 
 	/**
@@ -110,7 +110,7 @@ class LogsController extends AppController {
 		$this->request->allowMethod('post');
 
 		$this->Logs->deleteAll('1 = 1');
-		return $this->redirect(array('action' => 'index'));
+		return $this->redirect(['action' => 'index']);
 	}
 
 	/**
@@ -122,7 +122,7 @@ class LogsController extends AppController {
 		$this->Logs->removeDuplicates();
 
 		$this->Flash->success(__('Duplicates have been removed.'));
-		return $this->redirect(array('action' => 'index'));
+		return $this->redirect(['action' => 'index']);
 	}
 
 }

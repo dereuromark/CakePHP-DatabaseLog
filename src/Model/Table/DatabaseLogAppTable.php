@@ -18,9 +18,10 @@ use Cake\ORM\Table;
 class DatabaseLogAppTable extends Table {
 
 	/**
+	 * @var array
 	 * Filter fields
 	 */
-	public $searchFields = array();
+	public $searchFields = [];
 
 	/**
 	 * Return conditions based on searchable fields and filter
@@ -29,7 +30,7 @@ class DatabaseLogAppTable extends Table {
 	 * @return array The generated filter conditions array.
 	 */
 	public function generateFilterConditions($filter = null) {
-		$retval = array();
+		$retval = [];
 		if ($filter) {
 			foreach ($this->searchFields as $field) {
 				$retval['OR']["$field LIKE"] = '%' . $filter . '%';
@@ -47,8 +48,7 @@ class DatabaseLogAppTable extends Table {
 	 * @return string
 	 * @see \Cake\ORM\TableRegistry::get()
 	 */
-	public static function defaultConnectionName()
-	{
+	public static function defaultConnectionName() {
 		return Configure::read('DatabaseLog.datasource') ?: 'default';
 	}
 
