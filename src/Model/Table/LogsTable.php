@@ -93,18 +93,8 @@ class LogsTable extends DatabaseLogAppTable {
 	* @return array Types
 	*/
 	public function getTypes() {
-		$cacheKey = 'database_log_types';
-		$retval = Cache::read($cacheKey);
-		if ($retval) {
-			return $retval;
-		}
-
 		$types = $this->find()->distinct('Logs.type')->select(['type'])->order('Logs.type ASC')->toArray();
-
-		$retval = Hash::extract($types, '{n}.type');
-
-		Cache::write($cacheKey, $retval);
-		return $retval;
+		return Hash::extract($types, '{n}.type');
 	}
 
 	/**
