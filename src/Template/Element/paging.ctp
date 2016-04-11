@@ -8,14 +8,6 @@
  * @link https://github.com/dereuromark/CakePHP-DatabaseLog
  */
 ?>
-<p>
-<?php
-echo $this->Paginator->counter();
-if (isset($filter)) {
-	$this->Paginator->options(['url' => [$filter]]);
-}
-?>	</p>
 
-<div class="pagination-container">
-	<?php echo $this->element('Tools.pagination'); ?>
-</div>
+<?php echo $this->element('Tools.pagination'); ?>
+
