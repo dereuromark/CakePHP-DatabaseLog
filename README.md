@@ -40,16 +40,16 @@ You can simply modify the existing config entries in your `config/app.php`:
 		],
 	],
 ```
-This will use a SQLite file database by default, stored in your `logs` folder.
+This will use the `database_log` connection and an SQLite file database by default, stored in your `logs` folder.
 
-### Using an actual database
+### Using an actual database (optional)
 
 Run the schema into your database:
 ```
 bin\cake schema create --plugin DatabaseLog
 ```
 
-Optionally create a config setting in your `config/app.php` if you want to use the DB logging approach:
+Create a config setting in your `config/app.php` what database connection it should log to:
 ```php
 'DatabaseLog' => [
 	'datasource' => 'my_datasource', // DataSource to use
