@@ -49,7 +49,7 @@ class DatabaseLogAppTable extends Table {
 	 * @see \Cake\ORM\TableRegistry::get()
 	 */
 	public static function defaultConnectionName() {
-		return Configure::read('DatabaseLog.datasource') ?: 'default';
+		return Configure::read('DatabaseLog.datasource') ?: 'database_log';
 	}
 
 }

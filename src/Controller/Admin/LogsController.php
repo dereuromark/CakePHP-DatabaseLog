@@ -120,7 +120,7 @@ class LogsController extends AppController {
 	 */
 	public function removeDuplicates() {
 		$this->request->allowMethod('post');
-		
+
 		$this->Logs->removeDuplicates();
 
 		$this->Flash->success(__('Duplicates have been removed.'));
