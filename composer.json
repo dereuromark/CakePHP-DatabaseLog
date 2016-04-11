@@ -4,7 +4,6 @@
 	"type": "cakephp-plugin",
 	"keywords": ["cakephp", "database", "logging", "logs", "plugin"],
 	"homepage": "https://github.com/dereuromark/CakePHP-DatabaseLog/",
-	"minimum-stability": "dev",
 	"license": "MIT",
 	"authors": [
 		{
@@ -27,9 +26,23 @@
 		"source": "https://github.com/dereuromark/CakePHP-DatabaseLog/"
 	},
 	"require": {
-		"php": ">=5.2.8"
+		"php": ">=5.4",
+		"cakephp/cakephp": "^3.0"
 	},
-	"extra": {
-		"installer-name": "DatabaseLog"
+	"require-dev": {
+		"fig-r/psr2r-sniffer": "dev-master"
+	},
+	"autoload": {
+		"psr-4": {
+			"DatabaseLog\\": "src",
+			"DatabaseLog\\Test\\Fixture\\": "tests\\Fixture"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"DatabaseLog\\Test\\": "tests",
+			"Cake\\Test\\": "vendor/cakephp/cakephp/tests",
+			"TestApp\\": "tests/test_app/TestApp"
+		}
 	}
 }
