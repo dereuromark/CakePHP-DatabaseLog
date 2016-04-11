@@ -23,28 +23,9 @@ class DatabaseLogAppTable extends Table {
 	public $searchFields = array();
 
 	/**
-	* Configurations
-	*/
-	public $configs = array(
-		'datasource' => 'default',
-	);
-
-	/**
-	 * Set the default datasource to the read setup in config
-	 *
-	 * {@inheritDoc}
-	 */
-	public function __construct(array $config = []) {
-		$this->configs = Configure::read('DatabaseLog');
-
-		parent::__construct($config);
-		$this->setDataSource();
-	}
-
-	/**
 	 * Return conditions based on searchable fields and filter
 	 *
-	 * @param string $filter The filter string.
+	 * @param string|null $filter The filter string.
 	 * @return array The generated filter conditions array.
 	 */
 	public function generateFilterConditions($filter = null) {
@@ -58,16 +39,17 @@ class DatabaseLogAppTable extends Table {
 	}
 
 	/**
-	* Set the datasource to be used
+	 * Get the default connection name.
 	 *
-	* if being tested, don't change, otherwise change to what we read
+	 * This method is used to get the fallback connection name if an
+	 * instance is created through the TableRegistry without a connection.
 	 *
-	 * @return void
-	*/
-	protected function setDataSource() {
-		if ($this->connection() !== 'test') {
-			$this->connection($this->configs['datasource']);
-		}
+	 * @return string
+	 * @see \Cake\ORM\TableRegistry::get()
+	 */
+	public static function defaultConnectionName()
+	{
+		return Configure::read('DatabaseLog.datasource');
 	}
 
 }

@@ -17,10 +17,29 @@ use Cake\Utility\Hash;
 
 class LogsTable extends DatabaseLogAppTable {
 
+	use LazyTableTrait;
+
 	public $displayField = 'type';
 
-	public $searchFields = array('Log.type');
+	public $searchFields = array('Logs.type');
 
+	/**
+	 * initialize method
+	 *
+	 * @param array $config Config data.
+	 * @return void
+	 */
+	public function initialize(array $config) {
+		$this->addBehavior('Timestamp', ['modified' => false]);
+		$this->ensureTables(['DatabaseLog.Logs']);
+	}
+
+	/**
+	 * @param \Cake\Event\Event $event
+	 * @param \Cake\Datasource\EntityInterface $entity
+	 * @param \ArrayObject $options
+	 * @return void
+     */
 	public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options) {
 		$entity['ip'] = env('REMOTE_ADDR');
 		$entity['hostname'] = env('HTTP_HOST');

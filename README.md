@@ -29,6 +29,28 @@ Enable the plugin in your bootstrap or call
 bin\cake plugin load DatabaseLog
 ```
 
+Update the file `config/bootstrap.php` with the following configuration:
+```php
+use Cake\Log\Log
+
+Log::config('default', ['className' => 'DatabaseLog.Database']);
+```
+
+Alternatively, you can simply modify the existing config entries in your `config/app.php`:
+ ```php
+	'Log' => [
+		'debug' => [
+			'className' => 'DatabaseLog.Database'
+		],
+		'error' => [
+			'className' => 'DatabaseLog.Database'
+		],
+	],
+```
+This will use a SQLite file database by default, stored in your `logs` folder.
+
+### Using an actual database
+
 Run the schema into your database:
 ```
 bin\cake schema create --plugin DatabaseLog
@@ -37,18 +59,12 @@ bin\cake schema create --plugin DatabaseLog
 Optionally create a config setting in your `config/app.php` if you want to use the DB logging approach:
 ```php
 'DatabaseLog' => [
-	'datasource' => 'default', // DataSource to read from.
+	'datasource' => 'database_log', // DataSource to use
 ]
 ```
 It is recommended to not use the same datasource as your production server because when the DB is not reachable logging to it will
 also not be possible. In that case it will fallback to SQLite file logging on this server instance, though.
 
-Update the file `config/bootstrap.php` with the following configuration:
-```php
-use Cake\Log\Log
-
-Log::config('default', ['className' => 'DatabaseLog.Database']);
-```
 
 ## Usage
 
