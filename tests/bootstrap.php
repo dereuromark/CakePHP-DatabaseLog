@@ -90,3 +90,15 @@ Cake\Datasource\ConnectionManager::config('test', [
 	'quoteIdentifiers' => true,
 	'cacheMetadata' => true,
 ]);
+
+Cake\Datasource\ConnectionManager::config('test_database_log', [
+	'className' => 'Cake\Database\Connection',
+	'driver' => getenv('db_class'),
+	'dsn' => getenv('db_dsn'),
+	'database' => getenv('db_database'),
+	'username' => getenv('db_username'),
+	'password' => getenv('db_password'),
+	'timezone' => 'UTC',
+	'quoteIdentifiers' => true,
+	'cacheMetadata' => true,
+]);

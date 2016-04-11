@@ -9,6 +9,7 @@
  */
 namespace DatabaseLog\TestCase\Controller;
 
+use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestCase;
 
@@ -16,6 +17,11 @@ use Cake\TestSuite\IntegrationTestCase;
  * @coversDefaultClass LogsController
  */
 class LogsControllerTest extends IntegrationTestCase {
+
+	/**
+	 * @var \DatabaseLog\Model\Table\LogsTable
+	 */
+	protected $Logs;
 
 	/**
 	 * Fixtures
@@ -34,6 +40,14 @@ class LogsControllerTest extends IntegrationTestCase {
 	 */
 	public function setUp() {
 		parent::setUp();
+
+		$this->Logs = TableRegistry::get('DatabaseLog.Logs');
+
+		/*
+		if (!$this->Logs->find()->count()) {
+			$this->Logs->log('warning', 'Foo Warning', ['x' => 'y']);
+		}
+		*/
 	}
 
 	/**
@@ -66,9 +80,7 @@ class LogsControllerTest extends IntegrationTestCase {
 	 * @expectedException \Cake\Network\Exception\MethodNotAllowedException
 	 */
 	public function testDeleteWithoutPost() {
-		$this->get(
-			'/admin/database-log/logs/delete/1'
-		);
+		$this->get(['prefix' => 'admin', 'plugin' => 'DatabaseLog', 'controller' => 'Logs', 'action' => 'delete', '1']);
 	}
 
 
