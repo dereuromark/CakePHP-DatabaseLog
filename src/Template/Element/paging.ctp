@@ -12,7 +12,7 @@
 <?php
 echo $this->Paginator->counter();
 if (isset($filter)) {
-	$this->Paginator->options(array('url' => array($filter)));
+	$this->Paginator->options(['url' => [$filter]]);
 }
 ?>	</p>
 

@@ -14,10 +14,11 @@
 <h1>Logs</h1>
 
 <ul class="list-inline">
+	<li><?php echo $this->Html->link('ALL', ['controller' => 'Logs', 'action' => 'index']); ?></li>
 <?php
 foreach ($types as $type) {
 	echo '<li>';
-	echo $this->Html->link($type, array('controller' => 'Logs', 'action' => 'index', '?' => array('type' => $type)));
+	echo $this->Html->link($type, ['controller' => 'Logs', 'action' => 'index', '?' => ['type' => $type]]);
 	echo '</li>';
 }
 ?>
@@ -49,8 +50,8 @@ foreach ($types as $type) {
 				<td><?php echo h($log['type']); ?>&nbsp;</td>
 				<td><?php echo nl2br(h($message)); ?>&nbsp;</td>
 				<td class="actions">
-					<?php echo $this->Html->link(__('Details'), array('action' => 'view', $log['id'], '?' => $this->request->query)); ?>
-					<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $log['id']), ['confirm' => __('Are you sure you want to delete this log # {0}?', $log['id'])]); ?>
+					<?php echo $this->Html->link(__('Details'), ['action' => 'view', $log['id'], '?' => $this->request->query]); ?>
+					<?php echo $this->Form->postLink(__('Delete'), ['action' => 'delete', $log['id']], ['confirm' => __('Are you sure you want to delete this log # {0}?', $log['id'])]); ?>
 				</td>
 			</tr>
 		<?php endforeach; ?>
@@ -60,8 +61,8 @@ foreach ($types as $type) {
 </div>
 <div class="actions">
 	<ul>
-		<li><?php echo $this->Html->link(__('Remove {0}', __('Duplicates')), array('action' => 'removeDuplicates')); ?></li>
-		<li><?php echo $this->Form->postLink(__('Reset {0}', __('Logs')), array('action' => 'reset')); ?></li>
+		<li><?php echo $this->Html->link(__('Remove {0}', __('Duplicates')), ['action' => 'removeDuplicates']); ?></li>
+		<li><?php echo $this->Form->postLink(__('Reset {0}', __('Logs')), ['action' => 'reset']); ?></li>
 	</ul>
 </div>
 

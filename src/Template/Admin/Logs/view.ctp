@@ -52,7 +52,7 @@
 
 	<div class="actions">
 		<ul>
-			<li><?php echo $this->Form->postLink(__('Delete {0}', __('Log Entry')), array('action' => 'delete', $log['id']), ['confirm' => __('Are you sure?')]); ?></li>
+			<li><?php echo $this->Form->postLink(__('Delete {0}', __('Log Entry')), ['action' => 'delete', $log['id']], ['confirm' => __('Are you sure?')]); ?></li>
 			<li><?php echo $this->Html->link(__('Back'), ['action' => 'index', '?' => $this->request->query]); ?></li>
 		</ul>
 	</div>
