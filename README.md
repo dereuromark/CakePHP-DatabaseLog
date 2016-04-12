@@ -64,7 +64,7 @@ Anywhere in your app where you call log() or CakeLog::write the DatabaseLog engi
 ```php
 $this->log('This is a detailed message logged to the database', 'error');
 // or
-CakeLog::write('error', 'This is a detailed message logged to the database');
+Log::write('error', 'This is a detailed message logged to the database');
 ```
 
 Navigate to `http://www.example.com/admin/database-log/logs` to view/search/delete your logs.
