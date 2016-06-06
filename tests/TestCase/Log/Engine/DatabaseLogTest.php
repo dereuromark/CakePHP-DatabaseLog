@@ -71,7 +71,7 @@ class DatabaseLogTest extends TestCase {
 
 		$View->log('x');
 		$View->log('warning', LOG_WARNING);
-		Log::write(LOG_ERROR, 'y');
+		Log::write(LOG_ERR, 'y');
 		Log::write(LOG_INFO, 'z');
 
 		$countAfter = $this->Logs->find()->count();

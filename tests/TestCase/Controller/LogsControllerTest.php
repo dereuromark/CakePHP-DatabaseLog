@@ -70,7 +70,6 @@ class LogsControllerTest extends IntegrationTestCase {
 		$this->get(['prefix' => 'admin', 'plugin' => 'DatabaseLog', 'controller' => 'Logs', 'action' => 'view', '1']);
 
 		$this->assertResponseNotEmpty();
-		//$this->assertEquals('Lorem ipsum dolor sit amet', $this->vars['log']['Log']['type']);
 	}
 
 	/**
@@ -83,7 +82,6 @@ class LogsControllerTest extends IntegrationTestCase {
 		$this->get(['prefix' => 'admin', 'plugin' => 'DatabaseLog', 'controller' => 'Logs', 'action' => 'delete', '1']);
 	}
 
-
 	/**
 	 * Tests the delete action
 	 *
@@ -91,7 +89,7 @@ class LogsControllerTest extends IntegrationTestCase {
 	 */
 	public function testDelete() {
 		$this->post(
-			'/admin/database-log/logs/delete/1'
+			['prefix' => 'admin', 'plugin' => 'DatabaseLog', 'controller' => 'Logs', 'action' => 'delete', 1]
 		);
 		$logModel = TableRegistry::get('DatabaseLog.Logs');
 		$count = $logModel->find()->count();

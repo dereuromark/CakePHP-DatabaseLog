@@ -31,7 +31,7 @@ require CORE_PATH . 'config/bootstrap.php';
 Cake\Core\Configure::write('App', [
 	'namespace' => 'App',
 	'paths' => [
-		'templates' => [ROOT . DS . 'tests' . DS . 'test_app' . DS . 'TestApp' . DS . 'Template' . DS],
+		'templates' => [ROOT . DS . 'tests' . DS . 'test_app' . DS . 'src' . DS . 'Template' . DS],
 	]
 ]);
 
@@ -67,7 +67,7 @@ $config = [
 		],
 	],
 ];
-Cake\Log\Log::config($config);
+Cake\Log\Log::config($config['Log']);
 
 Cake\Cache\Cache::config($cache);
 
