@@ -55,6 +55,7 @@ class LogsControllerTest extends IntegrationTestCase {
 		$this->get(['prefix' => 'admin', 'plugin' => 'DatabaseLog', 'controller' => 'Logs']);
 
 		$this->assertResponseNotEmpty();
+		$this->assertResponseCode(200);
 	}
 
 	/**
@@ -66,6 +67,7 @@ class LogsControllerTest extends IntegrationTestCase {
 		$this->get(['prefix' => 'admin', 'plugin' => 'DatabaseLog', 'controller' => 'Logs', 'action' => 'view', '1']);
 
 		$this->assertResponseNotEmpty();
+		$this->assertResponseCode(200);
 	}
 
 	/**
