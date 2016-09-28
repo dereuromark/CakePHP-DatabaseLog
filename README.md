@@ -43,12 +43,6 @@ You can simply modify the existing config entries in your `config/app.php`:
 This will use the `database_log` connection and an SQLite file database by default, stored in your `logs` folder.
 
 ### Using an actual database (optional)
-
-Run the schema into your database:
-```
-bin/cake schema create --plugin DatabaseLog
-```
-
 Create a config setting in your `config/app.php` what database connection it should log to:
 ```php
 'DatabaseLog' => [
@@ -57,6 +51,9 @@ Create a config setting in your `config/app.php` what database connection it sho
 ```
 It is recommended to not use the same datasource as your production server (`default`) because when the DB is not reachable logging to it will
 also not be possible. In that case it will fallback to SQLite file logging on this server instance, though.
+
+Once the datasource is reachable and once the first log entry is being written, the database table (defaulting to `database_logs`) will be automatically
+created. No need to manually run any migration or SQL script here.
 
 ## Usage
 
