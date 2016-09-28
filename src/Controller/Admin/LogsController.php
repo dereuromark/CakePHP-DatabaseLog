@@ -12,7 +12,7 @@ namespace DatabaseLog\Controller\Admin;
 use App\Controller\AppController;
 
 /**
- * @property \DatabaseLog\Model\Table\DatabaseLogsTable $Logs
+ * @property \DatabaseLog\Model\Table\DatabaseLogsTable $DatabaseLogs
  */
 class LogsController extends AppController {
 
@@ -108,6 +108,7 @@ class LogsController extends AppController {
 		$this->request->allowMethod('post');
 
 		$this->DatabaseLogs->deleteAll('1 = 1');
+
 		return $this->redirect(['action' => 'index']);
 	}
 

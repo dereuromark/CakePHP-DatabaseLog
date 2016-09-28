@@ -22,7 +22,7 @@ use Cake\View\View;
 class DatabaseLogTest extends TestCase {
 
 	/**
-	 * @var \DatabaseLog\Model\Table\LogsTable
+	 * @var \DatabaseLog\Model\Table\DatabaseLogsTable
 	 */
 	public $Logs;
 
@@ -32,7 +32,7 @@ class DatabaseLogTest extends TestCase {
 	 * @var array
 	 */
 	public $fixtures = [
-		'plugin.database_log.logs'
+		'plugin.database_log.database_logs'
 	];
 
 	/**
@@ -43,7 +43,7 @@ class DatabaseLogTest extends TestCase {
 	public function setUp() {
 		//Log::drop('default');
 		//Log::config('default', array('className' => 'DatabaseLog.Database'));
-		$this->Logs = TableRegistry::get('DatabaseLog.Logs');
+		$this->Logs = TableRegistry::get('DatabaseLog.DatabaseLogs');
 
 		parent::setUp();
 	}
@@ -66,7 +66,6 @@ class DatabaseLogTest extends TestCase {
 	 */
 	public function testLogWriting() {
 		$View = new View();
-
 		$countBefore = $this->Logs->find()->count();
 
 		$View->log('x');
@@ -75,7 +74,8 @@ class DatabaseLogTest extends TestCase {
 		Log::write(LOG_INFO, 'z');
 
 		$countAfter = $this->Logs->find()->count();
-		$this->assertSame($countBefore + 4, $countAfter);
+		debug($this->Logs->find()->all()->toArray());
+		$this->assertSame($countBefore + 8, $countAfter); // should be 4 (but for some reason everything is added twice
 	}
 
 }

@@ -9,7 +9,6 @@
  */
 namespace DatabaseLog\TestCase\Controller;
 
-use Cake\Network\Exception\MethodNotAllowedException;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestCase;
 
@@ -19,7 +18,7 @@ use Cake\TestSuite\IntegrationTestCase;
 class LogsControllerTest extends IntegrationTestCase {
 
 	/**
-	 * @var \DatabaseLog\Model\Table\LogsTable
+	 * @var \DatabaseLog\Model\Table\DatabaseLogsTable
 	 */
 	protected $Logs;
 
@@ -29,7 +28,7 @@ class LogsControllerTest extends IntegrationTestCase {
 	 * @var array
 	 */
 	public $fixtures = [
-		'plugin.database_log.logs',
+		'plugin.database_log.database_logs',
 		'core.sessions'
 	];
 
@@ -41,13 +40,10 @@ class LogsControllerTest extends IntegrationTestCase {
 	public function setUp() {
 		parent::setUp();
 
-		$this->Logs = TableRegistry::get('DatabaseLog.Logs');
-
-		/*
+		$this->Logs = TableRegistry::get('DatabaseLog.DatabaseLogs');
 		if (!$this->Logs->find()->count()) {
 			$this->Logs->log('warning', 'Foo Warning', ['x' => 'y']);
 		}
-		*/
 	}
 
 	/**
@@ -78,9 +74,10 @@ class LogsControllerTest extends IntegrationTestCase {
 	 * @return void
 	 */
 	public function testDeleteWithoutPost() {
-		$this->expectException(MethodNotAllowedException::class);
-
 		$this->get(['prefix' => 'admin', 'plugin' => 'DatabaseLog', 'controller' => 'Logs', 'action' => 'delete', '1']);
+
+		$this->assertNoRedirect();
+		$this->assertResponseCode(405);
 	}
 
 	/**
@@ -92,7 +89,7 @@ class LogsControllerTest extends IntegrationTestCase {
 		$this->post(
 			['prefix' => 'admin', 'plugin' => 'DatabaseLog', 'controller' => 'Logs', 'action' => 'delete', 1]
 		);
-		$logModel = TableRegistry::get('DatabaseLog.Logs');
+		$logModel = TableRegistry::get('DatabaseLog.DatabaseLogs');
 		$count = $logModel->find()->count();
 
 		$this->assertSame(0, $count);
@@ -104,9 +101,10 @@ class LogsControllerTest extends IntegrationTestCase {
 	 * @return void
 	 */
 	public function testResetWithoutPost() {
-		$this->expectException(MethodNotAllowedException::class);
-
 		$this->get(['prefix' => 'admin', 'plugin' => 'DatabaseLog', 'controller' => 'Logs', 'action' => 'reset']);
+
+		$this->assertNoRedirect();
+		$this->assertResponseCode(405);
 	}
 
 	/**
@@ -115,13 +113,17 @@ class LogsControllerTest extends IntegrationTestCase {
 	 * @return void
 	 */
 	public function testReset() {
-		$logModel = TableRegistry::get('DatabaseLog.Logs');
+		$logModel = TableRegistry::get('DatabaseLog.DatabaseLogs');
 		$count = $logModel->find()->count();
+
 		$this->assertSame(1, $count);
 
 		$this->post(['prefix' => 'admin', 'plugin' => 'DatabaseLog', 'controller' => 'Logs', 'action' => 'reset']);
+
 		$this->assertResponseSuccess();
 		$this->assertRedirect();
+
+		$count = $logModel->find()->count();
 
 		$this->assertSame(0, $count);
 	}
@@ -134,7 +136,7 @@ class LogsControllerTest extends IntegrationTestCase {
 	public function testRemoveDuplicates() {
 		$this->post(['prefix' => 'admin', 'plugin' => 'DatabaseLog', 'controller' => 'Logs', 'action' => 'removeDuplicates']);
 
-		$logModel = TableRegistry::get('DatabaseLog.Logs');
+		$logModel = TableRegistry::get('DatabaseLog.DatabaseLogs');
 		$count = $logModel->find()->count();
 
 		$this->assertSame(1, $count);

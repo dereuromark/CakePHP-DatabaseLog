@@ -3,6 +3,9 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
+use Cake\Routing\DispatcherFactory;
+use TestApp\Controller\AppController;
+
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', dirname(__DIR__));
 define('APP_DIR', 'src');
@@ -29,7 +32,7 @@ require dirname(__DIR__) . '/vendor/autoload.php';
 require CORE_PATH . 'config/bootstrap.php';
 
 Cake\Core\Configure::write('App', [
-	'namespace' => 'App',
+	'namespace' => 'TestApp',
 	'paths' => [
 		'templates' => [ROOT . DS . 'tests' . DS . 'test_app' . DS . 'src' . DS . 'Template' . DS],
 	]
@@ -71,7 +74,12 @@ Cake\Log\Log::config($config['Log']);
 
 Cake\Cache\Cache::config($cache);
 
-Cake\Core\Plugin::load('DatabaseLog', ['path' => ROOT . DS, 'autoload' => true, 'bootstrap' => true, 'routes' => true]);
+Cake\Core\Plugin::load('DatabaseLog', ['path' => ROOT . DS, 'autoload' => true, 'bootstrap' => false, 'routes' => true]);
+
+DispatcherFactory::add('Routing');
+DispatcherFactory::add('ControllerFactory');
+
+class_alias(AppController::class, 'App\Controller\AppController');
 
 // Ensure default test connection is defined
 if (!getenv('db_class')) {
