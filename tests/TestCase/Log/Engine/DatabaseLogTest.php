@@ -74,7 +74,6 @@ class DatabaseLogTest extends TestCase {
 		Log::write(LOG_INFO, 'z');
 
 		$countAfter = $this->Logs->find()->count();
-		debug($this->Logs->find()->all()->toArray());
 		$this->assertSame($countBefore + 8, $countAfter); // should be 4 (but for some reason everything is added twice
 	}
 

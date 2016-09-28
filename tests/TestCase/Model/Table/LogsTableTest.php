@@ -133,7 +133,7 @@ class LogsTableTest extends TestCase {
 		$this->Logs->removeDuplicates();
 
 		$resAfter = $this->Logs->find()->count();
-		$this->assertSame($resBefore - 3, $resAfter); // should be 1 (but for some reason everything is added twice
+		$this->assertSame($resBefore - 1, $resAfter);
 	}
 
 }
