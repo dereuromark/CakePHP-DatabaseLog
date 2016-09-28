@@ -9,7 +9,7 @@
  */
 namespace DatabaseLog\TestCase\Controller;
 
-use Cake\Log\Log;
+use Cake\Network\Exception\MethodNotAllowedException;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestCase;
 
@@ -76,9 +76,10 @@ class LogsControllerTest extends IntegrationTestCase {
 	 * Tests the delete action without POST
 	 *
 	 * @return void
-	 * @expectedException \Cake\Network\Exception\MethodNotAllowedException
 	 */
 	public function testDeleteWithoutPost() {
+		$this->expectException(MethodNotAllowedException::class);
+
 		$this->get(['prefix' => 'admin', 'plugin' => 'DatabaseLog', 'controller' => 'Logs', 'action' => 'delete', '1']);
 	}
 
@@ -101,12 +102,11 @@ class LogsControllerTest extends IntegrationTestCase {
 	 * Tests the reset action without POST
 	 *
 	 * @return void
-	 * @expectedException \Cake\Network\Exception\MethodNotAllowedException
 	 */
 	public function testResetWithoutPost() {
-		$this->get(['prefix' => 'admin', 'plugin' => 'DatabaseLog', 'controller' => 'Logs', 'action' => 'reset']);
+		$this->expectException(MethodNotAllowedException::class);
 
-		//die(debug($this->_response->body()));
+		$this->get(['prefix' => 'admin', 'plugin' => 'DatabaseLog', 'controller' => 'Logs', 'action' => 'reset']);
 	}
 
 	/**

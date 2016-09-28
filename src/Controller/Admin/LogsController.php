@@ -12,7 +12,7 @@ namespace DatabaseLog\Controller\Admin;
 use App\Controller\AppController;
 
 /**
- * Logs Controller
+ * @property \DatabaseLog\Model\Table\LogsTable $Logs
  */
 class LogsController extends AppController {
 
@@ -71,8 +71,6 @@ class LogsController extends AppController {
 	}
 
 	/**
-	 * View action
-	 *
 	 * @param null|int $id The log ID to view.
 	 * @return void
 	 */

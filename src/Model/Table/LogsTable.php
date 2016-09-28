@@ -10,7 +10,6 @@
 namespace DatabaseLog\Model\Table;
 
 use ArrayObject;
-use Cake\Cache\Cache;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\Utility\Hash;

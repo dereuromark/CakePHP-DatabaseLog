@@ -26,7 +26,7 @@ composer require "dereuromark/cakephp-databaselog":"dev-master"
 ## Setup
 Enable the plugin in your `config/bootstrap.php` or call
 ```
-bin\cake plugin load DatabaseLog
+bin/cake plugin load DatabaseLog
 ```
 
 You can simply modify the existing config entries in your `config/app.php`:
@@ -46,7 +46,7 @@ This will use the `database_log` connection and an SQLite file database by defau
 
 Run the schema into your database:
 ```
-bin\cake schema create --plugin DatabaseLog
+bin/cake schema create --plugin DatabaseLog
 ```
 
 Create a config setting in your `config/app.php` what database connection it should log to:

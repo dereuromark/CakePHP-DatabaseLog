@@ -26,8 +26,8 @@
 		"source": "https://github.com/dereuromark/CakePHP-DatabaseLog/"
 	},
 	"require": {
-		"php": ">=5.4",
-		"cakephp/cakephp": "^3.0"
+		"php": ">=5.5",
+		"cakephp/cakephp": "^3.2"
 	},
 	"require-dev": {
 		"fig-r/psr2r-sniffer": "dev-master"
@@ -35,14 +35,14 @@
 	"autoload": {
 		"psr-4": {
 			"DatabaseLog\\": "src",
-			"DatabaseLog\\Test\\Fixture\\": "tests\\Fixture"
+			"DatabaseLog\\Test\\Fixture\\": "tests/Fixture"
 		}
 	},
 	"autoload-dev": {
 		"psr-4": {
 			"DatabaseLog\\Test\\": "tests",
 			"Cake\\Test\\": "vendor/cakephp/cakephp/tests",
-			"TestApp\\": "tests/test_app/TestApp"
+			"TestApp\\": "tests/test_app/src"
 		}
 	}
 }
