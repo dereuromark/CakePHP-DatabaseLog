@@ -14,7 +14,7 @@ use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * @coversDefaultClass DatabaseLogsTable
+ * @coversDefaultClass \DatabaseLog\Model\Table\DatabaseLogsTable
  */
 class LogsTableTest extends TestCase {
 
@@ -45,7 +45,6 @@ class LogsTableTest extends TestCase {
 	 * Tests the save method
 	 *
 	 * @return void
-	 * @covers ::save
 	 */
 	public function testSave() {
 		$data = [
