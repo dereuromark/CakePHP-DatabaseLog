@@ -12,7 +12,7 @@ namespace DatabaseLog\Controller\Admin;
 use App\Controller\AppController;
 
 /**
- * @property \DatabaseLog\Model\Table\LogsTable $Logs
+ * @property \DatabaseLog\Model\Table\DatabaseLogsTable $Logs
  */
 class LogsController extends AppController {
 
@@ -23,7 +23,7 @@ class LogsController extends AppController {
 	 *
 	 * @var string
 	 */
-	public $modelClass = 'DatabaseLog.Logs';
+	public $modelClass = 'DatabaseLog.DatabaseLogs';
 
 	/**
 	 * Load the TimeHelper
@@ -38,12 +38,12 @@ class LogsController extends AppController {
 	 * @var array
 	 */
 	public $paginate = [
-		'order' => ['Logs.id' => 'DESC'],
+		'order' => ['DatabaseLogs.id' => 'DESC'],
 		'fields' => [
-			'Logs.created',
-			'Logs.type',
-			'Logs.message',
-			'Logs.id'
+			'DatabaseLogs.created',
+			'DatabaseLogs.type',
+			'DatabaseLogs.message',
+			'DatabaseLogs.id'
 		]
 	];
 
@@ -53,10 +53,10 @@ class LogsController extends AppController {
 	 * @return void
 	 */
 	public function index() {
-		$types = $this->Logs->getTypes();
+		$types = $this->DatabaseLogs->getTypes();
 		$this->set(compact('types'));
 
-		$conditions = $this->Logs->textSearch();
+		$conditions = $this->DatabaseLogs->textSearch();
 		$type = $this->request->query('type');
 		if ($type) {
 			$conditions['type'] = $type;
@@ -67,7 +67,7 @@ class LogsController extends AppController {
 		];
 
 		$this->set('logs', $this->paginate());
-		$this->set('types', $this->Logs->getTypes());
+		$this->set('types', $this->DatabaseLogs->getTypes());
 	}
 
 	/**
@@ -75,7 +75,7 @@ class LogsController extends AppController {
 	 * @return void
 	 */
 	public function view($id = null) {
-		$log = $this->Logs->get($id);
+		$log = $this->DatabaseLogs->get($id);
 		$this->set('log', $log);
 	}
 
@@ -87,9 +87,9 @@ class LogsController extends AppController {
 	 */
 	public function delete($id = null) {
 		$this->request->allowMethod('post');
-		$log = $this->Logs->get($id);
+		$log = $this->DatabaseLogs->get($id);
 
-		if ($this->Logs->delete($log)) {
+		if ($this->DatabaseLogs->delete($log)) {
 			$this->Flash->success(__('Log deleted'));
 			return $this->redirect(['action' => 'index']);
 		}
@@ -107,7 +107,7 @@ class LogsController extends AppController {
 	public function reset() {
 		$this->request->allowMethod('post');
 
-		$this->Logs->deleteAll('1 = 1');
+		$this->DatabaseLogs->deleteAll('1 = 1');
 		return $this->redirect(['action' => 'index']);
 	}
 
@@ -119,7 +119,7 @@ class LogsController extends AppController {
 	public function removeDuplicates() {
 		$this->request->allowMethod('post');
 
-		$this->Logs->removeDuplicates();
+		$this->DatabaseLogs->removeDuplicates();
 
 		$this->Flash->success(__('Duplicates have been removed.'));
 		return $this->redirect(['action' => 'index']);

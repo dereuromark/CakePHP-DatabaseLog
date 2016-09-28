@@ -20,7 +20,7 @@ class DatabaseLog extends BaseLog {
 	/**
 	 * Model object placeholder
 	 *
-	 * @var \DatabaseLog\Model\Table\LogsTable
+	 * @var \DatabaseLog\Model\Table\DatabaseLogsTable
 	 */
 	public $Logs;
 
@@ -31,7 +31,7 @@ class DatabaseLog extends BaseLog {
 	 */
 	public function __construct($config = []) {
 		parent::__construct($config);
-		$model = !empty($config['model']) ? $config['model'] : 'DatabaseLog.Logs';
+		$model = !empty($config['model']) ? $config['model'] : 'DatabaseLog.DatabaseLogs';
 		$this->Logs = TableRegistry::get($model);
 	}
 

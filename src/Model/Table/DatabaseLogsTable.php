@@ -14,14 +14,14 @@ use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\Utility\Hash;
 
-class LogsTable extends DatabaseLogAppTable {
+class DatabaseLogsTable extends DatabaseLogAppTable {
 
 	use LazyTableTrait;
 
 	/**
 	 * @var array
 	 */
-	public $searchFields = ['Logs.type'];
+	public $searchFields = ['DatabaseLogs.type'];
 
 	/**
 	 * initialize method
@@ -32,7 +32,7 @@ class LogsTable extends DatabaseLogAppTable {
 	public function initialize(array $config) {
 		$this->displayField('type');
 		$this->addBehavior('Timestamp', ['modified' => false]);
-		$this->ensureTables(['DatabaseLog.Logs']);
+		$this->ensureTables(['DatabaseLog.DatabaseLogs']);
 	}
 
 	/**
@@ -93,7 +93,7 @@ class LogsTable extends DatabaseLogAppTable {
 	* @return array Types
 	*/
 	public function getTypes() {
-		$types = $this->find()->distinct('Logs.type')->select(['type'])->order('Logs.type ASC')->toArray();
+		$types = $this->find()->distinct($this->alias() . '.type')->select(['type'])->order($this->alias() . '.type ASC')->toArray();
 		return Hash::extract($types, '{n}.type');
 	}
 

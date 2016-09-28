@@ -14,7 +14,7 @@ use Cake\TestSuite\Fixture\TestFixture;
 /**
  * Log fixtures
  */
-class LogsFixture extends TestFixture {
+class DatabaseLogsFixture extends TestFixture {
 
 	/**
 	 * Fields
