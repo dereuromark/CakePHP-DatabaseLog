@@ -19,6 +19,12 @@ DatabaseLog engine for CakePHP applications.
 - Fallback to SQLite in case the DB is not reachable.
 - Simple admin interface to view/delete logs included.
 
+### Log Rotation
+While file handling requires file log rotation and splitting into chunks of (compressed) files, a database approach can more easily keep the logs together in a single database. This is more convinient when looking through them or searching for something specific.
+
+This plugin internally combines log entries of the exact same "content" into a single row with an increased count.
+Additionally you would want to add a cronjob triggered cleanup shell to keep the total size and row count below a certain threshold.
+
 ## Install
 
 ### Composer (preferred)
