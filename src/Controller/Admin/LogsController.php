@@ -107,7 +107,7 @@ class LogsController extends AppController {
 	public function reset() {
 		$this->request->allowMethod('post');
 
-		$this->DatabaseLogs->deleteAll('1 = 1');
+		$this->DatabaseLogs->truncate();
 
 		return $this->redirect(['action' => 'index']);
 	}

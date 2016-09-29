@@ -102,7 +102,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	 * Remove duplicates and leave only the newest entry
 	 * Also stores the new total "number" of this message in the remaining one
 	 *
-	 * @return void
+	 * @return int
 	 */
 	public function removeDuplicates() {
 		$query = $this->find();
@@ -114,6 +114,8 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 			'order' => ['created' => 'DESC']
 		];
 		$logs = $query->find('all', $options);
+
+		$count = 0;
 		foreach ($logs as $key => $log) {
 			if ($log['count'] <= 1) {
 				continue;
@@ -135,8 +137,10 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 			if (!empty($entries)) {
 				$this->deleteAll(['id IN' => $entries]);
 			}
-			$this->updateAll(['count = count + ' . count($entries)], ['id' => $keep]);
+			$count += $this->updateAll(['count = count + ' . count($entries)], ['id' => $keep]);
 		}
+
+		return $count;
 	}
 
 	/**
@@ -175,8 +179,6 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	}
 
 	/**
-	 * truncate()
-	 *
 	 * @return void
 	 */
 	public function truncate() {

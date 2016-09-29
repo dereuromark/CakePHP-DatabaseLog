@@ -69,9 +69,9 @@ class DatabaseLogShellTest extends TestCase {
 
 		$this->Logs->updateAll(['created' => date('Y-m-d H:i:s', time() - DAY)], '1 = 1');
 
-		Log::write('info', 'one');
-		Log::write('info', 'two');
-		Log::write('info', 'three');
+		Log::write('info', 'four');
+		Log::write('info', 'five');
+		Log::write('info', 'six');
 
 		$count = $this->Logs->find()->count();
 		$this->assertTrue($count > 4);
@@ -83,7 +83,8 @@ class DatabaseLogShellTest extends TestCase {
 		$output = (string)$this->out->output();
 		$this->assertNotEmpty($output);
 
-		$this->assertContains('10 removed', $output);
+		$this->assertContains('6 duplicates removed', $output);
+		$this->assertContains('4 outdated logs removed', $output);
 
 		$count = $this->Logs->find()->count();
 		$this->assertSame(2, $count);
