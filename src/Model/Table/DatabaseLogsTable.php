@@ -141,8 +141,10 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 
 	/**
 	 * @return int
-     */
+	 */
 	public function garbageCollector() {
+		$deleted = $this->_cleanByAge();
+
 		$query = $this->find()
 			->order(['id' => 'ASC']);
 
@@ -150,12 +152,26 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 
 		$limit = Configure::read('DatabaseLog.limit') ?: 999999;
 		if ($count <= $limit) {
-			return 0;
+			return $deleted;
 		}
 
 		$record = $query->where()->offset($count - $limit)->first();
 
-		return $this->deleteAll(['id <' => $record->id]);
+		return $deleted + $this->deleteAll(['id <' => $record->id]);
+	}
+
+	/**
+	 * @return int
+	 */
+	protected function _cleanByAge() {
+		$age = Configure::read('DatabaseLog.maxLength');
+		if (!$age) {
+			return 0;
+		}
+
+		$date = strtotime($age);
+
+		return $this->deleteAll(['created <' => $date]);
 	}
 
 	/**

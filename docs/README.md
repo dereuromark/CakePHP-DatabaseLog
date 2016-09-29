@@ -22,6 +22,15 @@ bin/cake database_log cleanup
 It will combine the log entries of the same content (and increase the count), and on top
 also clean out old records, either by date or by total record count.
 
+You can adjust both values in your app.php config:
+```php
+	'DatabaseLog' => [
+		'limit' => 999999,
+		'maxLength' => '-1 year' // Older than a year
+```
+The `limit` config defaults to `999999` as basic protection.
+
+
 
 ## Contributing
 Feel free to fork and pull request.

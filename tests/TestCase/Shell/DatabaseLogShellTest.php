@@ -35,6 +35,7 @@ class DatabaseLogShellTest extends TestCase {
 		parent::setUp();
 
 		Configure::delete('DatabaseLog.limit');
+		Configure::delete('DatabaseLog.maxLength');
 
 		$this->out = new ConsoleOutput();
 		$this->err = new ConsoleOutput();
@@ -65,16 +66,24 @@ class DatabaseLogShellTest extends TestCase {
 		Log::write('info', 'three');
 
 		$this->Logs = TableRegistry::get('DatabaseLog.DatabaseLogs');
+
+		$this->Logs->updateAll(['created' => date('Y-m-d H:i:s', time() - DAY)], '1 = 1');
+
+		Log::write('info', 'one');
+		Log::write('info', 'two');
+		Log::write('info', 'three');
+
 		$count = $this->Logs->find()->count();
-		$this->assertTrue($count > 2);
+		$this->assertTrue($count > 4);
 
 		Configure::write('DatabaseLog.limit', 2);
+		Configure::write('DatabaseLog.maxLength', '-1 hour');
 
 		$this->Shell->runCommand(['cleanup']);
 		$output = (string)$this->out->output();
 		$this->assertNotEmpty($output);
 
-		$this->assertContains('5 removed', $output);
+		$this->assertContains('10 removed', $output);
 
 		$count = $this->Logs->find()->count();
 		$this->assertSame(2, $count);
