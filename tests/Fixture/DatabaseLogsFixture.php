@@ -43,18 +43,6 @@ class DatabaseLogsFixture extends TestFixture {
 	 * @var array
 	 */
 	public $records = [
-		[
-			'type' => 'Lorem ipsum dolor sit amet',
-			'message' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
-			'context' => '',
-			'created' => '2011-08-08 13:46:28',
-			'ip' => '',
-			'hostname' => '',
-			'uri' => '',
-			'refer' => '',
-			'user_agent' => '',
-			'count' => 0,
-		],
 	];
 
 }
