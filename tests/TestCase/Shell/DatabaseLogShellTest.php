@@ -73,9 +73,8 @@ class DatabaseLogShellTest extends TestCase {
 		$this->Shell->runCommand(['cleanup']);
 		$output = (string)$this->out->output();
 		$this->assertNotEmpty($output);
-
-		debug($output);
-		$this->assertContains('4 removed', $output);
+		
+		$this->assertContains('5 removed', $output);
 
 		$count = $this->Logs->find()->count();
 		$this->assertSame(2, $count);
