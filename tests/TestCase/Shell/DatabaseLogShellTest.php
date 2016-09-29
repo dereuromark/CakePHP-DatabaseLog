@@ -14,12 +14,12 @@ use Tools\TestSuite\TestCase;
  */
 class DatabaseLogShellTest extends TestCase {
 
-    /**
-     * @var array
-     */
-    public $fixtures = [
-        'plugin.database_log.database_logs'
-    ];
+	/**
+	 * @var array
+	 */
+	public $fixtures = [
+		'plugin.database_log.database_logs'
+	];
 
 	/**
 	 * @var \DatabaseLog\Shell\DatabaseLogShell|\PHPUnit_Framework_MockObject_MockObject
@@ -73,40 +73,40 @@ class DatabaseLogShellTest extends TestCase {
 		$this->Shell->runCommand(['cleanup']);
 		$output = (string)$this->out->output();
 		$this->assertNotEmpty($output);
-		
+
 		$this->assertContains('5 removed', $output);
 
 		$count = $this->Logs->find()->count();
 		$this->assertSame(2, $count);
 	}
 
-    /**
-     * @return void
-     */
-    public function testTestEntry() {
-        $this->Logs = TableRegistry::get('DatabaseLog.DatabaseLogs');
-        $count = $this->Logs->find()->count();
+	/**
+	 * @return void
+	 */
+	public function testTestEntry() {
+		$this->Logs = TableRegistry::get('DatabaseLog.DatabaseLogs');
+		$count = $this->Logs->find()->count();
 
-        $this->Shell->runCommand(['test_entry']);
-        //$output = $this->out->output();
+		$this->Shell->runCommand(['test_entry']);
+		//$output = $this->out->output();
 
-        $newCount = $this->Logs->find()->count();
+		$newCount = $this->Logs->find()->count();
 
-        $this->assertSame($count + 2, $newCount); // Should only be 1...
-    }
+		$this->assertSame($count + 2, $newCount); // Should only be 1...
+	}
 
-    /**
-     * @return void
-     */
-    public function testTestEntryCustom() {
-        $this->Logs = TableRegistry::get('DatabaseLog.DatabaseLogs');
+	/**
+	 * @return void
+	 */
+	public function testTestEntryCustom() {
+		$this->Logs = TableRegistry::get('DatabaseLog.DatabaseLogs');
 
-        $this->Shell->runCommand(['test_entry', 'warning', 'My warning']);
+		$this->Shell->runCommand(['test_entry', 'warning', 'My warning']);
 
-        $log = $this->Logs->find()->order(['id' => 'DESC'])->first();
+		$log = $this->Logs->find()->order(['id' => 'DESC'])->first();
 
-        $this->assertSame('warning', $log->type);
-        $this->assertSame('My warning', $log->message);
-    }
+		$this->assertSame('warning', $log->type);
+		$this->assertSame('My warning', $log->message);
+	}
 
 }

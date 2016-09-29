@@ -34,7 +34,7 @@ class DatabaseLogsFixture extends TestFixture {
 		'user_agent' => ['type' => 'string', 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'],
 		'count' => ['type' => 'integer', 'null' => false, 'default' => 0],
 		'_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']]],
-		'_options' => ['charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'MyISAM']
+		'_options' => ['charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM']
 	];
 
 	/**
@@ -45,10 +45,15 @@ class DatabaseLogsFixture extends TestFixture {
 	public $records = [
 		[
 			'type' => 'Lorem ipsum dolor sit amet',
-			'context' => '',
 			'message' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
+			'context' => '',
+			'created' => '2011-08-08 13:46:28',
+			'ip' => '',
+			'hostname' => '',
+			'uri' => '',
+			'refer' => '',
+			'user_agent' => '',
 			'count' => 0,
-			'created' => '2011-08-08 13:46:28'
 		],
 	];
 
