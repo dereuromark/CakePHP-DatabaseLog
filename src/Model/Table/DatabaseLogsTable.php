@@ -10,6 +10,7 @@
 namespace DatabaseLog\Model\Table;
 
 use ArrayObject;
+use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\Utility\Hash;
@@ -135,6 +136,37 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 				$this->deleteAll(['id IN' => $entries]);
 			}
 			$this->updateAll(['count = count + ' . count($entries)], ['id' => $keep]);
+		}
+	}
+
+	/**
+	 * @return int
+     */
+	public function garbageCollector() {
+		$query = $this->find()
+			->order(['id' => 'ASC']);
+
+		$count = $query->count();
+
+		$limit = Configure::read('DatabaseLog.limit') ?: 999999;
+		if ($count <= $limit) {
+			return 0;
+		}
+
+		$record = $query->where()->offset($count - $limit)->first();
+
+		return $this->deleteAll(['id <' => $record->id]);
+	}
+
+	/**
+	 * truncate()
+	 *
+	 * @return void
+	 */
+	public function truncate() {
+		$sql = $this->schema()->truncateSql($this->_connection);
+		foreach ($sql as $snippet) {
+			$this->_connection->execute($snippet);
 		}
 	}
 

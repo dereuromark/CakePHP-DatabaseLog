@@ -66,7 +66,7 @@ created. No need to manually run any migration or SQL script here.
 
 ## Usage
 
-Anywhere in your app where you call log() or CakeLog::write the DatabaseLog engine will be used.
+Anywhere in your app where you call `$this->log()` or `Log::write()` the DatabaseLog engine will be used.
 ```php
 $this->log('This is a detailed message logged to the database', 'error');
 // or
@@ -76,3 +76,5 @@ Log::write('error', 'This is a detailed message logged to the database');
 Navigate to `http://www.example.com/admin/database-log/logs` to view/search/delete your logs.
 
 You can customize the template with a custom theme if necessary.
+
+See [docs](/docs) for more details.
