@@ -71,9 +71,10 @@ class DatabaseLogShellTest extends TestCase {
 		Configure::write('DatabaseLog.limit', 2);
 
 		$this->Shell->runCommand(['cleanup']);
-		$output = $this->out->output();
+		$output = (string)$this->out->output();
 		$this->assertNotEmpty($output);
 
+		debug($output);
 		$this->assertContains('4 removed', $output);
 
 		$count = $this->Logs->find()->count();
