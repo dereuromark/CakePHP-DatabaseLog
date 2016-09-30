@@ -30,6 +30,21 @@ class DatabaseLogShell extends Shell {
 	}
 
 	/**
+	 * @return void
+	 */
+	public function reset() {
+		if (!$this->param('quite')) {
+			$in = $this->in('Sure?', ['y', 'n'], 'n');
+			if ($in !== 'y') {
+				$this->abort('Aborted!');
+			}
+		}
+
+		$this->DatabaseLogs->truncate();
+		$this->info('Reset done');
+	}
+
+	/**
 	 * @param string|null $level
 	 * @param string|null $message
 	 * @param string|null $scope
@@ -48,14 +63,14 @@ class DatabaseLogShell extends Shell {
 	public function getOptionParser() {
 		$parser = parent::getOptionParser();
 		$parser->addSubcommand('cleanup', [
-			'help' => 'Log rotation and other cleanup',
+			'help' => 'Log rotation and other cleanup.',
+		]);
+		$parser->addSubcommand('reset', [
+			'help' => 'Resets the database, truncates all data. Use -q to skip confirmation.',
 		]);
 		$parser->addSubcommand('test_entry', [
-			'help' => 'Add a test entry with a certain log type',
+			'help' => 'Adds a test entry with a certain log type.',
 			'parser' => [
-				'description' => [
-					'xxx'
-				],
 				'arguments' => [
 					'level' => [
 						'help' => 'The log level to use ("' . implode('", "', Log::levels()) . '"), defaults to "info"',
