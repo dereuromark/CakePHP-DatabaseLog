@@ -64,7 +64,7 @@ class LogsTableTest extends TestCase {
 	 */
 	public function testTextSearch() {
 		$res = $this->Logs->textSearch('interesting');
-		$this->assertEquals(['MATCH (DatabaseLogs.message) AGAINST (\'interesting\')'], $res);
+		$this->assertEquals(['MATCH (message) AGAINST (\'interesting\')'], $res);
 
 		$res = $this->Logs->textSearch('type@foo');
 		$this->assertEquals(['Log.type' => 'foo'], $res);

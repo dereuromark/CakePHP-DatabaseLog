@@ -23,18 +23,18 @@ class DatabaseLogsFixture extends TestFixture {
 	 */
 	public $fields = [
 		'id' => ['type' => 'integer', 'null' => false, 'default' => null],
-		'type' => ['type' => 'string', 'null' => false, 'default' => null, 'length' => 50, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'],
-		'message' => ['type' => 'text', 'null' => false, 'default' => null, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'],
-		'context' => ['type' => 'text', 'null' => true, 'default' => null, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'],
+		'type' => ['type' => 'string', 'null' => false, 'default' => null, 'length' => 50],
+		'message' => ['type' => 'text', 'null' => false, 'default' => null],
+		'context' => ['type' => 'text', 'null' => true, 'default' => null],
 		'created' => ['type' => 'datetime', 'null' => true, 'default' => null],
-		'ip' => ['type' => 'string', 'null' => true, 'default' => null, 'length' => 50, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'],
-		'hostname' => ['type' => 'string', 'null' => true, 'default' => null, 'length' => 50, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'],
-		'uri' => ['type' => 'string', 'null' => true, 'default' => null, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'],
-		'refer' => ['type' => 'string', 'null' => true, 'default' => null, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'],
-		'user_agent' => ['type' => 'string', 'null' => true, 'default' => null, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'],
+		'ip' => ['type' => 'string', 'null' => true, 'default' => null, 'length' => 50],
+		'hostname' => ['type' => 'string', 'null' => true, 'default' => null, 'length' => 50],
+		'uri' => ['type' => 'string', 'null' => true, 'default' => null],
+		'refer' => ['type' => 'string', 'null' => true, 'default' => null],
+		'user_agent' => ['type' => 'string', 'null' => true, 'default' => null],
 		'count' => ['type' => 'integer', 'null' => false, 'default' => 0],
 		'_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']]],
-		'_options' => ['charset' => 'utf8', 'collate' => 'utf8_unicode_ci', 'engine' => 'MyISAM']
+		'_options' => []
 	];
 
 	/**

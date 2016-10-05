@@ -61,12 +61,12 @@ class LogsController extends AppController {
 		if ($type) {
 			$conditions['type'] = $type;
 		}
+		$query = $this->DatabaseLogs->find()->where($conditions);
 		$this->paginate = [
 			'order' => ['created' => 'DESC'],
-			'conditions' => $conditions
 		];
 
-		$this->set('logs', $this->paginate());
+		$this->set('logs', $this->paginate($query));
 		$this->set('types', $this->DatabaseLogs->getTypes());
 	}
 

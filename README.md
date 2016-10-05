@@ -63,6 +63,11 @@ also not be possible. In that case it will fallback to SQLite file logging on th
 
 Once the datasource is reachable and once the first log entry is being written, the database table (defaulting to `database_logs`) will be automatically
 created. No need to manually run any migration or SQL script here.
+You can also manually create the table before hand, if you prefer:
+```
+bin/cake Migrations migrate -p DatabaseLog
+```
+Or just copy the migration file into your app `/config/Migrations`, modify if needed, and then run it as part of your app migrations.
 
 ## Usage
 

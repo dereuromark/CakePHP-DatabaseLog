@@ -13,6 +13,8 @@
 namespace DatabaseLog\Model\Table;
 
 use Cake\Core\App;
+use Cake\Database\Driver\Mysql;
+use Cake\Database\Driver\Sqlite;
 use RuntimeException;
 
 /**
@@ -25,6 +27,8 @@ use RuntimeException;
  */
 trait LazyTableTrait {
 
+	protected static $invoked = false;
+
 	/**
 	 * Ensures the tables for the given fixtures exist in the schema.
 	 *
@@ -36,6 +40,13 @@ trait LazyTableTrait {
 	 */
 	public function ensureTables(array $fixtures) {
 		$connection = $this->connection();
+
+		if (static::$invoked) {
+			// When exceptions are encountered we try to avoid loops
+			return;
+		}
+		static::$invoked = true;
+
 		$schema = $connection->schemaCollection();
 		$existing = $schema->listTables();
 

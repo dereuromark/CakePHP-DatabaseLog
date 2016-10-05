@@ -83,7 +83,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 			}
 
 			$escapedQuery = "'" . $query . "'"; // for now - $this->getDataSource()->value($query);
-			return ["MATCH ({$this->alias()}.message) AGAINST ($escapedQuery)"];
+			return ["MATCH (message) AGAINST ($escapedQuery)"];
 		}
 		return [];
 	}
@@ -94,7 +94,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	* @return array Types
 	*/
 	public function getTypes() {
-		$types = $this->find()->distinct($this->alias() . '.type')->select(['type'])->order($this->alias() . '.type ASC')->toArray();
+		$types = $this->find()->select(['type'])->distinct('type')->order('type ASC')->toArray();
 		return Hash::extract($types, '{n}.type');
 	}
 
