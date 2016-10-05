@@ -134,7 +134,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 
 			// keep the newest entry
 			$keep = array_shift($entries);
-			if (!empty($entries)) {
+			if ($entries) {
 				$this->deleteAll(['id IN' => $entries]);
 			}
 			$count += $this->updateAll(['count = count + ' . count($entries)], ['id' => $keep]);
