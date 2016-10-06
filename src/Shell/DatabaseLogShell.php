@@ -33,7 +33,7 @@ class DatabaseLogShell extends Shell {
 	 * @return void
 	 */
 	public function reset() {
-		if (!$this->param('quite')) {
+		if (!$this->param('quiet')) {
 			$in = $this->in('Sure?', ['y', 'n'], 'n');
 			if ($in !== 'y') {
 				$this->abort('Aborted!');

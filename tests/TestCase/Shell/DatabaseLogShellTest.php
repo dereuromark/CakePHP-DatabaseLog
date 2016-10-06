@@ -93,6 +93,23 @@ class DatabaseLogShellTest extends TestCase {
 	/**
 	 * @return void
 	 */
+	public function testReset() {
+		$this->Logs = TableRegistry::get('DatabaseLog.DatabaseLogs');
+
+		Log::write('info', 'six');
+
+		$count = $this->Logs->find()->count();
+		$this->assertTrue($count > 0);
+
+		$this->Shell->runCommand(['reset', '-q']);
+
+		$count = $this->Logs->find()->count();
+		$this->assertSame(0, $count);
+	}
+
+	/**
+	 * @return void
+	 */
 	public function testTestEntry() {
 		$this->Logs = TableRegistry::get('DatabaseLog.DatabaseLogs');
 		$count = $this->Logs->find()->count();
