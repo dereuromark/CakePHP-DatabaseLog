@@ -10,6 +10,7 @@
 namespace DatabaseLog\Model\Table;
 
 use ArrayObject;
+use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\Utility\Hash;
@@ -82,7 +83,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 			}
 
 			$escapedQuery = "'" . $query . "'"; // for now - $this->getDataSource()->value($query);
-			return ["MATCH ({$this->alias()}.message) AGAINST ($escapedQuery)"];
+			return ["MATCH (message) AGAINST ($escapedQuery)"];
 		}
 		return [];
 	}
@@ -93,7 +94,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	* @return array Types
 	*/
 	public function getTypes() {
-		$types = $this->find()->distinct($this->alias() . '.type')->select(['type'])->order($this->alias() . '.type ASC')->toArray();
+		$types = $this->find()->select(['type'])->distinct('type')->order('type ASC')->toArray();
 		return Hash::extract($types, '{n}.type');
 	}
 
@@ -101,7 +102,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	 * Remove duplicates and leave only the newest entry
 	 * Also stores the new total "number" of this message in the remaining one
 	 *
-	 * @return void
+	 * @return int
 	 */
 	public function removeDuplicates() {
 		$query = $this->find();
@@ -113,6 +114,8 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 			'order' => ['created' => 'DESC']
 		];
 		$logs = $query->find('all', $options);
+
+		$count = 0;
 		foreach ($logs as $key => $log) {
 			if ($log['count'] <= 1) {
 				continue;
@@ -131,10 +134,57 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 
 			// keep the newest entry
 			$keep = array_shift($entries);
-			if (!empty($entries)) {
+			if ($entries) {
 				$this->deleteAll(['id IN' => $entries]);
 			}
-			$this->updateAll(['count = count + ' . count($entries)], ['id' => $keep]);
+			$count += $this->updateAll(['count = count + ' . count($entries)], ['id' => $keep]);
+		}
+
+		return $count;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function garbageCollector() {
+		$deleted = $this->_cleanByAge();
+
+		$query = $this->find()
+			->order(['id' => 'ASC']);
+
+		$count = $query->count();
+
+		$limit = Configure::read('DatabaseLog.limit') ?: 999999;
+		if ($count <= $limit) {
+			return $deleted;
+		}
+
+		$record = $query->where()->offset($count - $limit)->first();
+
+		return $deleted + $this->deleteAll(['id <' => $record->id]);
+	}
+
+	/**
+	 * @return int
+	 */
+	protected function _cleanByAge() {
+		$age = Configure::read('DatabaseLog.maxLength');
+		if (!$age) {
+			return 0;
+		}
+
+		$date = strtotime($age);
+
+		return $this->deleteAll(['created <' => $date]);
+	}
+
+	/**
+	 * @return void
+	 */
+	public function truncate() {
+		$sql = $this->schema()->truncateSql($this->_connection);
+		foreach ($sql as $snippet) {
+			$this->_connection->execute($snippet);
 		}
 	}
 
