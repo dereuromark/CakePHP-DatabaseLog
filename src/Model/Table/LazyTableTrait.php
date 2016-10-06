@@ -13,8 +13,6 @@
 namespace DatabaseLog\Model\Table;
 
 use Cake\Core\App;
-use Cake\Database\Driver\Mysql;
-use Cake\Database\Driver\Sqlite;
 use RuntimeException;
 
 /**
