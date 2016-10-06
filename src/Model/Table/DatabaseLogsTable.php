@@ -111,7 +111,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 			'conditions' => [],
 			'group' => ['type', 'message'],
 			//'having' => $this->alias . '__count > 0',
-			'order' => ['created' => 'DESC']
+			//'order' => ['created' => 'DESC']
 		];
 		$logs = $query->find('all', $options);
 
