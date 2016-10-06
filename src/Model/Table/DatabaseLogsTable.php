@@ -107,11 +107,11 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	public function removeDuplicates() {
 		$query = $this->find();
 		$options = [
-			'fields' => ['id', 'type', 'message', 'count' => $query->func()->count('*')],
+			'fields' => ['type', 'message', 'count' => $query->func()->count('*')],
 			'conditions' => [],
 			'group' => ['type', 'message'],
 			//'having' => $this->alias . '__count > 0',
-			'order' => ['created' => 'DESC']
+			//'order' => ['created' => 'DESC']
 		];
 		$logs = $query->find('all', $options);
 
