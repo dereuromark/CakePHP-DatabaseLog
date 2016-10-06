@@ -31,6 +31,11 @@ You can adjust both values in your app.php config:
 ```
 The `limit` config defaults to `999999` as basic protection. The `maxLength` is disabled by default.
 
+## Resetting
+```
+bin/cake database_log reset
+```
+will truncate your logs table and you have a fully resetted setup.
 
 ## Contributing
 Feel free to fork and pull request.
