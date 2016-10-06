@@ -1,7 +1,7 @@
 #  CakePHP DatabaseLog Plugin Documentation
 
 
-## Testing log Writing
+## Testing log writing
 
 You can use the shell to quickly produce log entries in your database:
 ```
