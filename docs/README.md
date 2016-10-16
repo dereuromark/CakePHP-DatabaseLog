@@ -31,11 +31,23 @@ You can adjust both values in your app.php config:
 ```
 The `limit` config defaults to `999999` as basic protection. The `maxLength` is disabled by default.
 
+
 ## Resetting
 ```
 bin/cake database_log reset
 ```
 will truncate your logs table and you have a fully resetted setup.
+
+
+## Tips
+
+### 404 logs should not be part of your error log. 
+See [Tools plugin ErrorHandler documentation](https://github.com/dereuromark/cakephp-tools/blob/master/docs/Error/ErrorHandler.md).
+
+### Looking into more advanced toolings
+This is a basic tool and sure some improvement over log files. It works out of the box without hassle.
+But even so there are more professional tools like Monolog/NewRelic which can be included with plugins and provide more enterprise-ready solutions beyond what this plugin can ever offer.
+
 
 ## Contributing
 Feel free to fork and pull request.
