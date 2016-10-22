@@ -1,5 +1,6 @@
 <?php
 
+use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\Network\Exception\InternalErrorException;
 
@@ -17,4 +18,8 @@ if (!$hasDatabaseLogConfig) {
 		'cacheMetadata' => true,
 		'quoteIdentifiers' => false,
 	]);
+}
+
+if (Configure::read('debug') && !is_dir(LOGS)) {
+	mkdir(LOGS, 0770, true);
 }
