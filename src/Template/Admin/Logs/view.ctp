@@ -1,15 +1,6 @@
-<?php
-/**
- * CakePHP DatabaseLog Plugin
- *
- * Licensed under The MIT License.
- *
- * @license http://www.opensource.org/licenses/mit-license.php MIT License
- * @link https://github.com/dereuromark/CakePHP-DatabaseLog
- */ 
-?>
-<div class="database-log-plugin">
-	<div class="logs view">
+<div class="database-log-plugin row">
+
+<div class="col-xs-12 view">
 	<h1><?php echo __('Log');?></h1>
 		<dl>
 			<dt><?php echo __('type'); ?></dt>
@@ -48,10 +39,11 @@
 		</dl>
 	</div>
 
-	<div class="actions">
-		<ul>
-			<li><?php echo $this->Form->postLink(__('Delete {0}', __('Log Entry')), ['action' => 'delete', $log['id']], ['confirm' => __('Are you sure?')]); ?></li>
-			<li><?php echo $this->Html->link(__('Back'), ['action' => 'index', '?' => $this->request->query]); ?></li>
-		</ul>
+	<div class="actions col-xs-12">
+	<ul>
+		<li><?php echo $this->Form->postLink(__('Delete {0}', __('Log Entry')), ['action' => 'delete', $log['id']], ['confirm' => __('Are you sure?')]); ?></li>
+		<li><?php echo $this->Html->link(__('Back'), ['action' => 'index', '?' => $this->request->query]); ?></li>
+	</ul>
 	</div>
+
 </div>

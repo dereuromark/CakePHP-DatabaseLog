@@ -1,16 +1,7 @@
-<?php
-/**
- * CakePHP DatabaseLog Plugin
- *
- * Licensed under The MIT License.
- *
- * @license http://www.opensource.org/licenses/mit-license.php MIT License
- * @link https://github.com/dereuromark/CakePHP-DatabaseLog
- */
-?>
-<div class="database-log-plugin">
+<div class="database-log-plugin row">
 
-<div class="logs index">
+<div class="index col-xs-12">
+
 <h1>Logs</h1>
 
 <ul class="list-inline">
@@ -60,7 +51,7 @@ foreach ($types as $type) {
 	<?php echo $this->element('DatabaseLog.paging'); ?>
 
 </div>
-<div class="actions">
+<div class="actions col-xs-12">
 	<ul>
 		<li><?php echo $this->Form->postLink(__('Remove {0}', __('Duplicates')), ['action' => 'removeDuplicates']); ?></li>
 		<li><?php echo $this->Form->postLink(__('Reset {0}', __('Logs')), ['action' => 'reset'], ['confirm' => 'Sure?']); ?></li>
