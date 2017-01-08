@@ -129,6 +129,19 @@ class DatabaseLogShell extends Shell {
 	 * @return void
 	 */
 	public function monitor() {
+		$interval = Configure::read('DatabaseLog.notificationInterval');
+
+		$time = null;
+		if (file_exists(LOGS . 'export')) {
+			$time = (int)file_get_contents(LOGS . 'export');
+		}
+
+		if ($time + $interval > time()) {
+			$secondsLeft = $time + $interval - time();
+			$this->out('Just ran... Will run again in ' . round($secondsLeft / 60) . ' min');
+			return;
+		}
+
 		$types = (array)Configure::read('DatabaseLog.monitor');
 		if (!$types) {
 			$this->abort('No DatabaseLog.monitor types defined.');
@@ -136,9 +149,7 @@ class DatabaseLogShell extends Shell {
 
 		$query = $this->DatabaseLogs->find()
 			->where(['type IN' => $types]);
-		if (file_exists(LOGS . 'export')) {
-			$time = file_get_contents(LOGS . 'export');
-
+		if ($time) {
 			$query->andWhere(['created >' => date('Y-m-d H:i:s', $time)]);
 		}
 

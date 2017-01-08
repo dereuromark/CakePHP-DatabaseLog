@@ -88,6 +88,7 @@ Just enable it via Configure:
 			'notice',
 			...
 		],
+		'notificationInterval => 4 * HOUR, // In seconds
 		'monitorCallback' => function (\Cake\Event\Event $event) {
 			/** @var \DatabaseLog\Model\Table\DatabaseLogsTable $logsTable */
 			$logsTable = $event->subject();
@@ -106,6 +107,8 @@ Just enable it via Configure:
 		}
 	],
 ```
+
+The `notificationInterval` is important to set high enough, so you won't get every x minutes a new email. 
 
 The callback via Configure is optional, you can also directly attach any method of your classes to the fired `DatabaseLog.alert` event:
 ```php
