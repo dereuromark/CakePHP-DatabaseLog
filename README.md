@@ -79,9 +79,6 @@ $this->log('This is a detailed message logged to the database', 'error');
 // or
 Log::write('error', 'This is a detailed message logged to the database');
 ```
-
-Navigate to `http://www.example.com/admin/database-log/logs` to view/search/delete your logs.
-
-You can customize the template with a custom theme if necessary.
+There is also a browsable web backend you can view your logs with.
 
 See [docs](/docs) for more details.

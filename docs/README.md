@@ -31,6 +31,22 @@ You can adjust both values in your app.php config:
 ```
 The `limit` config defaults to `999999` as basic protection. The `maxLength` is disabled by default.
 
+## Backend View
+Navigate to `http://your-domain.local/admin/database-log/logs` to view/search/delete your logs.
+Make sure you loaded your plugin with `'routes' => true'` in that case.
+
+You can customize the template with a custom theme if necessary.
+
+You can also adjust the label colors of the log types with Configure and
+```php
+'DatabaseLog' => [
+	'template' => '...', // Custom template (defaults to bootstrap)
+	'map' => [
+		// Custom class mapping
+	],
+]
+```
+
 
 ## Resetting
 ```
