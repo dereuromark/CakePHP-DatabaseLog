@@ -44,9 +44,14 @@ class LogHelper extends Helper {
 	 * @return string Formatted HTML
 	 */
 	public function typeLabel($type) {
+		$map = $this->config('map');
+		if (!$map) {
+			return h($type);
+		}
+
 		$class = $this->config('defaultClass');
-		if (!empty($this->_config['map'][$type])) {
-			$class = $this->_config['map'][$type];
+		if (!empty($map[$type])) {
+			$class = $map[$type];
 		}
 
 		$template = $this->config('template');
