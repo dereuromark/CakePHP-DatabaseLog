@@ -12,8 +12,10 @@ namespace DatabaseLog\Model\Table;
 use ArrayObject;
 use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
+use Cake\Datasource\ResultSetInterface;
 use Cake\Event\Event;
 use Cake\Utility\Hash;
+use DatabaseLog\Model\Entity\DatabaseLog;
 
 class DatabaseLogsTable extends DatabaseLogAppTable {
 
@@ -34,6 +36,12 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 		$this->displayField('type');
 		$this->addBehavior('Timestamp', ['modified' => false]);
 		$this->ensureTables(['DatabaseLog.DatabaseLogs']);
+
+		$callback = Configure::read('DatabaseLog.monitorCallback');
+		if (!$callback) {
+			return;
+		}
+		$this->eventManager()->on('DatabaseLog.alert', $callback);
 	}
 
 	/**
@@ -186,6 +194,32 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 		foreach ($sql as $snippet) {
 			$this->_connection->execute($snippet);
 		}
+	}
+
+	/**
+	 * @param \Cake\Datasource\ResultSetInterface $logs
+	 * @return void
+	 */
+	public function notify(ResultSetInterface $logs) {
+		$event = new Event('DatabaseLog.alert', $this, ['logs' => $logs]);
+		$this->eventManager()->dispatch($event);
+	}
+
+	/**
+	 * @param \DatabaseLog\Model\Entity\DatabaseLog $log
+	 * @return string
+	 */
+	public function format(DatabaseLog $log) {
+		$content = $log->created . ': ' . $log->type;
+		if ($log->ip) {
+			$content .= ' - IP: ' . $log->ip;
+		}
+		if ($log->refer) {
+			$content .= ' - Referer: ' . $log->refer;
+		}
+		$content .= PHP_EOL . $log->message;
+
+		return $content;
 	}
 
 }

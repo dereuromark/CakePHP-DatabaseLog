@@ -3,6 +3,7 @@
 namespace DatabaseLog\Shell;
 
 use Cake\Console\Shell;
+use Cake\Core\Configure;
 use Cake\Log\Log;
 use Cake\Utility\Text;
 
@@ -112,14 +113,7 @@ class DatabaseLogShell extends Shell {
 				->all();
 			$contentArray = [];
 			foreach ($logs as $log) {
-				$content = $log->created . ': ' . $log->type;
-				if ($log->ip) {
-					$content .= ' - IP: ' . $log->ip;
-				}
-				if ($log->refer) {
-					$content .= ' - Referer: ' . $log->refer;
-				}
-				$content .= PHP_EOL . $log->message;
+				$content = $this->DatabaseLogs->format($log);
 
 				$contentArray[] = $content;
 			}
@@ -129,6 +123,37 @@ class DatabaseLogShell extends Shell {
 
 			$this->out('Exporting type ' . $type . ': ' . count($logs) . ' entries written to export-' . $type . '.txt');
 		}
+	}
+
+	/**
+	 * @return void
+	 */
+	public function monitor() {
+		$types = (array)Configure::read('DatabaseLog.monitor');
+		if (!$types) {
+			$this->abort('No DatabaseLog.monitor types defined.');
+		}
+
+		$query = $this->DatabaseLogs->find()
+			->where(['type IN' => $types]);
+		if (file_exists(LOGS . 'export')) {
+			$time = file_get_contents(LOGS . 'export');
+
+			$query->andWhere(['created >' => date('Y-m-d H:i:s', $time)]);
+		}
+
+		$logs = $query->order(['created' => 'DESC'])
+			->all();
+
+		if (count($logs) < 1) {
+			$this->out('All good...');
+			return;
+		}
+
+		$this->DatabaseLogs->notify($logs);
+		file_put_contents(LOGS . 'export', time());
+
+		$this->out(count($logs) . ' new log entries reported.');
 	}
 
 	/**
@@ -176,6 +201,9 @@ class DatabaseLogShell extends Shell {
 		]);
 		$parser->addSubcommand('reset', [
 			'help' => 'Resets the database, truncates all data. Use -q to skip confirmation.',
+		]);
+		$parser->addSubcommand('monitor', [
+			'help' => 'Run as cronjob to monitor your logs',
 		]);
 		$parser->addSubcommand('test_entry', [
 			'help' => 'Adds a test entry with a certain log type.',

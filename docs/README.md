@@ -39,12 +39,12 @@ You can customize the template with a custom theme if necessary.
 
 You can also adjust the label colors of the log types with Configure and
 ```php
-'DatabaseLog' => [
-	'template' => '...', // Custom template (defaults to bootstrap)
-	'map' => [
-		// Custom class mapping
-	],
-]
+	'DatabaseLog' => [
+		'template' => '...', // Custom template (defaults to bootstrap)
+		'map' => [
+			// Custom class mapping
+		],
+	]
 ```
 If you want to disable it completely, set `'map'` to `false`.
 
@@ -76,6 +76,64 @@ bin/cake database_log reset
 ```
 will truncate your logs table and you have a fully resetted setup.
 
+## Monitor
+You can run a very basic cronjob based monitoring on your log files, alerting you via eMail, SMS or alike if any critical issues arise.
+Just enable it via Configure:
+```php
+	'DatabaseLog' => [
+		'monitor' => [
+			'error',
+			'warning',
+			'notice',
+			...
+		],
+		'monitorCallback' => function (\Cake\Event\Event $event) {
+			/** @var \DatabaseLog\Model\Table\DatabaseLogsTable $logsTable */
+			$logsTable = $event->subject();
+
+			/* @var \DatabaseLog\Model\Entity\DatabaseLog[] $logs */
+			$logs = $event->data('logs');
+
+			$content = '';
+			foreach ($logs as $log) {
+				$content .= $logsTable->format($log);
+			}
+			
+			$mailer = new \Cake\Mailer\Mailer();
+			$subject = count($logs) . ' new error log entries';
+			// TODO Implement
+		}
+	],
+```
+
+The callback via Configure is optional, you can also directly attach any method of your classes to the fired `DatabaseLog.alert` event:
+```php
+class AlertTheAdmin implements EventListenerInterface {
+
+	public function implementedEvents() {
+		return [
+			'DatabaseLog.alert' => 'methodToRun',
+		];
+	}
+	
+	public function methodToRun($event, $entity) {
+		...
+	}
+
+}
+
+// Attach it somewhere
+...->eventManager()->on(new AlertTheAdmin());
+```
+
+You could even have it manually set up in your bootstrap:
+```php
+EventManager::instance()->on(
+	'DatabaseLog.alert',
+	$myCallback
+);
+```
+Read more about this in the [CakePHP docs](https://book.cakephp.org/3.0/en/core-libraries/events.html).
 
 ## Tips
 
@@ -92,6 +150,6 @@ Feel free to fork and pull request.
 
 There are a few guidelines:
 
-- Coding standards passing: `vendor/bin/sniff` to check and `vendor/bin/sniff -f` to fix.
+- Coding standards passing: `composer cs-check` to check and `composer cs-fix` to fix.
 - Tests passing for Windows and Unix: `php phpunit.phar` to run them.
 

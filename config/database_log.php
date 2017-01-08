@@ -1,13 +1,4 @@
 <?php
-/**
- * CakePHP DatabaseLog Plugin
- *
- * Licensed under The MIT License.
- *
- * @license http://www.opensource.org/licenses/mit-license.php MIT License
- * @link https://github.com/dereuromark/CakePHP-DatabaseLog
- */
-namespace DatabaseLog\Config;
 
 /**
  * DatabaseLog (Default) Configuration
@@ -15,8 +6,29 @@ namespace DatabaseLog\Config;
  * Copy this content to your config/app.php
  * and customize it to your needs.
  */
-$config = [
+
+return [
 	'DatabaseLog' => [
-		'datasource' => 'default', // DataSource to use
+		'datasource' => null, // DataSource to use, 'default' will use your live DB instead of SQLite
+		'monitor' => [
+			'error',
+			'warning',
+		],
+		'monitorCallback' => function (\Cake\Event\Event $event) {
+			/** @var \DatabaseLog\Model\Table\DatabaseLogsTable $logsTable */
+			$logsTable = $event->subject();
+
+			/* @var \DatabaseLog\Model\Entity\DatabaseLog[] $logs */
+			$logs = $event->data('logs');
+
+			$content = '';
+			foreach ($logs as $log) {
+				$content .= $logsTable->format($log);
+			}
+
+			$mailer = new \Cake\Mailer\Mailer();
+			$subject = count($logs) . ' new error log entries';
+			// TODO Implement
+		}
 	]
 ];
