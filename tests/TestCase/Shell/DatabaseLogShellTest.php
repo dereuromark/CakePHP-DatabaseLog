@@ -32,8 +32,13 @@ class DatabaseLogShellTest extends TestCase {
 	public function setUp() {
 		parent::setUp();
 
-		Configure::delete('DatabaseLog.limit');
-		Configure::delete('DatabaseLog.maxLength');
+		if (!is_dir(LOGS)) {
+			mkdir(LOGS, 0770, true);
+		}
+
+		Configure::delete('DatabaseLog');
+		Configure::write('DatabaseLog.monitor', ['info']);
+		Configure::write('DatabaseLog.notificationInterval', MINUTE);
 
 		$this->out = new ConsoleOutput();
 		$this->err = new ConsoleOutput();
@@ -81,6 +86,34 @@ class DatabaseLogShellTest extends TestCase {
 		$output = (string)$this->out->output();
 
 		$this->assertContains('entries written to export-info.txt', $output, $output);
+	}
+
+	/**
+	 * @return void
+	 */
+	public function testMonitor() {
+		if (file_exists(LOGS . 'export')) {
+			unlink(LOGS . 'export');
+		}
+
+		Log::write('info', 'one');
+
+		$this->Shell->runCommand(['monitor']);
+		$output = (string)$this->out->output();
+
+		$this->assertContains(' new log entries reported', $output, $output);
+	}
+
+	/**
+	 * @return void
+	 */
+	public function testMonitorInterval() {
+		file_put_contents(LOGS . 'export', time() - 2);
+
+		$this->Shell->runCommand(['monitor']);
+		$output = (string)$this->out->output();
+
+		$this->assertContains('Just ran... Will run again in 1 min', $output, $output);
 	}
 
 	/**
