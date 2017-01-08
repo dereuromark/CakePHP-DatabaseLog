@@ -139,6 +139,17 @@ EventManager::instance()->on(
 ```
 Read more about this in the [CakePHP docs](https://book.cakephp.org/3.0/en/core-libraries/events.html).
 
+To set up a cronjob here, you can for example use crontab:
+```
+crontab -u www-data -e
+```
+And set up something like
+```
+*/5 * * * * cd /var/www/my-app/ && bin/cake database_log monitor -q
+```
+This example would make the cronjob look every 5 minutes of there is something to alert about.
+
+
 ## Tips
 
 ### 404 logs should not be part of your error log. 
