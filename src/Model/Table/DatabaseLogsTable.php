@@ -17,6 +17,9 @@ use Cake\Event\Event;
 use Cake\Utility\Hash;
 use DatabaseLog\Model\Entity\DatabaseLog;
 
+/**
+ * @property \Cake\Database\Connection $_connection
+ */
 class DatabaseLogsTable extends DatabaseLogAppTable {
 
 	use LazyTableTrait;
@@ -55,8 +58,8 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	public function log($level, $message, array $context = []) {
 		$data = [
 			'type' => $level,
-			'message' => is_string($message) ? $message : print_r($message, true),
-			'context' => is_string($context) ? $context : print_r($context, true),
+			'message' => trim(is_string($message) ? $message : print_r($message, true)),
+			'context' => trim(is_string($context) ? $context : print_r($context, true)),
 			'count' => 1
 		];
 		$log = $this->newEntity($data);
