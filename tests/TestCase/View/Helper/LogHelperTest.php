@@ -63,4 +63,15 @@ class LogHelperTest extends TestCase {
 		$this->assertSame($expected, $result);
 	}
 
+	/**
+	 * @return void
+	 */
+	public function testTypeLabelDisabled() {
+		$this->Log->config('typeMap', false);
+
+		$result = $this->Log->typeLabel('<Sweet>');
+		$expected = '&lt;Sweet&gt;';
+		$this->assertSame($expected, $result);
+	}
+
 }
