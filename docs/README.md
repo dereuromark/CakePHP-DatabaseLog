@@ -88,7 +88,7 @@ Just enable it via Configure:
 			'notice',
 			...
 		],
-		'notificationInterval => 4 * HOUR, // In seconds
+		'notificationInterval' => 4 * HOUR, // In seconds
 		'monitorCallback' => function (\Cake\Event\Event $event) {
 			/** @var \DatabaseLog\Model\Table\DatabaseLogsTable $logsTable */
 			$logsTable = $event->subject();
