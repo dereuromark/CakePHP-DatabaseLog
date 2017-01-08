@@ -40,9 +40,10 @@ You can customize the template with a custom theme if necessary.
 You can also adjust the label colors of the log types with Configure and
 ```php
 	'DatabaseLog' => [
-		'template' => '...', // Custom template (defaults to bootstrap)
-		'map' => [
-			// Custom class mapping
+		'typeTemplate' => '...', // Custom template (defaults to bootstrap markup)
+		'typeDefaultClass => '...', // Custom class (defaults to bootstrap markup)
+		'typeMap' => [
+			// Custom class mapping (defaults to bootstrap markup)
 		],
 	]
 ```

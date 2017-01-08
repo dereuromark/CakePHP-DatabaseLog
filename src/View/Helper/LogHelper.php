@@ -19,9 +19,9 @@ class LogHelper extends Helper {
 	 * @var array
 	 */
 	protected $_defaultConfig = [
-		'template' => '<span class="label label-%s">%s</span>',
-		'defaultClass' => 'default',
-		'map' => [
+		'typeTemplate' => '<span class="label label-%s">%s</span>',
+		'typeDefaultClass' => 'default',
+		'typeMap' => [
 			'error' => 'danger',
 			'warning' => 'warning',
 			'notice' => 'warning',
@@ -44,17 +44,17 @@ class LogHelper extends Helper {
 	 * @return string Formatted HTML
 	 */
 	public function typeLabel($type) {
-		$map = $this->config('map');
+		$map = $this->config('typeMap');
 		if (!$map) {
 			return h($type);
 		}
 
-		$class = $this->config('defaultClass');
+		$class = $this->config('typeDefaultClass');
 		if (!empty($map[$type])) {
 			$class = $map[$type];
 		}
 
-		$template = $this->config('template');
+		$template = $this->config('typeTemplate');
 		return sprintf($template, $class, h($type));
 	}
 
