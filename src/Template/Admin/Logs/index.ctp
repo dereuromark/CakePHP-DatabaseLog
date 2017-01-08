@@ -9,7 +9,7 @@
 <?php
 foreach ($types as $type) {
 	echo '<li>';
-	echo $this->Html->link($type, ['controller' => 'Logs', 'action' => 'index', '?' => ['type' => $type]]);
+	echo $this->Html->link($this->Log->typeLabel($type), ['controller' => 'Logs', 'action' => 'index', '?' => ['type' => $type]], ['escape' => false]);
 	echo '</li>';
 }
 ?>
@@ -38,7 +38,7 @@ foreach ($types as $type) {
 			?>
 			<tr>
 				<td><?php echo $this->Time->nice($log['created']); ?>&nbsp;</td>
-				<td><?php echo h($log['type']); ?><br>
+				<td><?php echo $this->Log->typeLabel($log['type']); ?><br>
 					<small>(<?php echo h($log['count']); ?>x)</small></td>
 				<td><?php echo nl2br(h($message)); ?>&nbsp;</td>
 				<td class="actions">

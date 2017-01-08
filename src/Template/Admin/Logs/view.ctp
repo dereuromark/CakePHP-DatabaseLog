@@ -5,7 +5,7 @@
 		<dl>
 			<dt><?php echo __('type'); ?></dt>
 			<dd>
-				<?php echo h($log['type']); ?>
+				<?php echo $this->Log->typeLabel($log['type']); ?>
 			</dd>
 			<dt><?php echo __('Message'); ?></dt>
 			<dd>

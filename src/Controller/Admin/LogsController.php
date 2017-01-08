@@ -30,7 +30,7 @@ class LogsController extends AppController {
 	 *
 	 * @var array
 	 */
-	public $helpers = ['Time'];
+	public $helpers = ['Time', 'DatabaseLog.Log'];
 
 	/**
 	 * Setup pagination
