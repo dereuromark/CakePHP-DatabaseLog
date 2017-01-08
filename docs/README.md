@@ -46,7 +46,29 @@ You can also adjust the label colors of the log types with Configure and
 	],
 ]
 ```
+If you want to disable it completely, set `'map'` to `false`.
 
+## CLI View
+A very basic command line view is also available, especially if the web backend is not available (or the whole site in maintenance mode). 
+```
+bin/cake database_log show [type]
+```
+
+Options:
+- `-l`/`--limit`, e.g. `-l 50,100` (defaults to 20)
+- `-v`/`--verbose` for full content
+
+## Generating text files
+In case you want store them in a different format, you can generate for example TXT files per type:
+```
+bin/cake database_log export [type]
+```
+They will be put into the same `/logs` folder by default. Type `error` would then become a `export-error.txt` file.
+
+Options:
+- `-l`/`--limit`, e.g. `-l 2000` (defaults to 100)
+
+They are on purpose `.txt` as they are not typical log files, the order is reversed (latest ones on top) just as with `show` output.
 
 ## Resetting
 ```

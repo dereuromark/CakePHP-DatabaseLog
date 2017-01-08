@@ -27,8 +27,6 @@ class DatabaseLogShellTest extends TestCase {
 	protected $Shell;
 
 	/**
-	 * setUp method
-	 *
 	 * @return void
 	 */
 	public function setUp() {
@@ -45,11 +43,11 @@ class DatabaseLogShellTest extends TestCase {
 			->setMethods(['in', '_stop'])
 			->setConstructorArgs([$io])
 			->getMock();
+
+		$this->Logs = TableRegistry::get('DatabaseLog.DatabaseLogs');
 	}
 
 	/**
-	 * tearDown
-	 *
 	 * @return void
 	 */
 	public function tearDown() {
@@ -60,12 +58,38 @@ class DatabaseLogShellTest extends TestCase {
 	/**
 	 * @return void
 	 */
+	public function testShow() {
+		Log::write('info', 'one');
+
+		$this->Shell->runCommand(['show']);
+		$output = (string)$this->out->output();
+
+		$this->assertContains(': info - one', $output, $output);
+	}
+
+	/**
+	 * @return void
+	 */
+	public function testExport() {
+		if (!is_dir(LOGS)) {
+			mkdir(LOGS, 0770, true);
+		}
+
+		Log::write('info', 'one');
+
+		$this->Shell->runCommand(['export']);
+		$output = (string)$this->out->output();
+
+		$this->assertContains('entries written to export-info.txt', $output, $output);
+	}
+
+	/**
+	 * @return void
+	 */
 	public function testCleanup() {
 		Log::write('info', 'one');
 		Log::write('info', 'two');
 		Log::write('info', 'three');
-
-		$this->Logs = TableRegistry::get('DatabaseLog.DatabaseLogs');
 
 		$this->Logs->updateAll(['created' => date('Y-m-d H:i:s', time() - DAY)], '1 = 1');
 
@@ -94,8 +118,6 @@ class DatabaseLogShellTest extends TestCase {
 	 * @return void
 	 */
 	public function testReset() {
-		$this->Logs = TableRegistry::get('DatabaseLog.DatabaseLogs');
-
 		Log::write('info', 'six');
 
 		$count = $this->Logs->find()->count();
@@ -111,7 +133,6 @@ class DatabaseLogShellTest extends TestCase {
 	 * @return void
 	 */
 	public function testTestEntry() {
-		$this->Logs = TableRegistry::get('DatabaseLog.DatabaseLogs');
 		$count = $this->Logs->find()->count();
 
 		$this->Shell->runCommand(['test_entry']);
@@ -126,8 +147,6 @@ class DatabaseLogShellTest extends TestCase {
 	 * @return void
 	 */
 	public function testTestEntryCustom() {
-		$this->Logs = TableRegistry::get('DatabaseLog.DatabaseLogs');
-
 		$this->Shell->runCommand(['test_entry', 'warning', 'My warning']);
 
 		$log = $this->Logs->find()->order(['id' => 'DESC'])->first();
