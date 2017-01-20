@@ -27,6 +27,11 @@ While file handling requires file log rotation and splitting into chunks of (com
 This plugin internally combines log entries of the exact same "content" into a single row with an increased count.
 Additionally you would want to add a cronjob triggered cleanup shell to keep the total size and row count below a certain threshold.
 
+### Demo
+Clone and install the [sandbox app](https://github.com/dereuromark/cakephp-sandbox), create some errors and browse the admin backend for the logs overview.
+
+Or just attach it to your app directly. Time needed: 5 minutes.
+
 ## Install
 
 ### Composer (preferred)
