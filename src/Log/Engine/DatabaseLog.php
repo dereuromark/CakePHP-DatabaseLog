@@ -44,7 +44,6 @@ class DatabaseLog extends BaseLog {
 	 * @return bool Success
 	 */
 	public function log($level, $message, array $context = []) {
-
 		if ($this->config('type')) {
 			$level = $this->config('type');
 		}
