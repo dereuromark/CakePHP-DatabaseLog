@@ -67,6 +67,7 @@ class LogsController extends AppController {
 		];
 
 		$this->set('logs', $this->paginate($query));
+		$this->set('logType', $type);
 		$this->set('types', $this->DatabaseLogs->getTypes());
 	}
 
@@ -107,7 +108,14 @@ class LogsController extends AppController {
 	public function reset() {
 		$this->request->allowMethod('post');
 
-		$this->DatabaseLogs->truncate();
+		$type = $this->request->query('type');
+		if ($type) {
+			$this->DatabaseLogs->deleteAll([
+				'type' => $type
+			]);
+		} else {
+			$this->DatabaseLogs->truncate();
+		}
 
 		return $this->redirect(['action' => 'index']);
 	}
