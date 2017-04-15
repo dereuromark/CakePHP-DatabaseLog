@@ -84,7 +84,7 @@ class LogsController extends AppController {
 	 * Delete action
 	 *
 	 * @param null|int $id The log ID to delete.
-	 * @return \Cake\Network\Response|null
+	 * @return \Cake\Http\Response|null
 	 */
 	public function delete($id = null) {
 		$this->request->allowMethod('post');
@@ -103,7 +103,7 @@ class LogsController extends AppController {
 	 *
 	 * Deletes all log entries.
 	 *
-	 * @return \Cake\Network\Response|null
+	 * @return \Cake\Http\Response|null
 	 */
 	public function reset() {
 		$this->request->allowMethod('post');
@@ -123,7 +123,7 @@ class LogsController extends AppController {
 	/**
 	 * Remove duplicates action
 	 *
-	 * @return \Cake\Network\Response|null
+	 * @return \Cake\Http\Response|null
 	 */
 	public function removeDuplicates() {
 		$this->request->allowMethod('post');
