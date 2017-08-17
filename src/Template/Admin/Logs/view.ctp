@@ -2,6 +2,11 @@
 
 <div class="col-xs-12 view">
 	<h1><?php echo __('Log');?></h1>
+
+<div style="float: right">
+	<?php echo $this->Html->link(__('Formatted'), [$log['id'], '?' => ['formatted' => true] + $this->request->query], ['class' => 'btn btn-default']); ?>
+</div>
+
 		<dl>
 			<dt><?php echo __('type'); ?></dt>
 			<dd>
@@ -9,12 +14,19 @@
 			</dd>
 			<dt><?php echo __('Message'); ?></dt>
 			<dd>
-				<?php echo trim(nl2br(h($log['message']))); ?>
+				<?php if ($this->request->query('formatted')) {
+					echo '<pre>' . trim(h($log['message'])) . '</pre>';
+				} else {
+					echo trim(nl2br(h($log['message'])));
+				} ?>
 			</dd>
 			<dt><?php echo __('Context'); ?></dt>
 			<dd>
-				<?php echo nl2br(h($log['context'])); ?>
-				&nbsp;
+				<?php if ($this->request->query('formatted')) {
+					echo '<pre>' . trim(h($log['context'])) . '</pre>';
+				} else {
+					echo trim(nl2br(h($log['context'])));
+				} ?>
 			</dd>
 			<dt><?php echo __('Uri'); ?></dt>
 			<dd>
