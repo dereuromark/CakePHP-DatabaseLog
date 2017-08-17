@@ -14,7 +14,7 @@ use Cake\ORM\Entity;
  * @property string $refer
  * @property string $user_agent
  * @property int $count
- * @property \Cake\I18n\Time $created
+ * @property \Cake\I18n\FrozenTime $created
  */
 class DatabaseLog extends Entity {
 

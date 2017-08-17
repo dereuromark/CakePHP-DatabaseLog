@@ -19,6 +19,14 @@ use DatabaseLog\Model\Entity\DatabaseLog;
 
 /**
  * @property \Cake\Database\Connection $_connection
+ * @method \DatabaseLog\Model\Entity\DatabaseLog get($primaryKey, $options = [])
+ * @method \DatabaseLog\Model\Entity\DatabaseLog newEntity($data = null, array $options = [])
+ * @method \DatabaseLog\Model\Entity\DatabaseLog[] newEntities(array $data, array $options = [])
+ * @method \DatabaseLog\Model\Entity\DatabaseLog|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \DatabaseLog\Model\Entity\DatabaseLog patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \DatabaseLog\Model\Entity\DatabaseLog[] patchEntities($entities, array $data, array $options = [])
+ * @method \DatabaseLog\Model\Entity\DatabaseLog findOrCreate($search, callable $callback = null, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class DatabaseLogsTable extends DatabaseLogAppTable {
 

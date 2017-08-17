@@ -1,3 +1,8 @@
+<?php
+/**
+ * @var \App\View\AppView $this
+ */
+?>
 <div class="database-log-plugin row">
 
 <div class="col-xs-12 view">
