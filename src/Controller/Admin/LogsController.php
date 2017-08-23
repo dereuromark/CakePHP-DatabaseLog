@@ -38,7 +38,7 @@ class LogsController extends AppController {
 	 * @var array
 	 */
 	public $paginate = [
-		'order' => ['DatabaseLogs.id' => 'DESC'],
+		'order' => ['DatabaseLogs.created' => 'DESC'],
 		'fields' => [
 			'DatabaseLogs.created',
 			'DatabaseLogs.type',
@@ -62,9 +62,6 @@ class LogsController extends AppController {
 			$conditions['type'] = $type;
 		}
 		$query = $this->DatabaseLogs->find()->where($conditions);
-		$this->paginate = [
-			'order' => ['created' => 'DESC'],
-		];
 
 		$this->set('logs', $this->paginate($query));
 		$this->set('logType', $type);

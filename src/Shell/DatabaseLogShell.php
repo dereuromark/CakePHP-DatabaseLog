@@ -66,7 +66,7 @@ class DatabaseLogShell extends Shell {
 			$limit = (int)$elements[1];
 		}
 
-		/* @var \DatabaseLog\Model\Entity\DatabaseLog[] $logs */
+		/** @var \DatabaseLog\Model\Entity\DatabaseLog[] $logs */
 		$logs = $query->order(['created' => 'DESC'])
 			->limit($limit)
 			->offset($offset)
@@ -106,7 +106,7 @@ class DatabaseLogShell extends Shell {
 		foreach ($types as $type) {
 			$query = $this->DatabaseLogs->find();
 
-			/* @var \DatabaseLog\Model\Entity\DatabaseLog[] $logs */
+			/** @var \DatabaseLog\Model\Entity\DatabaseLog[] $logs */
 			$logs = $query->where(['type' => $type])
 				->limit($limit)
 				->order(['created' => 'DESC'])
