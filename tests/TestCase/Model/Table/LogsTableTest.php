@@ -37,6 +37,7 @@ class LogsTableTest extends TestCase {
 	 */
 	public function setUp() {
 		$this->Logs = TableRegistry::get('DatabaseLog.DatabaseLogs');
+		$this->Logs->truncate();
 
 		parent::setUp();
 	}
@@ -132,7 +133,7 @@ class LogsTableTest extends TestCase {
 		$this->Logs->removeDuplicates();
 
 		$resAfter = $this->Logs->find()->count();
-		$this->assertSame($resBefore - 1, $resAfter);
+		$this->assertSame($resBefore - 1, $resAfter, 'Res after is ' . $resAfter . ' but expected ' . ($resBefore - 1));
 	}
 
 }

@@ -27,6 +27,21 @@ class DatabaseLogShellTest extends TestCase {
 	protected $Shell;
 
 	/**
+	 * @var \DatabaseLog\Model\Table\DatabaseLogsTable
+	 */
+	protected $Logs;
+
+	/**
+	 * @var \Tools\TestSuite\ConsoleOutput
+	 */
+	protected $out;
+
+	/**
+	 * @var \Tools\TestSuite\ConsoleOutput
+	 */
+	protected $err;
+
+	/**
 	 * @return void
 	 */
 	public function setUp() {
@@ -50,6 +65,7 @@ class DatabaseLogShellTest extends TestCase {
 			->getMock();
 
 		$this->Logs = TableRegistry::get('DatabaseLog.DatabaseLogs');
+		$this->Logs->truncate();
 	}
 
 	/**
