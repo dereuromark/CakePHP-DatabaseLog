@@ -32,12 +32,12 @@ class DatabaseLogShellTest extends TestCase {
 	protected $Logs;
 
 	/**
-	 * @var ConsoleOutput
+	 * @var \Tools\TestSuite\ConsoleOutput
 	 */
 	protected $out;
 
 	/**
-	 * @var ConsoleOutput
+	 * @var \Tools\TestSuite\ConsoleOutput
 	 */
 	protected $err;
 
