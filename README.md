@@ -40,9 +40,13 @@ composer require dereuromark/cakephp-databaselog
 ```
 
 ## Setup
-Enable the plugin in your `config/bootstrap.php` or call
+Enable the plugin in your `config/bootstrap.php`:
+ ```php
+ Plugin::load('DatabaseLog', ['bootstrap' => true]);
+ ```
+or just call:
 ```
-bin/cake plugin load DatabaseLog
+bin/cake plugin load DatabaseLog -b
 ```
 
 You can simply modify the existing config entries in your `config/app.php`:
