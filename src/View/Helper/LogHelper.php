@@ -6,7 +6,7 @@ use Cake\View\Helper;
 use Cake\View\View;
 
 /**
- * @property \Cake\View\Helper\HtmlHelper $Html;
+ * @property \Cake\View\Helper\HtmlHelper $Html
  */
 class LogHelper extends Helper {
 

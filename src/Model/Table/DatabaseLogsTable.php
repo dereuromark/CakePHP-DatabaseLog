@@ -18,7 +18,6 @@ use Cake\Utility\Hash;
 use DatabaseLog\Model\Entity\DatabaseLog;
 
 /**
- * @property \Cake\Database\Connection $_connection
  * @method \DatabaseLog\Model\Entity\DatabaseLog get($primaryKey, $options = [])
  * @method \DatabaseLog\Model\Entity\DatabaseLog newEntity($data = null, array $options = [])
  * @method \DatabaseLog\Model\Entity\DatabaseLog[] newEntities(array $data, array $options = [])
