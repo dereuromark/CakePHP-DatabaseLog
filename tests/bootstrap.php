@@ -4,7 +4,6 @@
  */
 
 use Cake\Routing\DispatcherFactory;
-use TestApp\Controller\AppController;
 
 if (!defined('DS')) {
 	define('DS', DIRECTORY_SEPARATOR);
