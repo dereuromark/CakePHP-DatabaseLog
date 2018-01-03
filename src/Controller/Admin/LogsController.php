@@ -38,7 +38,7 @@ class LogsController extends AppController {
 	 * @var array
 	 */
 	public $paginate = [
-		'order' => ['DatabaseLogs.id' => 'DESC'],
+		'order' => ['DatabaseLogs.created' => 'DESC'],
 		'fields' => [
 			'DatabaseLogs.created',
 			'DatabaseLogs.type',
@@ -50,7 +50,7 @@ class LogsController extends AppController {
 	/**
 	 * Index/Overview action
 	 *
-	 * @return void
+	 * @return \Cake\Http\Response|null
 	 */
 	public function index() {
 		$types = $this->DatabaseLogs->getTypes();
@@ -62,9 +62,6 @@ class LogsController extends AppController {
 			$conditions['type'] = $type;
 		}
 		$query = $this->DatabaseLogs->find()->where($conditions);
-		$this->paginate = [
-			'order' => ['created' => 'DESC'],
-		];
 
 		$this->set('logs', $this->paginate($query));
 		$this->set('logType', $type);
@@ -73,7 +70,7 @@ class LogsController extends AppController {
 
 	/**
 	 * @param null|int $id The log ID to view.
-	 * @return void
+	 * @return \Cake\Http\Response|null
 	 */
 	public function view($id = null) {
 		$log = $this->DatabaseLogs->get($id);

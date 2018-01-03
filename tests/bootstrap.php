@@ -4,9 +4,10 @@
  */
 
 use Cake\Routing\DispatcherFactory;
-use TestApp\Controller\AppController;
 
-define('DS', DIRECTORY_SEPARATOR);
+if (!defined('DS')) {
+	define('DS', DIRECTORY_SEPARATOR);
+}
 define('ROOT', dirname(__DIR__));
 define('APP_DIR', 'src');
 
@@ -32,7 +33,7 @@ require dirname(__DIR__) . '/vendor/autoload.php';
 require CORE_PATH . 'config/bootstrap.php';
 
 Cake\Core\Configure::write('App', [
-	'namespace' => 'TestApp',
+	'namespace' => 'App',
 	'paths' => [
 		'templates' => [ROOT . DS . 'tests' . DS . 'test_app' . DS . 'src' . DS . 'Template' . DS],
 	]
@@ -78,8 +79,6 @@ Cake\Core\Plugin::load('DatabaseLog', ['path' => ROOT . DS, 'autoload' => true, 
 
 DispatcherFactory::add('Routing');
 DispatcherFactory::add('ControllerFactory');
-
-class_alias(AppController::class, 'App\Controller\AppController');
 
 // Ensure default test connection is defined
 if (!getenv('db_class')) {

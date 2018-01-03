@@ -159,6 +159,10 @@ See [Tools plugin ErrorHandler documentation](https://github.com/dereuromark/cak
 This is a basic tool and sure some improvement over log files. It works out of the box without hassle.
 But even so there are more professional tools like Monolog/NewRelic which can be included with plugins and provide more enterprise-ready solutions beyond what this plugin can ever offer.
 
+### Disabling for tests
+If you do not want an extra "test_database_log" database for testing, you can specifically for testing go back to files again.
+Just read the Log configs, set the `'className'` back to `'File'` for each and dropConfig() + setConfig() them.
+Then your tests should just use basic file writing for logs again.
 
 ## Contributing
 Feel free to fork and pull request.
