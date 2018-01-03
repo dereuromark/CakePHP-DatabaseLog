@@ -13,6 +13,10 @@ class InitDatabaseLogs extends AbstractMigration {
 	 * @return void
 	 */
 	public function up() {
+		if ($this->hasTable('database_logs')) {
+			return;
+		}
+
 		$this->table('database_logs')
 			->addColumn('type', 'string', [
 				'default' => null,
