@@ -43,8 +43,13 @@ foreach ($types as $type) {
 			?>
 			<tr>
 				<td><?php echo $this->Time->nice($log['created']); ?>&nbsp;</td>
-				<td><?php echo $this->Log->typeLabel($log['type']); ?><br>
-					<small>(<?php echo h($log['count']); ?>x)</small></td>
+				<td><?php echo $this->Log->typeLabel($log['type']); ?>
+					<?php if (false) { ?>
+						<div class="log-count">
+							<small>(<?php echo h($log['count']); ?>x)</small>
+						</div>
+					<?php } ?>
+				</td>
 				<td><?php echo nl2br(h($message)); ?>&nbsp;</td>
 				<td class="actions">
 					<?php echo $this->Html->link(__('Details'), ['action' => 'view', $log['id'], '?' => $this->request->query]); ?>
