@@ -13,10 +13,10 @@ class AlterDatabaseLogs extends AbstractMigration
     public function change()
     {
         $table = $this->table('database_logs');
-		$table->changeColumn('uri', 'text', [
-			'default' => null,
-			'null' => true,
-		]);
+        $table->changeColumn('uri', 'text', [
+            'default' => null,
+            'null' => true,
+        ]);
         $table->update();
     }
 }
