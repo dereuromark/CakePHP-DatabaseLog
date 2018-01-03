@@ -44,7 +44,7 @@ foreach ($types as $type) {
 			<tr>
 				<td><?php echo $this->Time->nice($log['created']); ?>&nbsp;</td>
 				<td><?php echo $this->Log->typeLabel($log['type']); ?>
-					<?php if (false) { ?>
+					<?php if ($log['count'] > 1) { ?>
 						<div class="log-count">
 							<small>(<?php echo h($log['count']); ?>x)</small>
 						</div>
