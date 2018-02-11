@@ -38,7 +38,7 @@ class DatabaseLog extends BaseLog {
 	/**
 	 * Write the log to database
 	 *
-	 * @param mixed $level
+	 * @param string $level
 	 * @param string $message
 	 * @param array $context
 	 * @return bool Success
@@ -46,6 +46,8 @@ class DatabaseLog extends BaseLog {
 	public function log($level, $message, array $context = []) {
 		if ($this->config('type')) {
 			$level = $this->config('type');
+		} elseif ($this->config('file')) {
+			$level = $this->config('file');
 		}
 
 		return $this->Logs->log($level, $message, $context);

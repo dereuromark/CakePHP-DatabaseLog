@@ -3,6 +3,8 @@
 /tmp/
 /composer.lock
 /composer.phar
+/config/Migrations/schema-dump-default.lock
+
 # IDE and editor specific files #
 #################################
 /nbproject
