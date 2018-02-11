@@ -151,11 +151,11 @@ This example would make the cronjob look every 5 minutes of there is something t
 
 ## Setting up a custom type
 Let's say, you want to collect the (email) bounces, and for that you want to use an own type.
-For filesystem this would then by `bounce.log` (even though this doesn't work even!).
+For filesystem this would then by `bounce.log` (using `'file' => 'bounce'` config).
 
 With this plugin it is as easy as scoping it and having a listener for this scope:
 ```php
-$this->log($email, LOG_INFO, ['scope' => 'bounce']);
+$this->log($email, 'info', ['scope' => 'bounce']);
 ```
 
 And this would be your config:
@@ -164,7 +164,7 @@ And this would be your config:
 		...
 		'bounce' => [
 			'className' => 'DatabaseLog.Database',
-			'type' => 'bounce',
+			'type' => 'bounce', // also works with FileLog `file` key
 			'levels' => ['info'],
 			'scopes' => ['bounce'],
 		],
