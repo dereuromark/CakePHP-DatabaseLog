@@ -39,20 +39,21 @@ before_script:
 
   - if [[ $PHPCS != 1 ]]; then composer require phpunit/phpunit:"^5.7.14|^6.0"; fi
 
-  - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'CREATE DATABASE cakephp_test;'; fi"
-  - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'CREATE DATABASE cakephp_test;' -U postgres; fi"
+  - if [[ $DB == 'mysql' ]]; then mysql -e 'CREATE DATABASE cakephp_test;' ; fi
+  - if [[ $DB == 'pgsql' ]]; then psql -c 'CREATE DATABASE cakephp_test;' -U postgres ; fi
 
   - phpenv rehash
   - set +H
   - cp phpunit.xml.dist phpunit.xml
 
 script:
-  - sh -c "if [ '$DEFAULT' = '1' ]; then vendor/bin/phpunit; fi"
-  - sh -c "if [ '$PHPCS' = '1' ]; then composer cs-check ; fi"
+  - if [[ $DEFAULT == 1 ]]; then vendor/bin/phpunit; fi
 
-  - sh -c "if [ '$CODECOVERAGE' = '1' ]; then vendor/bin/phpunit --coverage-clover=clover.xml || true; fi"
-  - sh -c "if [ '$CODECOVERAGE' = '1' ]; then wget -O codecov.sh https://codecov.io/bash; fi"
-  - sh -c "if [ '$CODECOVERAGE' = '1' ]; then bash codecov.sh; fi"
+  - if [[ $PHPCS == 1 ]]; then composer cs-check ; fi
+
+  - if [[ $CODECOVERAGE == 1 ]]; then vendor/bin/phpunit --coverage-clover=clover.xml || true ; fi
+  - if [[ $CODECOVERAGE == 1 ]]; then wget -O codecov.sh https://codecov.io/bash ; fi
+  - if [[ $CODECOVERAGE == 1 ]]; then bash codecov.sh ; fi
 
 notifications:
   email: false
