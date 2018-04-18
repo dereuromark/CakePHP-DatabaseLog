@@ -113,7 +113,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	*/
 	public function getTypes() {
 		$types = $this->find()->select(['type'])->distinct('type')->order('type ASC')->toArray();
-		return Hash::extract($types, '{n}.type');
+		return (array)Hash::extract($types, '{n}.type');
 	}
 
 	/**

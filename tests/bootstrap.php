@@ -71,9 +71,9 @@ $config = [
 		],
 	],
 ];
-Cake\Log\Log::config($config['Log']);
+Cake\Log\Log::setConfig($config['Log']);
 
-Cake\Cache\Cache::config($cache);
+Cake\Cache\Cache::setConfig($cache);
 
 Cake\Core\Plugin::load('DatabaseLog', ['path' => ROOT . DS, 'autoload' => true, 'bootstrap' => false, 'routes' => true]);
 
@@ -86,7 +86,7 @@ if (!getenv('db_class')) {
 	putenv('db_dsn=sqlite::memory:');
 }
 
-Cake\Datasource\ConnectionManager::config('test', [
+Cake\Datasource\ConnectionManager::setConfig('test', [
 	'className' => 'Cake\Database\Connection',
 	'driver' => getenv('db_class'),
 	'dsn' => getenv('db_dsn'),
@@ -98,7 +98,7 @@ Cake\Datasource\ConnectionManager::config('test', [
 	'cacheMetadata' => true,
 ]);
 
-Cake\Datasource\ConnectionManager::config('test_database_log', [
+Cake\Datasource\ConnectionManager::setConfig('test_database_log', [
 	'className' => 'Cake\Database\Connection',
 	'driver' => getenv('db_class'),
 	'dsn' => getenv('db_dsn'),

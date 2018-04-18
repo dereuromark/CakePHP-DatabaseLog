@@ -9,7 +9,7 @@
 
 DatabaseLog engine for CakePHP applications.
 
-**This branch is for CakePHP 3.x**
+**This branch is for CakePHP 3.5+**
 
 ## Features
 

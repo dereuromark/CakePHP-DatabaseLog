@@ -18,7 +18,7 @@ use Cake\ORM\TableRegistry;
 class DatabaseLog extends BaseLog {
 
 	/**
-	 * Model object placeholder
+	 * Model object
 	 *
 	 * @var \DatabaseLog\Model\Table\DatabaseLogsTable
 	 */
@@ -32,7 +32,9 @@ class DatabaseLog extends BaseLog {
 	public function __construct($config = []) {
 		parent::__construct($config);
 		$model = !empty($config['model']) ? $config['model'] : 'DatabaseLog.DatabaseLogs';
-		$this->Logs = TableRegistry::get($model);
+		/** @var \DatabaseLog\Model\Table\DatabaseLogsTable $Logs */
+		$Logs = TableRegistry::get($model);
+		$this->Logs = $Logs;
 	}
 
 	/**
@@ -44,10 +46,10 @@ class DatabaseLog extends BaseLog {
 	 * @return bool Success
 	 */
 	public function log($level, $message, array $context = []) {
-		if ($this->config('type')) {
-			$level = $this->config('type');
-		} elseif ($this->config('file')) {
-			$level = $this->config('file');
+		if ($this->getConfig('type')) {
+			$level = $this->getConfig('type');
+		} elseif ($this->getConfig('file')) {
+			$level = $this->getConfig('file');
 		}
 
 		return $this->Logs->log($level, $message, $context);

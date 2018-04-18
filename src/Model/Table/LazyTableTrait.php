@@ -37,7 +37,7 @@ trait LazyTableTrait {
 	 * @throws \RuntimeException When fixtures are missing/unknown/fail.
 	 */
 	public function ensureTables(array $fixtures) {
-		$connection = $this->connection();
+		$connection = $this->getConnection();
 
 		if (static::$invoked) {
 			// When exceptions are encountered we try to avoid loops
@@ -45,7 +45,7 @@ trait LazyTableTrait {
 		}
 		static::$invoked = true;
 
-		$schema = $connection->schemaCollection();
+		$schema = $connection->getSchemaCollection();
 		$existing = $schema->listTables();
 
 		foreach ($fixtures as $name) {
