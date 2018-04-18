@@ -65,8 +65,8 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	public function log($level, $message, array $context = []) {
 		$data = [
 			'type' => $level,
-			'message' => trim(is_string($message) ? $message : print_r($message, true)),
-			'context' => trim(is_string($context) ? $context : print_r($context, true)),
+			'message' => trim($message),
+			'context' => trim(print_r($context, true)),
 			'count' => 1
 		];
 		$log = $this->newEntity($data);

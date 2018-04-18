@@ -56,7 +56,7 @@ class DatabaseLogShell extends Shell {
 			$type = Text::tokenize($type);
 			$query->where(['type IN' => $type]);
 		}
-		$limit = $this->param('limit');
+		$limit = (int)$this->param('limit');
 		$offset = null;
 		if (!$limit) {
 			$limit = 20;
@@ -96,12 +96,12 @@ class DatabaseLogShell extends Shell {
 	 */
 	public function export($type = null) {
 		if ($type) {
-			$types = Text::tokenize($type);
+			$types = (array)Text::tokenize($type);
 		} else {
 			$types = $this->DatabaseLogs->getTypes();
 		}
 
-		$limit = $this->param('limit') ?: 100;
+		$limit = (int)$this->param('limit') ?: 100;
 
 		foreach ($types as $type) {
 			$query = $this->DatabaseLogs->find();
