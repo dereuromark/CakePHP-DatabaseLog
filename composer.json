@@ -31,7 +31,7 @@
 	},
 	"require-dev": {
 		"fig-r/psr2r-sniffer": "dev-master",
-		"dereuromark/cakephp-tools": "dev-master"
+		"dereuromark/cakephp-tools": "^1.5"
 	},
 	"autoload": {
 		"psr-4": {
