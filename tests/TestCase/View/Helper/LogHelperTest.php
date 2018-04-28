@@ -67,7 +67,7 @@ class LogHelperTest extends TestCase {
 	 * @return void
 	 */
 	public function testTypeLabelDisabled() {
-		$this->Log->config('typeMap', false);
+		$this->Log->setConfig('typeMap', false);
 
 		$result = $this->Log->typeLabel('<Sweet>');
 		$expected = '&lt;Sweet&gt;';

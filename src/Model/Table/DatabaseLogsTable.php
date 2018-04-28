@@ -43,7 +43,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	 * @return void
 	 */
 	public function initialize(array $config) {
-		$this->displayField('type');
+		$this->setDisplayField('type');
 		$this->addBehavior('Timestamp', ['modified' => false]);
 		$this->ensureTables(['DatabaseLog.DatabaseLogs']);
 
@@ -51,7 +51,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 		if (!$callback) {
 			return;
 		}
-		$this->eventManager()->on('DatabaseLog.alert', $callback);
+		$this->getEventManager()->on('DatabaseLog.alert', $callback);
 	}
 
 	/**
@@ -200,7 +200,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	 * @return void
 	 */
 	public function truncate() {
-		$sql = $this->schema()->truncateSql($this->_connection);
+		$sql = $this->getSchema()->truncateSql($this->_connection);
 		foreach ($sql as $snippet) {
 			$this->_connection->execute($snippet);
 		}
@@ -212,7 +212,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	 */
 	public function notify(ResultSetInterface $logs) {
 		$event = new Event('DatabaseLog.alert', $this, ['logs' => $logs]);
-		$this->eventManager()->dispatch($event);
+		$this->getEventManager()->dispatch($event);
 	}
 
 	/**
