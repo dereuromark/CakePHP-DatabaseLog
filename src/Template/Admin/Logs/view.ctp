@@ -9,7 +9,7 @@
 	<h1><?php echo __('Log');?></h1>
 
 <div style="float: right">
-	<?php echo $this->Html->link(__('Formatted'), [$log['id'], '?' => ['formatted' => true] + $this->request->query], ['class' => 'btn btn-default']); ?>
+	<?php echo $this->Html->link(__('Formatted'), [$log['id'], '?' => ['formatted' => true] + $this->request->getQuery()], ['class' => 'btn btn-default']); ?>
 </div>
 
 		<dl>
@@ -19,7 +19,7 @@
 			</dd>
 			<dt><?php echo __('Message'); ?></dt>
 			<dd>
-				<?php if ($this->request->query('formatted')) {
+				<?php if ($this->request->getQuery('formatted')) {
 					echo '<pre>' . trim(h($log['message'])) . '</pre>';
 				} else {
 					echo trim(nl2br(h($log['message'])));
@@ -27,7 +27,7 @@
 			</dd>
 			<dt><?php echo __('Context'); ?></dt>
 			<dd>
-				<?php if ($this->request->query('formatted')) {
+				<?php if ($this->request->getQuery('formatted')) {
 					echo '<pre>' . trim(h($log['context'])) . '</pre>';
 				} else {
 					echo trim(nl2br(h($log['context'])));
@@ -59,7 +59,7 @@
 	<div class="actions col-xs-12">
 	<ul>
 		<li><?php echo $this->Form->postLink(__('Delete {0}', __('Log Entry')), ['action' => 'delete', $log['id']], ['confirm' => __('Are you sure?')]); ?></li>
-		<li><?php echo $this->Html->link(__('Back'), ['action' => 'index', '?' => $this->request->query]); ?></li>
+		<li><?php echo $this->Html->link(__('Back'), ['action' => 'index', '?' => $this->request->getQuery()]); ?></li>
 	</ul>
 	</div>
 

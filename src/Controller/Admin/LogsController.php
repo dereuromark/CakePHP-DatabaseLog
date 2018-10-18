@@ -57,7 +57,7 @@ class LogsController extends AppController {
 		$this->set(compact('types'));
 
 		$conditions = $this->DatabaseLogs->textSearch();
-		$type = $this->request->query('type');
+		$type = $this->request->getQuery('type');
 		if ($type) {
 			$conditions['type'] = $type;
 		}
