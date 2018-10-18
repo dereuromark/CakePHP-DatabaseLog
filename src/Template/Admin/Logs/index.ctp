@@ -52,7 +52,7 @@ foreach ($types as $type) {
 				</td>
 				<td><?php echo nl2br(h($message)); ?>&nbsp;</td>
 				<td class="actions">
-					<?php echo $this->Html->link(__('Details'), ['action' => 'view', $log['id'], '?' => $this->request->query]); ?>
+					<?php echo $this->Html->link(__('Details'), ['action' => 'view', $log['id'], '?' => $this->request->getQuery()]); ?>
 					<?php echo $this->Form->postLink(__('Delete'), ['action' => 'delete', $log['id']], ['confirm' => __('Are you sure you want to delete this log # {0}?', $log['id'])]); ?>
 				</td>
 			</tr>
