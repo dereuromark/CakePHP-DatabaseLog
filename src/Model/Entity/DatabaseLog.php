@@ -7,14 +7,14 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property string $type
  * @property string $message
- * @property string $context
- * @property string $ip
- * @property string $hostname
- * @property string $uri
- * @property string $refer
- * @property string $user_agent
+ * @property string|null $context
+ * @property string|null $ip
+ * @property string|null $hostname
+ * @property string|null $uri
+ * @property string|null $refer
+ * @property string|null $user_agent
  * @property int $count
- * @property \Cake\I18n\FrozenTime $created
+ * @property \Cake\I18n\FrozenTime|null $created
  */
 class DatabaseLog extends Entity {
 
