@@ -86,14 +86,29 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 		$entity['uri'] = env('REQUEST_URI');
 		$entity['refer'] = env('HTTP_REFERER');
 		$entity['user_agent'] = env('HTTP_USER_AGENT');
+
+		if (PHP_SAPI === 'cli') {
+			if (!$entity['ip']) {
+				$entity['ip'] = gethostname();
+			}
+			if (!$entity['hostname']) {
+				$entity['hostname'] = env('USER') . '@' . env('LOGNAME');
+			}
+			if (!$entity['uri']) {
+				$entity['uri'] = 'CLI ' . str_replace(env('PWD'), '', implode(' ', (array)env('argv')));
+			}
+			if (!$entity['user_agent']) {
+				$entity['user_agent'] = env('SHELL') . ' (' . php_uname() . ')';
+			}
+		}
 	}
 
 	/**
-	* Return a text search on message
-	*
-	* @param string|null $query search string or `type@...`
-	* @return array Conditions
-	*/
+	 * Return a text search on message
+	 *
+	 * @param string|null $query search string or `type@...`
+	 * @return array Conditions
+	 */
 	public function textSearch($query = null) {
 		if ($query) {
 			if (strpos($query, 'type@') === 0) {
@@ -108,10 +123,10 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	}
 
 	/**
-	* Return all the unique types
-	*
-	* @return array Types
-	*/
+	 * Return all the unique types
+	 *
+	 * @return array Types
+	 */
 	public function getTypes() {
 		$types = $this->find()->select(['type'])->distinct('type')->order('type ASC')->toArray();
 		return (array)Hash::extract($types, '{n}.type');

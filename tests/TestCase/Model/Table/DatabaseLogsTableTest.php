@@ -16,7 +16,7 @@ use Cake\TestSuite\TestCase;
 /**
  * @coversDefaultClass \DatabaseLog\Model\Table\DatabaseLogsTable
  */
-class LogsTableTest extends TestCase {
+class DatabaseLogsTableTest extends TestCase {
 
 	/**
 	 * @var \DatabaseLog\Model\Table\DatabaseLogsTable
@@ -43,8 +43,6 @@ class LogsTableTest extends TestCase {
 	}
 
 	/**
-	 * Tests the save method
-	 *
 	 * @return void
 	 */
 	public function testSave() {
@@ -55,6 +53,11 @@ class LogsTableTest extends TestCase {
 		$log = $this->Logs->newEntity($data);
 		$res = $this->Logs->save($log);
 		$this->assertTrue(!empty($res));
+
+		$this->assertNotEmpty($log->ip);
+		$this->assertNotEmpty($log->hostname);
+		$this->assertNotEmpty($log->uri);
+		$this->assertNotEmpty($log->user_agent);
 	}
 
 	/**

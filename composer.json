@@ -30,6 +30,7 @@
 		"cakephp/cakephp": "^3.5"
 	},
 	"require-dev": {
+		"cakephp/migrations": "@stable",
 		"fig-r/psr2r-sniffer": "dev-master",
 		"dereuromark/cakephp-tools": "dev-master"
 	},

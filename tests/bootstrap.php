@@ -3,6 +3,7 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
+use Cake\Datasource\ConnectionManager;
 use Cake\Routing\DispatcherFactory;
 
 if (!defined('DS')) {
@@ -86,7 +87,7 @@ if (!getenv('db_class')) {
 	putenv('db_dsn=sqlite::memory:');
 }
 
-Cake\Datasource\ConnectionManager::setConfig('test', [
+ConnectionManager::setConfig('test', [
 	'className' => 'Cake\Database\Connection',
 	'driver' => getenv('db_class'),
 	'dsn' => getenv('db_dsn'),
@@ -98,7 +99,7 @@ Cake\Datasource\ConnectionManager::setConfig('test', [
 	'cacheMetadata' => true,
 ]);
 
-Cake\Datasource\ConnectionManager::setConfig('test_database_log', [
+ConnectionManager::setConfig('test_database_log', [
 	'className' => 'Cake\Database\Connection',
 	'driver' => getenv('db_class'),
 	'dsn' => getenv('db_dsn'),
