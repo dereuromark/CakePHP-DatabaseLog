@@ -17,7 +17,7 @@ $model = isset($model) ? $model : false;
 
 if ($model) {
 	echo $this->Form->create();
-	echo $this->Form->input('filter', ['label' => false, 'placeholder' => "$model Search", 'class' => 'clear-default']);
+	echo $this->Form->control('filter', ['label' => false, 'placeholder' => "$model Search", 'class' => 'clear-default']);
 	echo $this->Form->submit(__('Filter'), ['div' => false]);
 	echo $this->Form->end();
 }
