@@ -12,37 +12,61 @@ namespace DatabaseLog\Test\Fixture;
 use Cake\TestSuite\Fixture\TestFixture;
 
 /**
- * Log fixtures
+ * DatabaseLogsFixture
  */
 class DatabaseLogsFixture extends TestFixture {
 
-	/**
-	 * Fields
-	 *
-	 * @var array
-	 */
-	public $fields = [
-		'id' => ['type' => 'integer', 'null' => false, 'default' => null],
-		'type' => ['type' => 'string', 'null' => false, 'default' => null, 'length' => 50],
-		'message' => ['type' => 'text', 'null' => false, 'default' => null],
-		'context' => ['type' => 'text', 'null' => true, 'default' => null],
-		'created' => ['type' => 'timestamp', 'null' => true, 'default' => null],
-		'ip' => ['type' => 'string', 'null' => true, 'default' => null, 'length' => 50],
-		'hostname' => ['type' => 'string', 'null' => true, 'default' => null, 'length' => 50],
-		'uri' => ['type' => 'string', 'null' => true, 'default' => null],
-		'refer' => ['type' => 'string', 'null' => true, 'default' => null],
-		'user_agent' => ['type' => 'string', 'null' => true, 'default' => null],
-		'count' => ['type' => 'integer', 'null' => false, 'default' => 0, 'length' => 10],
-		'_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']]],
-		'_options' => []
-	];
+    /**
+     * Fields
+     *
+     * @var array
+     */
+    // @codingStandardsIgnoreStart
+    public $fields = [
+        'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
+        'type' => ['type' => 'string', 'length' => 50, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_unicode_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'message' => ['type' => 'text', 'length' => 16777215, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_unicode_ci', 'comment' => '', 'precision' => null],
+        'context' => ['type' => 'text', 'length' => 16777215, 'null' => true, 'default' => null, 'collate' => 'utf8mb4_unicode_ci', 'comment' => '', 'precision' => null],
+        'created' => ['type' => 'datetime', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
+        'ip' => ['type' => 'string', 'length' => 100, 'null' => true, 'default' => null, 'collate' => 'utf8mb4_unicode_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'hostname' => ['type' => 'string', 'length' => 100, 'null' => true, 'default' => null, 'collate' => 'utf8mb4_unicode_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'uri' => ['type' => 'string', 'length' => 255, 'null' => true, 'default' => null, 'collate' => 'utf8mb4_unicode_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'refer' => ['type' => 'string', 'length' => 255, 'null' => true, 'default' => null, 'collate' => 'utf8mb4_unicode_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'user_agent' => ['type' => 'string', 'length' => 255, 'null' => true, 'default' => null, 'collate' => 'utf8mb4_unicode_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
+        'count' => ['type' => 'integer', 'length' => 10, 'unsigned' => false, 'null' => false, 'default' => '0', 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        '_constraints' => [
+            'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
+        ],
+        '_options' => [
+            'engine' => 'InnoDB',
+            'collation' => 'utf8mb4_unicode_ci'
+        ],
+    ];
+    // @codingStandardsIgnoreEnd
 
-	/**
-	 * Records
-	 *
-	 * @var array
-	 */
-	public $records = [
-	];
+    /**
+     * Init method
+     *
+     * @return void
+     */
+    public function init()
+    {
+        $this->records = [
+            [
+                'id' => 1,
+                'type' => 'Lorem ipsum dolor sit amet',
+                'message' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
+                'context' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
+                'created' => '2018-11-18 22:17:24',
+                'ip' => 'Lorem ipsum dolor sit amet',
+                'hostname' => 'Lorem ipsum dolor sit amet',
+                'uri' => 'Lorem ipsum dolor sit amet',
+                'refer' => 'Lorem ipsum dolor sit amet',
+                'user_agent' => 'Lorem ipsum dolor sit amet',
+                'count' => 1
+            ],
+        ];
+        parent::init();
+    }
 
 }
