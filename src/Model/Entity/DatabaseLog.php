@@ -35,8 +35,7 @@ class DatabaseLog extends Entity {
 	/**
 	 * @return bool
 	 */
-	public function isCli()
-	{
+	public function isCli() {
 		return $this->uri && strpos($this->uri, 'CLI ') === 0;
 	}
 
