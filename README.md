@@ -14,6 +14,7 @@ DatabaseLog engine for CakePHP applications.
 ## Features
 
 - Easy setup and almost no dependencies.
+- Detailed log infos added for both Web and CLI log entries.
 - Defaults to SQLite as single app application light weight approach.
 - Ideal for multi app applications where logging to a file is just not convenient.
 - If DB is used, fallback to SQLite in case the DB is not reachable.
