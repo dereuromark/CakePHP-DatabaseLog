@@ -92,14 +92,19 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 				$entity['ip'] = gethostname();
 			}
 			if (!$entity['hostname']) {
-				$entity['hostname'] = env('USER') . '@' . env('LOGNAME');
+				$user = env('USER');
+				$logName = env('LOGNAME');
+				if ($user || $logName) {
+					$entity['hostname'] = $user . '@' . $logName;
+				}
 			}
 			if (!$entity['uri']) {
 				$type = 'CLI';
 				$entity['uri'] = $type . ' ' . str_replace(env('PWD'), '', implode(' ', (array)env('argv')));
 			}
 			if (!$entity['user_agent']) {
-				$entity['user_agent'] = env('SHELL') . ' (' . php_uname() . ')';
+				$shell = env('SHELL') ?: 'n/a';
+				$entity['user_agent'] = $shell . ' (' . php_uname() . ')';
 			}
 		}
 	}
