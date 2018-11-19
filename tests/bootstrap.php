@@ -4,7 +4,6 @@
  */
 
 use Cake\Datasource\ConnectionManager;
-use Cake\Routing\DispatcherFactory;
 
 if (!defined('DS')) {
 	define('DS', DIRECTORY_SEPARATOR);
@@ -77,9 +76,6 @@ Cake\Log\Log::setConfig($config['Log']);
 Cake\Cache\Cache::setConfig($cache);
 
 Cake\Core\Plugin::load('DatabaseLog', ['path' => ROOT . DS, 'autoload' => true, 'bootstrap' => false, 'routes' => true]);
-
-DispatcherFactory::add('Routing');
-DispatcherFactory::add('ControllerFactory');
 
 // Ensure default test connection is defined
 if (!getenv('db_class')) {
