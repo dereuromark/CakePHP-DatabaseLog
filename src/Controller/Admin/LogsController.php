@@ -38,13 +38,14 @@ class LogsController extends AppController {
 	 * @var array
 	 */
 	public $paginate = [
-		'order' => ['DatabaseLogs.created' => 'DESC'],
+		'order' => ['created' => 'DESC'],
 		'fields' => [
-			'DatabaseLogs.created',
-			'DatabaseLogs.type',
-			'DatabaseLogs.message',
-			'DatabaseLogs.id'
-		]
+			'created',
+			'type',
+			'uri',
+			'message',
+			'id',
+		],
 	];
 
 	/**
@@ -105,7 +106,7 @@ class LogsController extends AppController {
 	public function reset() {
 		$this->request->allowMethod('post');
 
-		$type = $this->request->query('type');
+		$type = $this->request->getQuery('type');
 		if ($type) {
 			$this->DatabaseLogs->deleteAll([
 				'type' => $type

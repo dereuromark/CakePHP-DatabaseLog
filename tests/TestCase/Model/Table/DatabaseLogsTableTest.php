@@ -58,6 +58,7 @@ class DatabaseLogsTableTest extends TestCase {
 		$this->assertNotEmpty($log->hostname);
 		$this->assertNotEmpty($log->uri);
 		$this->assertNotEmpty($log->user_agent);
+		$this->assertTrue($log->isCli());
 	}
 
 	/**

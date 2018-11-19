@@ -1,6 +1,7 @@
 <?php
 /**
  * @var \App\View\AppView $this
+ * @var \DatabaseLog\Model\Entity\DatabaseLog $log
  */
 ?>
 <div class="database-log-plugin row">
@@ -16,6 +17,12 @@
 			<dt><?php echo __('type'); ?></dt>
 			<dd>
 				<?php echo $this->Log->typeLabel($log['type']); ?>
+				<?php
+				$isCli = $log->isCli();
+				if ($isCli) {
+					echo '<span class="badge label label secondary round radius">cli</span>';
+				}
+				?>
 			</dd>
 			<dt><?php echo __('Message'); ?></dt>
 			<dd>
@@ -33,14 +40,18 @@
 					echo trim(nl2br(h($log['context'])));
 				} ?>
 			</dd>
-			<dt><?php echo __('Uri'); ?></dt>
+			<dt><?php echo $isCli ? __('Command') :  __('Uri'); ?></dt>
 			<dd>
 				<?php echo h($log['uri']); ?>
 			</dd>
+
+			<?php if (!$isCli) { ?>
 			<dt><?php echo __('Referrer'); ?></dt>
 			<dd>
 				<?php echo h($log['refer']); ?>
 			</dd>
+			<?php } ?>
+
 			<dt><?php echo __('Hostname'); ?></dt>
 			<dd>
 				<?php echo h($log['hostname']); ?>
@@ -49,6 +60,12 @@
 			<dd>
 				<?php echo h($log['ip']); ?>
 			</dd>
+
+			<dt><?php echo __('User Agent'); ?></dt>
+			<dd>
+				<?php echo h($log->user_agent); ?>
+			</dd>
+
 			<dt><?php echo __('Created'); ?></dt>
 			<dd>
 				<?php echo $this->Time->nice($log['created']); ?>

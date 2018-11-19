@@ -1,6 +1,7 @@
 <?php
 /**
  * @var \App\View\AppView $this
+ * @var \DatabaseLog\Model\Entity\DatabaseLog[] $logs
  */
 ?>
 <div class="database-log-plugin row">
@@ -43,14 +44,23 @@ foreach ($types as $type) {
 			?>
 			<tr>
 				<td><?php echo $this->Time->nice($log['created']); ?>&nbsp;</td>
-				<td><?php echo $this->Log->typeLabel($log['type']); ?>
+				<td>
+					<?php echo $this->Log->typeLabel($log['type']); ?>
+					<?php
+					if ($log->isCli()) {
+						echo '<span class="badge label label secondary round radius">cli</span>';
+					}
+					?>
+
 					<?php if ($log['count'] > 1) { ?>
 						<div class="log-count">
 							<small>(<?php echo h($log['count']); ?>x)</small>
 						</div>
 					<?php } ?>
 				</td>
-				<td><?php echo nl2br(h($message)); ?>&nbsp;</td>
+				<td>
+					<?php echo nl2br(h($message)); ?>&nbsp;
+				</td>
 				<td class="actions">
 					<?php echo $this->Html->link(__('Details'), ['action' => 'view', $log['id'], '?' => $this->request->getQuery()]); ?>
 					<?php echo $this->Form->postLink(__('Delete'), ['action' => 'delete', $log['id']], ['confirm' => __('Are you sure you want to delete this log # {0}?', $log['id'])]); ?>

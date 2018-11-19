@@ -32,4 +32,12 @@ class DatabaseLog extends Entity {
 		'id' => false,
 	];
 
+	/**
+	 * @return bool
+	 */
+	public function isCli()
+	{
+		return $this->uri && strpos($this->uri, 'CLI ') === 0;
+	}
+
 }

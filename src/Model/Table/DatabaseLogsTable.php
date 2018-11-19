@@ -95,7 +95,8 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 				$entity['hostname'] = env('USER') . '@' . env('LOGNAME');
 			}
 			if (!$entity['uri']) {
-				$entity['uri'] = 'CLI ' . str_replace(env('PWD'), '', implode(' ', (array)env('argv')));
+				$type = 'CLI';
+				$entity['uri'] = $type . ' ' . str_replace(env('PWD'), '', implode(' ', (array)env('argv')));
 			}
 			if (!$entity['user_agent']) {
 				$entity['user_agent'] = env('SHELL') . ' (' . php_uname() . ')';
