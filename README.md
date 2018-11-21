@@ -59,6 +59,7 @@ You can simply modify the existing config entries in your `config/app.php`:
 		'error' => [
 			'className' => 'DatabaseLog.Database'
 		],
+		...
 	],
 ```
 This will use the `database_log` connection and an SQLite file database by default, stored in your `logs` folder.
