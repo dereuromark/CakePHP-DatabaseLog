@@ -82,14 +82,14 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	 */
 	public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options) {
 		$entity['ip'] = env('REMOTE_ADDR');
-		$entity['hostname'] = env('HTTP_HOST');
+		$entity['hostname'] = env('HTTP_HOST') ?: gethostname();
 		$entity['uri'] = env('REQUEST_URI');
 		$entity['refer'] = env('HTTP_REFERER');
 		$entity['user_agent'] = env('HTTP_USER_AGENT');
 
 		if (PHP_SAPI === 'cli') {
-			if (!$entity['ip']) {
-				$entity['ip'] = gethostname();
+			if (!$entity['hostname']) {
+				$entity['hostname'] = env('SERVER_NAME');
 			}
 			if (!$entity['hostname']) {
 				$user = env('USER');
@@ -106,6 +106,11 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 				$shell = env('SHELL') ?: 'n/a';
 				$entity['user_agent'] = $shell . ' (' . php_uname() . ')';
 			}
+		}
+
+		$env = getenv('APPLICATION_ENV');
+		if ($env) {
+			$entity['user_agent'] .= ($entity['user_agent'] ? '' : 'n/a') . ' [' . $env . ']';
 		}
 	}
 
