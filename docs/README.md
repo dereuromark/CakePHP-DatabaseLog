@@ -18,7 +18,7 @@ You can install a cronjob to hourly trigger the cleanup shell command:
 ```
 bin/cake database_log cleanup
 ```
-See the [CakePHP Cronjob docs](http://book.cakephp.org/3.0/en/console-and-shells/cron-jobs.html) for details.
+See the [CakePHP Cronjob docs](https://book.cakephp.org/3.0/en/console-and-shells/cron-jobs.html) for details.
 
 It will combine the log entries of the same content (and increase the count), and on top
 also clean out old records, either by date or by total record count.
