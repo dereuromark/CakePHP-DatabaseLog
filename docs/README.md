@@ -80,6 +80,7 @@ will truncate your logs table and you have a fully resetted setup.
 ## Save Callback
 You can add additional infos into the stacktrace via custom `saveCallback` callable:
 ```php
+// in your app.php config
 	'DatabaseLog' => [
 		'saveCallback' => function (\DatabaseLog\Model\Entity\DatabaseLog $databaseLog) {
 			if (empty($_SESSION) || empty($_SESSION['language'])) {
