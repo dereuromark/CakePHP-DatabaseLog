@@ -23,6 +23,7 @@ class LogHelper extends Helper {
 		'typeDefaultClass' => 'default',
 		'typeMap' => [
 			'error' => 'danger',
+			'cli-error' => 'danger',
 			'warning' => 'warning',
 			'notice' => 'warning',
 			'info' => 'info',
