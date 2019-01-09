@@ -71,12 +71,13 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 			'count' => 1
 		];
 		$log = $this->newEntity($data);
+
 		return (bool)$this->save($log);
 	}
 
 	/**
 	 * @param \Cake\Event\Event $event
-	 * @param \Cake\Datasource\EntityInterface $entity
+	 * @param \DatabaseLog\Model\Entity\DatabaseLog $entity
 	 * @param \ArrayObject $options
 	 * @return void
 	 */
@@ -112,6 +113,13 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 		if ($env) {
 			$entity['user_agent'] .= ($entity['user_agent'] ? '' : 'n/a') . ' [' . $env . ']';
 		}
+
+		$callback = Configure::read('DatabaseLog.saveCallback');
+		if (!is_callable($callback)) {
+			return;
+		}
+
+		$callback($entity);
 	}
 
 	/**

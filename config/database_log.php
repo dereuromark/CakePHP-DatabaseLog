@@ -29,6 +29,14 @@ return [
 			$email = new \Cake\Mailer\Email();
 			$subject = count($logs) . ' new error log entries';
 			// TODO Implement
-		}
+		},
+		'saveCallback' => function (\DatabaseLog\Model\Entity\DatabaseLog $databaseLog) {
+			if (empty($_SESSION) || empty($_SESSION['language'])) {
+				return;
+			}
+			$currentSessionLanguage = $_SESSION['language'];
+
+			$databaseLog->message .= PHP_EOL . 'Language: ' . $currentSessionLanguage;
+		},
 	]
 ];

@@ -77,6 +77,22 @@ bin/cake database_log reset
 ```
 will truncate your logs table and you have a fully resetted setup.
 
+## Save Callback
+You can add additional infos into the stacktrace via custom `saveCallback` callable:
+```php
+	'DatabaseLog' => [
+		'saveCallback' => function (\DatabaseLog\Model\Entity\DatabaseLog $databaseLog) {
+			if (empty($_SESSION) || empty($_SESSION['language'])) {
+				return;
+			}
+			$currentSessionLanguage = $_SESSION['language'];
+
+			$databaseLog->message .= PHP_EOL . 'Language: ' . $currentSessionLanguage;
+		},
+	],
+```
+This will run after all the internal processing of the entity has been done, prior to actually saving the log.
+
 ## Monitor
 You can run a very basic cronjob based monitoring on your log files, alerting you via eMail, SMS or alike if any critical issues arise.
 Just enable it via Configure:
