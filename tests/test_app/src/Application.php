@@ -12,7 +12,6 @@ class Application extends BaseApplication {
 	 * @return \Cake\Http\MiddlewareQueue
 	 */
 	public function middleware($middleware) {
-
 		$middleware->add(new RoutingMiddleware($this));
 
 		return $middleware;
