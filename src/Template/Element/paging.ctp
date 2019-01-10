@@ -8,10 +8,13 @@
  * @link https://github.com/dereuromark/CakePHP-DatabaseLog
  * @var \App\View\AppView $this
  */
+
+use Cake\Core\Plugin;
+
 ?>
 
 <?php
-if (\Cake\Core\Plugin::loaded('Tools')) {
+if (Plugin::isLoaded('Tools')) {
 	echo $this->element('Tools.pagination');
 } else {
 ?>

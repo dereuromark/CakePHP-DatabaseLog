@@ -27,7 +27,7 @@ class DatabaseLogsTableTest extends TestCase {
 	 * @var array
 	 */
 	public $fixtures = [
-		'plugin.database_log.database_logs'
+		'plugin.DatabaseLog.DatabaseLogs'
 	];
 
 	/**
@@ -86,7 +86,7 @@ class DatabaseLogsTableTest extends TestCase {
 		$this->Logs->deleteAll('1=1');
 
 		$data = [
-			'type' => 'Foo',
+			'type' => 'foo',
 			'message' => 'some text'
 		];
 		$log = $this->Logs->newEntity($data);
@@ -94,7 +94,7 @@ class DatabaseLogsTableTest extends TestCase {
 		$this->assertTrue(!empty($res));
 
 		$data = [
-			'type' => 'Bar',
+			'type' => 'bar',
 			'message' => 'some more text'
 		];
 		$log = $this->Logs->newEntity($data);
@@ -102,7 +102,7 @@ class DatabaseLogsTableTest extends TestCase {
 		$this->assertTrue(!empty($res));
 
 		$res = $this->Logs->getTypes();
-		$this->assertSame(['Bar', 'Foo'], $res);
+		$this->assertSame(['bar' => 'bar', 'foo' => 'foo'], $res);
 	}
 
 	/**
