@@ -32,7 +32,7 @@ matrix:
 before_script:
   - if [[ $PREFER_LOWEST != 1 ]]; then composer install --prefer-source --no-interaction ; fi
   - if [[ $PREFER_LOWEST == 1 ]]; then composer update --prefer-lowest --prefer-stable --prefer-dist --no-interaction ; fi
-  - if [[ $PREFER_LOWEST == 1 ]]; then composer prefer-lowest-setup; fi
+  - if [[ $PREFER_LOWEST == 1 ]]; then composer validate-lowest-setup; fi
 
   - if [[ $PHPCS != 1 ]]; then composer require --dev phpunit/phpunit:"^5.7.14|^6.0"; fi
 
@@ -41,7 +41,7 @@ before_script:
 
 script:
   - if [[ $DEFAULT == 1 ]]; then vendor/bin/phpunit; fi
-  - if [[ $PREFER_LOWEST == 1 ]]; then vendor/bin/validate-prefer-lowest; fi
+  - if [[ $PREFER_LOWEST == 1 ]]; then composer validate-lowest; fi
 
   - if [[ $CHECKS == 1 ]]; then composer phpstan-setup && composer phpstan ; fi
   - if [[ $CHECKS == 1 ]]; then composer cs-check ; fi
