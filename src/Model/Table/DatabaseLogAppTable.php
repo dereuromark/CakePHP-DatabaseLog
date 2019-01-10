@@ -59,7 +59,7 @@ class DatabaseLogAppTable extends Table {
 	public static function isSearchEnabled() {
 		$isSearchEnabled = Configure::read('DatabaseLog.isSearchEnabled');
 		if ($isSearchEnabled === null) {
-			return Plugin::isLoaded('DatabaseLog');
+			return Plugin::isLoaded('Search');
 		}
 
 		return $isSearchEnabled !== false;
