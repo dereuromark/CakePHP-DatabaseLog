@@ -6,8 +6,7 @@
  * @var array $types
  */
 
-use Cake\Core\Configure;
-use Cake\Core\Plugin;
+use DatabaseLog\Model\Table\DatabaseLogsTable;
 
 ?>
 <div class="database-log-plugin row">
@@ -17,7 +16,7 @@ use Cake\Core\Plugin;
 <h1><?php echo $currentType ? $this->Log->typeLabel($currentType) : 'All'; ?> Logs</h1>
 
 	<?php
-	if (Configure::read('DatabaseLog.isSearchEnabled') !== false && Plugin::isLoaded('DatabaseLog')) {
+	if (DatabaseLogsTable::isSearchEnabled()) {
 		echo $this->element('DatabaseLog.search');
 	}
 	?>

@@ -41,6 +41,8 @@ Cake\Core\Configure::write('App', [
 
 Cake\Core\Configure::write('debug', true);
 
+Cake\Core\Configure::write('DatabaseLog.isSearchEnabled', true);
+
 $cache = [
 	'default' => [
 		'engine' => 'File'

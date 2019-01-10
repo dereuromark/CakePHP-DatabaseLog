@@ -10,8 +10,7 @@
 namespace DatabaseLog\Controller\Admin;
 
 use App\Controller\AppController;
-use Cake\Core\Configure;
-use Cake\Core\Plugin;
+use DatabaseLog\Model\Table\DatabaseLogsTable;
 
 /**
  * @property \DatabaseLog\Model\Table\DatabaseLogsTable $DatabaseLogs
@@ -56,7 +55,7 @@ class LogsController extends AppController {
 	public function initialize() {
 		parent::initialize();
 
-		if (Configure::read('DatabaseLog.isSearchEnabled') === false || !Plugin::isLoaded('DatabaseLog')) {
+		if (!DatabaseLogsTable::isSearchEnabled()) {
 			return;
 		}
 		$this->loadComponent('Search.Prg', [
@@ -72,7 +71,7 @@ class LogsController extends AppController {
 	public function index() {
 		$currentType = $this->request->getQuery('type');
 
-		if (Configure::read('DatabaseLog.isSearchEnabled') !== false && Plugin::isLoaded('DatabaseLog')) {
+		if (DatabaseLogsTable::isSearchEnabled()) {
 			$query = $this->DatabaseLogs->find('search', ['search' => $this->request->getQuery()]);
 		} else {
 			$conditions = $this->DatabaseLogs->textSearch();

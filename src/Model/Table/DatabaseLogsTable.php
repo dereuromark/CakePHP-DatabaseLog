@@ -11,7 +11,6 @@ namespace DatabaseLog\Model\Table;
 
 use ArrayObject;
 use Cake\Core\Configure;
-use Cake\Core\Plugin;
 use Cake\Datasource\EntityInterface;
 use Cake\Datasource\ResultSetInterface;
 use Cake\Event\Event;
@@ -48,7 +47,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	public function initialize(array $config) {
 		$this->setDisplayField('type');
 		$this->addBehavior('Timestamp', ['modified' => false]);
-		if (Configure::read('DatabaseLog.isSearchEnabled') !== false && Plugin::isLoaded('DatabaseLog')) {
+		if (static::isSearchEnabled()) {
 			$this->addBehavior('Search.Search');
 		}
 		$this->ensureTables(['DatabaseLog.DatabaseLogs']);
