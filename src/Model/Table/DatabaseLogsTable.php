@@ -28,6 +28,7 @@ use DatabaseLog\Model\Entity\DatabaseLog;
  * @method \DatabaseLog\Model\Entity\DatabaseLog findOrCreate($search, callable $callback = null, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @method \DatabaseLog\Model\Entity\DatabaseLog|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @mixin \Search\Model\Behavior\SearchBehavior
  */
 class DatabaseLogsTable extends DatabaseLogAppTable {
 
@@ -164,7 +165,8 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	 */
 	public function getTypes() {
 		$types = $this->find()->select(['type'])->distinct('type')->order('type ASC')->toArray();
-		return (array)Hash::combine($types, '{n}.type', '{n}.type');
+
+		return Hash::combine($types, '{n}.type', '{n}.type');
 	}
 
 	/**
