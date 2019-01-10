@@ -4,7 +4,6 @@
  */
 
 use Cake\Datasource\ConnectionManager;
-use Cake\Routing\DispatcherFactory;
 
 if (!defined('DS')) {
 	define('DS', DIRECTORY_SEPARATOR);
@@ -42,6 +41,8 @@ Cake\Core\Configure::write('App', [
 
 Cake\Core\Configure::write('debug', true);
 
+Cake\Core\Configure::write('DatabaseLog.isSearchEnabled', true);
+
 $cache = [
 	'default' => [
 		'engine' => 'File'
@@ -76,10 +77,7 @@ Cake\Log\Log::setConfig($config['Log']);
 
 Cake\Cache\Cache::setConfig($cache);
 
-Cake\Core\Plugin::load('DatabaseLog', ['path' => ROOT . DS, 'autoload' => true, 'bootstrap' => false, 'routes' => true]);
-
-DispatcherFactory::add('Routing');
-DispatcherFactory::add('ControllerFactory');
+Cake\Core\Plugin::getCollection()->add(new \DatabaseLog\Plugin());
 
 // Ensure default test connection is defined
 if (!getenv('db_class')) {

@@ -28,8 +28,8 @@ class LogsControllerTest extends IntegrationTestCase {
 	 * @var array
 	 */
 	public $fixtures = [
-		'plugin.database_log.database_logs',
-		'core.sessions'
+		'plugin.DatabaseLog.DatabaseLogs',
+		'core.Sessions'
 	];
 
 	/**

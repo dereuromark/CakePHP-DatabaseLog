@@ -10,6 +10,7 @@
 namespace DatabaseLog\Model\Table;
 
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
 use Cake\ORM\Table;
 
 /**
@@ -50,6 +51,18 @@ class DatabaseLogAppTable extends Table {
 	 */
 	public static function defaultConnectionName() {
 		return Configure::read('DatabaseLog.datasource') ?: 'database_log';
+	}
+
+	/**
+	 * @return bool
+	 */
+	public static function isSearchEnabled() {
+		$isSearchEnabled = Configure::read('DatabaseLog.isSearchEnabled');
+		if ($isSearchEnabled === null) {
+			return Plugin::isLoaded('DatabaseLog');
+		}
+
+		return $isSearchEnabled !== false;
 	}
 
 }

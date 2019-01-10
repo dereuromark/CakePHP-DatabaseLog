@@ -2,13 +2,24 @@
 /**
  * @var \App\View\AppView $this
  * @var \DatabaseLog\Model\Entity\DatabaseLog[] $logs
+ * @var string|null $currentType
+ * @var array $types
  */
+
+use DatabaseLog\Model\Table\DatabaseLogsTable;
+
 ?>
 <div class="database-log-plugin row">
 
 <div class="index col-xs-12">
 
-<h1><?php echo $logType ? $this->Log->typeLabel($logType) : 'All'; ?> Logs</h1>
+<h1><?php echo $currentType ? $this->Log->typeLabel($currentType) : 'All'; ?> Logs</h1>
+
+	<?php
+	if (DatabaseLogsTable::isSearchEnabled()) {
+		echo $this->element('DatabaseLog.search');
+	}
+	?>
 
 <ul class="list-inline">
 	<li><?php echo $this->Html->link('ALL', ['controller' => 'Logs', 'action' => 'index']); ?></li>
@@ -20,8 +31,6 @@ foreach ($types as $type) {
 }
 ?>
 </ul>
-
-<?php echo $this->element('DatabaseLog.admin_filter'); ?>
 
 	<table class="table list">
 		<tr>
@@ -74,8 +83,8 @@ foreach ($types as $type) {
 <div class="actions col-xs-12">
 	<ul>
 		<li><?php echo $this->Form->postLink(__('Remove {0}', __('Duplicates')), ['action' => 'removeDuplicates']); ?></li>
-		<?php if ($logType) { ?>
-			<li><?php echo $this->Form->postLink(__('Reset {0}', '"' . $logType . '" ' . __('Logs')), ['action' => 'reset', '?' => ['type' => $logType]], ['confirm' => 'Sure?']); ?></li>
+		<?php if ($currentType) { ?>
+			<li><?php echo $this->Form->postLink(__('Reset {0}', '"' . $currentType . '" ' . __('Logs')), ['action' => 'reset', '?' => ['type' => $currentType]], ['confirm' => 'Sure?']); ?></li>
 		<?php } ?>
 		<li><?php echo $this->Form->postLink(__('Reset {0}', __('Logs')), ['action' => 'reset'], ['confirm' => 'Sure?']); ?></li>
 	</ul>

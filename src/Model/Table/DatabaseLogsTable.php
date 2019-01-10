@@ -27,6 +27,7 @@ use DatabaseLog\Model\Entity\DatabaseLog;
  * @method \DatabaseLog\Model\Entity\DatabaseLog findOrCreate($search, callable $callback = null, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @method \DatabaseLog\Model\Entity\DatabaseLog|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @mixin \Search\Model\Behavior\SearchBehavior
  */
 class DatabaseLogsTable extends DatabaseLogAppTable {
 
@@ -46,6 +47,9 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	public function initialize(array $config) {
 		$this->setDisplayField('type');
 		$this->addBehavior('Timestamp', ['modified' => false]);
+		if (static::isSearchEnabled()) {
+			$this->addBehavior('Search.Search');
+		}
 		$this->ensureTables(['DatabaseLog.DatabaseLogs']);
 
 		$callback = Configure::read('DatabaseLog.monitorCallback');
@@ -53,6 +57,18 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 			return;
 		}
 		$this->getEventManager()->on('DatabaseLog.alert', $callback);
+	}
+
+	/**
+	 * @return \Search\Manager
+	 */
+	public function searchManager() {
+		$searchManager = $this->behaviors()->Search->searchManager();
+		$searchManager
+			->value('type')
+			->like('search', ['field' => ['message'], 'before' => true, 'after' => true]);
+
+		return $searchManager;
 	}
 
 	/**
@@ -148,7 +164,8 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	 */
 	public function getTypes() {
 		$types = $this->find()->select(['type'])->distinct('type')->order('type ASC')->toArray();
-		return (array)Hash::extract($types, '{n}.type');
+
+		return Hash::combine($types, '{n}.type', '{n}.type');
 	}
 
 	/**

@@ -190,6 +190,12 @@ And this would be your config:
 
 Now you can see all those in a specific new type category in your backend (probably /admin/database-log/logs?type=bounce).
 
+## Backend configuration
+
+- isSearchEnabled: Set to false if you do not want search/filtering capability.
+This is auto-detected based on [Search](https://github.com/FriendsOfCake/search) plugin being available/loaded if not disabled.
+If disabled, it will at least still be able to filter by error type.
+
 ## Tips
 
 ### 404 logs should not be part of your error log. 

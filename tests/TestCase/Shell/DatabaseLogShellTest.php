@@ -18,7 +18,7 @@ class DatabaseLogShellTest extends TestCase {
 	 * @var array
 	 */
 	public $fixtures = [
-		'plugin.database_log.database_logs'
+		'plugin.DatabaseLog.DatabaseLogs'
 	];
 
 	/**
