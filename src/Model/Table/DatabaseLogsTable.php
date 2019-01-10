@@ -11,6 +11,7 @@ namespace DatabaseLog\Model\Table;
 
 use ArrayObject;
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
 use Cake\Datasource\EntityInterface;
 use Cake\Datasource\ResultSetInterface;
 use Cake\Event\Event;
@@ -46,6 +47,9 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	public function initialize(array $config) {
 		$this->setDisplayField('type');
 		$this->addBehavior('Timestamp', ['modified' => false]);
+		if (Configure::read('DatabaseLog.isSearchEnabled') !== false && Plugin::isLoaded('DatabaseLog')) {
+			$this->addBehavior('Search.Search');
+		}
 		$this->ensureTables(['DatabaseLog.DatabaseLogs']);
 
 		$callback = Configure::read('DatabaseLog.monitorCallback');
@@ -53,6 +57,18 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 			return;
 		}
 		$this->getEventManager()->on('DatabaseLog.alert', $callback);
+	}
+
+	/**
+	 * @return \Search\Manager
+	 */
+	public function searchManager() {
+		$searchManager = $this->behaviors()->Search->searchManager();
+		$searchManager
+			->value('type')
+			->like('search', ['field' => ['message'], 'before' => true, 'after' => true]);
+
+		return $searchManager;
 	}
 
 	/**
@@ -148,7 +164,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	 */
 	public function getTypes() {
 		$types = $this->find()->select(['type'])->distinct('type')->order('type ASC')->toArray();
-		return (array)Hash::extract($types, '{n}.type');
+		return (array)Hash::combine($types, '{n}.type', '{n}.type');
 	}
 
 	/**

@@ -10,6 +10,8 @@
 namespace DatabaseLog\Controller\Admin;
 
 use App\Controller\AppController;
+use Cake\Core\Configure;
+use Cake\Core\Plugin;
 
 /**
  * @property \DatabaseLog\Model\Table\DatabaseLogsTable $DatabaseLogs
@@ -49,24 +51,41 @@ class LogsController extends AppController {
 	];
 
 	/**
+	 * @return void
+	 */
+	public function initialize() {
+		parent::initialize();
+
+		if (Configure::read('DatabaseLog.isSearchEnabled') === false || !Plugin::isLoaded('DatabaseLog')) {
+			return;
+		}
+		$this->loadComponent('Search.Prg', [
+			'actions' => ['index'],
+		]);
+	}
+
+	/**
 	 * Index/Overview action
 	 *
 	 * @return \Cake\Http\Response|null
 	 */
 	public function index() {
-		$types = $this->DatabaseLogs->getTypes();
-		$this->set(compact('types'));
+		$currentType = $this->request->getQuery('type');
 
-		$conditions = $this->DatabaseLogs->textSearch();
-		$type = $this->request->getQuery('type');
-		if ($type) {
-			$conditions['type'] = $type;
+		if (Configure::read('DatabaseLog.isSearchEnabled') !== false && Plugin::isLoaded('DatabaseLog')) {
+			$query = $this->DatabaseLogs->find('search', ['search' => $this->request->getQuery()]);
+		} else {
+			$conditions = $this->DatabaseLogs->textSearch();
+			if ($currentType) {
+				$conditions['type'] = $currentType;
+			}
+			$query = $this->DatabaseLogs->find()->where($conditions);
 		}
-		$query = $this->DatabaseLogs->find()->where($conditions);
 
-		$this->set('logs', $this->paginate($query));
-		$this->set('logType', $type);
-		$this->set('types', $this->DatabaseLogs->getTypes());
+		$logs = $this->paginate($query);
+		$types = $this->DatabaseLogs->getTypes();
+
+		$this->set(compact('logs', 'types', 'currentType'));
 	}
 
 	/**
