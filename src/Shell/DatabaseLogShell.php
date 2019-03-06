@@ -168,7 +168,7 @@ class DatabaseLogShell extends Shell {
 	}
 
 	/**
-	 * @param string|null $level
+	 * @param string|int|null $level
 	 * @param string|null $message
 	 * @param string|null $scope
 	 * @return void

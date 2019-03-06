@@ -48,7 +48,8 @@ class DatabaseLogsTableTest extends TestCase {
 	public function testSave() {
 		$data = [
 			'type' => 'Foo',
-			'message' => 'some text'
+			'summary' => 'some text',
+			'message' => 'some text',
 		];
 		$log = $this->Logs->newEntity($data);
 		$res = $this->Logs->save($log);
@@ -58,6 +59,21 @@ class DatabaseLogsTableTest extends TestCase {
 		$this->assertNotEmpty($log->uri);
 		$this->assertNotEmpty($log->user_agent);
 		$this->assertTrue($log->isCli());
+	}
+
+	/**
+	 * @return void
+	 */
+	public function testLog() {
+		$message = str_repeat('some very long text', 100);
+		$result = $this->Logs->log(LOG_ERR, $message);
+		$this->assertTrue($result);
+
+		/** @var \DatabaseLog\Model\Entity\DatabaseLog $log */
+		$log = $this->Logs->find()->orderDesc('id')->firstOrFail();
+
+		$this->assertNotEmpty($log->message);
+		$this->assertSame(255, mb_strlen($log->summary));
 	}
 
 	/**
@@ -87,7 +103,8 @@ class DatabaseLogsTableTest extends TestCase {
 
 		$data = [
 			'type' => 'foo',
-			'message' => 'some text'
+			'summary' => 'some text',
+			'message' => 'some text',
 		];
 		$log = $this->Logs->newEntity($data);
 		$res = $this->Logs->save($log);
@@ -95,11 +112,12 @@ class DatabaseLogsTableTest extends TestCase {
 
 		$data = [
 			'type' => 'bar',
+			'summary' => 'some text',
 			'message' => 'some more text'
 		];
 		$log = $this->Logs->newEntity($data);
 		$res = $this->Logs->save($log);
-		$this->assertTrue(!empty($res));
+		$this->assertTrue((bool)$res);
 
 		$res = $this->Logs->getTypes();
 		$this->assertSame(['bar' => 'bar', 'foo' => 'foo'], $res);
@@ -114,6 +132,7 @@ class DatabaseLogsTableTest extends TestCase {
 	public function testRemoveDuplicates() {
 		$data = [
 			'type' => 'Foo',
+			'summary' => 'some text',
 			'message' => 'some text'
 		];
 		$log = $this->Logs->newEntity($data);
@@ -122,6 +141,7 @@ class DatabaseLogsTableTest extends TestCase {
 
 		$data = [
 			'type' => 'Bar',
+			'summary' => 'some text',
 			'message' => 'some more text'
 		];
 		$log = $this->Logs->newEntity($data);

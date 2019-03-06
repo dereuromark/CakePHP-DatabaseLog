@@ -13,14 +13,12 @@ use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\ORM\Table;
 
-/**
- * DatabaseLog App Model
- */
 class DatabaseLogAppTable extends Table {
 
 	/**
-	 * @var array
 	 * Filter fields
+	 *
+	 * @var array
 	 */
 	public $searchFields = [];
 
