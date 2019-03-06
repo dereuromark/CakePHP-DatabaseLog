@@ -4,6 +4,8 @@ use Cake\Routing\Router;
 
 Router::prefix('admin', function (RouteBuilder $routes) {
 	$routes->plugin('DatabaseLog', ['path' => '/database-log'], function (RouteBuilder $routes) {
+		$routes->connect('/', ['controller' => 'DatabaseLog', 'action' => 'index']);
+
 		$routes->fallbacks();
 	});
 });

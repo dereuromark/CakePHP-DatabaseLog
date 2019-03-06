@@ -15,6 +15,7 @@ use Cake\ORM\Entity;
  * @property string|null $user_agent
  * @property int $count
  * @property \Cake\I18n\FrozenTime $created
+ * @property string $summary
  */
 class DatabaseLog extends Entity {
 

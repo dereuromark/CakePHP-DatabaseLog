@@ -15,6 +15,7 @@ use Cake\Datasource\EntityInterface;
 use Cake\Datasource\ResultSetInterface;
 use Cake\Event\Event;
 use Cake\Utility\Hash;
+use Cake\Utility\Text;
 use DatabaseLog\Model\Entity\DatabaseLog;
 
 /**
@@ -66,7 +67,12 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 		$searchManager = $this->behaviors()->Search->searchManager();
 		$searchManager
 			->value('type')
-			->like('search', ['field' => ['message'], 'before' => true, 'after' => true]);
+			->like('search', ['field' => ['summary'], 'before' => true, 'after' => true]);
+			/*
+			->callback('search', ['callback' => function (Query $query, array $args, Base $filter) {
+				...
+		 	}])
+			*/
 
 		return $searchManager;
 	}
@@ -80,11 +86,15 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	 * @return bool Success
 	 */
 	public function log($level, $message, array $context = []) {
+		$message = trim($message);
+		$summary = Text::truncate($message, 255);
+
 		$data = [
 			'type' => $level,
-			'message' => trim($message),
+			'summary' => $summary,
+			'message' => $message,
 			'context' => trim(print_r($context, true)),
-			'count' => 1
+			'count' => 1,
 		];
 		$log = $this->newEntity($data);
 
@@ -162,8 +172,30 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	 *
 	 * @return array Types
 	 */
+	public function getTypesWithCount() {
+		$query = $this->find();
+		$types = $query
+			->select(['type', 'count' => 'COUNT(*)'])
+			->distinct('type')
+			->order('type ASC')
+			->disableHydration()
+			->toArray();
+
+		return Hash::combine($types, '{n}.type', '{n}.count');
+	}
+
+	/**
+	 * Return all the unique types
+	 *
+	 * @return array Types
+	 */
 	public function getTypes() {
-		$types = $this->find()->select(['type'])->distinct('type')->order('type ASC')->toArray();
+		$types = $this->find()
+			->select(['type'])
+			->distinct('type')
+			->order('type ASC')
+			->disableHydration()
+			->toArray();
 
 		return Hash::combine($types, '{n}.type', '{n}.type');
 	}
@@ -183,7 +215,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 			//'having' => $this->alias . '__count > 0',
 			//'order' => ['created' => 'DESC']
 		];
-		$logs = $query->find('all', $options);
+		$logs = $query->find('all', $options)->disableHydration()->toArray();
 
 		$count = 0;
 		foreach ($logs as $key => $log) {
