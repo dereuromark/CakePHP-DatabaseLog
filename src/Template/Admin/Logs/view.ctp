@@ -24,7 +24,7 @@
 	<dl>
 		<dt><?php echo __('type'); ?></dt>
 		<dd>
-			<?php echo $this->Log->typeLabel($log['type']); ?>
+			<?php echo $this->Log->typeLabel($log->type); ?>
 			<?php
 			$isCli = $log->isCli();
 			if ($isCli) {
@@ -55,30 +55,30 @@
 		<dt><?php echo __('Context'); ?></dt>
 		<dd>
 			<?php if ($this->request->getQuery('formatted')) {
-				echo '<pre>' . trim(h($log['context'])) . '</pre>';
+				echo '<pre>' . trim(h($log->context)) . '</pre>';
 			} else {
-				echo trim(nl2br(h($log['context'])));
+				echo trim(nl2br(h($log->context)));
 			} ?>
 		</dd>
 		<dt><?php echo $isCli ? __('Command') :  __('Uri'); ?></dt>
 		<dd>
-			<?php echo h($log['uri']); ?>
+			<?php echo h($log->uri); ?>
 		</dd>
 
 		<?php if (!$isCli) { ?>
 		<dt><?php echo __('Referrer'); ?></dt>
 		<dd>
-			<?php echo h($log['refer']); ?>
+			<?php echo h($log->refer); ?>
 		</dd>
 		<?php } ?>
 
 		<dt><?php echo __('Hostname'); ?></dt>
 		<dd>
-			<?php echo h($log['hostname']); ?>
+			<?php echo h($log->hostname); ?>
 		</dd>
 		<dt><?php echo __('IP'); ?></dt>
 		<dd>
-			<?php echo h($log['ip']); ?>
+			<?php echo h($log->ip); ?>
 		</dd>
 
 		<dt><?php echo __('User Agent'); ?></dt>
@@ -88,7 +88,7 @@
 
 		<dt><?php echo __('Created'); ?></dt>
 		<dd>
-			<?php echo $this->Time->nice($log['created']); ?>
+			<?php echo $this->Time->nice($log->created); ?>
 		</dd>
 	</dl>
 
