@@ -2,7 +2,7 @@
 
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
-use Cake\Network\Exception\InternalErrorException;
+use Cake\Http\Exception\InternalErrorException;
 
 $hasDatabaseLogConfig = ConnectionManager::getConfig('database_log');
 if (!$hasDatabaseLogConfig && !in_array('sqlite', PDO::getAvailableDrivers())) {
