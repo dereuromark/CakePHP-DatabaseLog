@@ -27,7 +27,7 @@ use DatabaseLog\Model\Entity\DatabaseLog;
  * @method \DatabaseLog\Model\Entity\DatabaseLog[] patchEntities($entities, array $data, array $options = [])
  * @method \DatabaseLog\Model\Entity\DatabaseLog findOrCreate($search, callable $callback = null, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
- * @method \DatabaseLog\Model\Entity\DatabaseLog|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \DatabaseLog\Model\Entity\DatabaseLog saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @mixin \Search\Model\Behavior\SearchBehavior
  */
 class DatabaseLogsTable extends DatabaseLogAppTable {
