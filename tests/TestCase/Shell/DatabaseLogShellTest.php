@@ -156,11 +156,11 @@ class DatabaseLogShellTest extends TestCase {
 		$output = (string)$this->out->output();
 		$this->assertNotEmpty($output);
 
-		$this->assertContains('6 duplicates removed', $output);
-		$this->assertContains('4 outdated logs removed', $output);
+		$this->assertContains('10 outdated logs removed', $output);
+		$this->assertContains('1 duplicates removed', $output);
 
 		$count = $this->Logs->find()->count();
-		$this->assertSame(2, $count);
+		$this->assertSame(1, $count);
 	}
 
 	/**

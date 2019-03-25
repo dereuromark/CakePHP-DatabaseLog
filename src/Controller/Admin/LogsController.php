@@ -145,7 +145,7 @@ class LogsController extends AppController {
 	public function removeDuplicates() {
 		$this->request->allowMethod('post');
 
-		$this->DatabaseLogs->removeDuplicates();
+		$this->DatabaseLogs->removeDuplicates((bool)$this->request->getQuery('strict'));
 
 		$this->Flash->success(__('Duplicates have been removed.'));
 		return $this->redirect(['action' => 'index']);
