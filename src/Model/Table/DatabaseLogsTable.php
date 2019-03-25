@@ -204,14 +204,17 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	 * Remove duplicates and leave only the newest entry
 	 * Also stores the new total "number" of this message in the remaining one
 	 *
+	 * @param bool $strict
 	 * @return int
 	 */
-	public function removeDuplicates() {
+	public function removeDuplicates($strict = false) {
+		$field = $strict ? 'message' : 'summary';
+
 		$query = $this->find();
 		$options = [
-			'fields' => ['type', 'message', 'count' => $query->func()->count('*')],
+			'fields' => ['type', $field, 'count' => $query->func()->count('*')],
 			'conditions' => [],
-			'group' => ['type', 'message'],
+			'group' => ['type', $field],
 			//'having' => $this->alias . '__count > 0',
 			//'order' => ['created' => 'DESC']
 		];
@@ -228,7 +231,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 				'valueField' => 'id',
 				'conditions' => [
 					'type' => $log['type'],
-					'message' => $log['message'],
+					$field => $log[$field],
 				],
 				'order' => ['created' => 'DESC']
 			];

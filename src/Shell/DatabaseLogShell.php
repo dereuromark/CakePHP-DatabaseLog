@@ -24,11 +24,11 @@ class DatabaseLogShell extends Shell {
 	 * @return void
 	 */
 	public function cleanup() {
-		$count = $this->DatabaseLogs->removeDuplicates();
-		$this->info($count . ' duplicates removed (merging)');
-
 		$count = $this->DatabaseLogs->garbageCollector();
 		$this->info($count . ' outdated logs removed (garbage collector)');
+
+		$count = $this->DatabaseLogs->removeDuplicates();
+		$this->info($count . ' duplicates removed (merging)');
 	}
 
 	/**

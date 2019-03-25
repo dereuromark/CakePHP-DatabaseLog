@@ -148,6 +148,7 @@ class DatabaseLogsTableTest extends TestCase {
 		$res = $this->Logs->save($log);
 		$this->assertTrue(!empty($res));
 
+		$data['message'] .= ' extra';
 		$log = $this->Logs->newEntity($data);
 		$res = $this->Logs->save($log);
 		$this->assertTrue(!empty($res));
