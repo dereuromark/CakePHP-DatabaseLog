@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \DatabaseLog\Model\Entity\DatabaseLog[] $logs
  * @var int[] $typesWithCount
+ * @var array $lastErrors
  */
 
 use DatabaseLog\Model\Table\DatabaseLogsTable;
@@ -39,5 +40,14 @@ foreach ($typesWithCount as $type => $count) {
 }
 ?>
 </ul>
+
+<?php if ($lastErrors) { ?>
+	<h2>Last Errors</h2>
+	<ul>
+		<?php foreach ($lastErrors as $lastError) { ?>
+		<li><?php echo h($lastError['summary']); ?></li>
+		<?php } ?>
+	</ul>
+<?php } ?>
 
 </div>

@@ -38,11 +38,19 @@ class DatabaseLogController extends AppController {
 	 * @return \Cake\Http\Response|null
 	 */
 	public function index() {
-		//$logs = $this->paginate($query);
 		$logs = [];
 		$typesWithCount = $this->DatabaseLogs->getTypesWithCount();
 
-		$this->set(compact('logs', 'typesWithCount'));
+		$lastErrors = $this->DatabaseLogs->find()
+			->select(['summary'])
+			->where(['type' => 'error'])
+			->group('summary')
+			->orderDesc('id')
+			->limit(10)
+			->disableHydration()
+			->all()->toArray();
+
+		$this->set(compact('logs', 'typesWithCount', 'lastErrors'));
 	}
 
 }
