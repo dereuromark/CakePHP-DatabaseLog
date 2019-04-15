@@ -22,6 +22,8 @@ use RuntimeException;
  * we'll need to make it as we need it.
  *
  * This trait lets us dump fixture schema into a given database at runtime.
+ *
+ * @mixin \DatabaseLog\Model\Table\DatabaseLogsTable
  */
 trait LazyTableTrait {
 
@@ -53,9 +55,10 @@ trait LazyTableTrait {
 			if ($class === false) {
 				throw new RuntimeException("Unknown fixture '$name'.");
 			}
+			/** @var \Cake\TestSuite\Fixture\TestFixture $fixture */
 			$fixture = new $class($this->getConnection()->configName());
 			$table = $fixture->table;
-			if (in_array($table, $existing)) {
+			if (in_array($table, $existing, true)) {
 				continue;
 			}
 			$fixture->create($connection);
