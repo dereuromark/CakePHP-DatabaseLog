@@ -3,16 +3,16 @@ use Migrations\AbstractMigration;
 
 class MigrationDatabaseLogs extends AbstractMigration
 {
-    /**
-     * Change Method.
-     *
-     * More information on this method is available here:
-     * http://docs.phinx.org/en/latest/migrations.html#the-change-method
-     * @return void
-     */
-    public function change()
-    {
-        $this->table('database_logs')
+	/**
+	 * Change Method.
+	 *
+	 * More information on this method is available here:
+	 * http://docs.phinx.org/en/latest/migrations.html#the-change-method
+	 * @return void
+	 */
+	public function change()
+	{
+		$this->table('database_logs')
 			->changeColumn('ip', 'string', [
 				'default' => null,
 				'limit' => 100,
@@ -27,5 +27,5 @@ class MigrationDatabaseLogs extends AbstractMigration
 				'default' => null,
 				'null' => false,
 			])->update();
-    }
+	}
 }
