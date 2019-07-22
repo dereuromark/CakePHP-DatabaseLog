@@ -71,6 +71,8 @@ foreach ($types as $type) {
 					if ($log->isCli()) {
 						echo '<span class="badge label label secondary round radius">cli</span>';
 					}
+
+					echo '<div><small>' . $this->Text->truncate($log->uri, 100) . '</small></div>';
 					?>
 
 					<?php if ($log->count > 1) { ?>
