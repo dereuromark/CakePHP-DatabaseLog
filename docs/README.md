@@ -210,6 +210,11 @@ If you do not want an extra "test_database_log" database for testing, you can sp
 Just read the Log configs, set the `'className'` back to `'File'` for each and dropConfig() + setConfig() them.
 Then your tests should just use basic file writing for logs again.
 
+## Troubleshooting
+
+Make sure you clear the cache, and also remove the local sqlite DB (as this doesn't get cleared automatically).
+Especially when you get errors after upgrading, like `General error: 1 no such column: DatabaseLogs.summary` etc.
+
 ## Contributing
 Feel free to fork and pull request.
 
