@@ -89,7 +89,7 @@ class LogsController extends AppController {
 	}
 
 	/**
-	 * @param null|int $id The log ID to view.
+	 * @param int|null $id The log ID to view.
 	 * @return \Cake\Http\Response|null
 	 */
 	public function view($id = null) {
@@ -100,7 +100,7 @@ class LogsController extends AppController {
 	/**
 	 * Delete action
 	 *
-	 * @param null|int $id The log ID to delete.
+	 * @param int|null $id The log ID to delete.
 	 * @return \Cake\Http\Response|null
 	 */
 	public function delete($id = null) {

@@ -27,6 +27,9 @@ use RuntimeException;
  */
 trait LazyTableTrait {
 
+	/**
+	 * @var bool
+	 */
 	protected static $invoked = false;
 
 	/**
