@@ -10,8 +10,6 @@ use DatabaseLog\Shell\DatabaseLogShell;
 use Tools\TestSuite\ConsoleOutput;
 use Tools\TestSuite\TestCase;
 
-/**
- */
 class DatabaseLogShellTest extends TestCase {
 
 	/**

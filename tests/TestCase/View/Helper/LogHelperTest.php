@@ -5,8 +5,6 @@ use Cake\TestSuite\TestCase;
 use Cake\View\View;
 use DatabaseLog\View\Helper\LogHelper;
 
-/**
- */
 class LogHelperTest extends TestCase {
 
 	/**
