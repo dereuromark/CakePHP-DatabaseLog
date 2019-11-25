@@ -32,7 +32,7 @@ class DatabaseLogTest extends TestCase {
 	 * @var array
 	 */
 	public $fixtures = [
-		'plugin.DatabaseLog.DatabaseLogs'
+		'plugin.DatabaseLog.DatabaseLogs',
 	];
 
 	/**

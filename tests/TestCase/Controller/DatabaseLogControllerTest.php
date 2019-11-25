@@ -26,7 +26,7 @@ class DatabaseLogControllerTest extends IntegrationTestCase {
 	 */
 	public $fixtures = [
 		'plugin.DatabaseLog.DatabaseLogs',
-		'core.Sessions'
+		'core.Sessions',
 	];
 
 	/**

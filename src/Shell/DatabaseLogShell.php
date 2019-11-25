@@ -191,10 +191,10 @@ class DatabaseLogShell extends Shell {
 				'options' => [
 					'limit' => [
 						'help' => 'Limit (and optional offset, comma separated).',
-						'short' => 'l'
+						'short' => 'l',
 					],
 				],
-			]
+			],
 		]);
 		$parser->addSubcommand('export', [
 			'help' => 'Export log entries. Optionally per type only.',
@@ -202,10 +202,10 @@ class DatabaseLogShell extends Shell {
 				'options' => [
 					'limit' => [
 						'help' => 'Limit.',
-						'short' => 'l'
+						'short' => 'l',
 					],
 				],
-			]
+			],
 		]);
 		$parser->addSubcommand('cleanup', [
 			'help' => 'Log rotation and other cleanup.',
@@ -222,18 +222,18 @@ class DatabaseLogShell extends Shell {
 				'arguments' => [
 					'level' => [
 						'help' => 'The log level to use ("' . implode('", "', Log::levels()) . '"), defaults to "info"',
-						'required' => false
+						'required' => false,
 					],
 					'message' => [
 						'help' => 'The message, defaults to "test"',
-						'required' => false
+						'required' => false,
 					],
 					'context' => [
 						'help' => 'The scope key, defaults to none',
-						'required' => false
-					]
-				]
-			]
+						'required' => false,
+					],
+				],
+			],
 		]);
 
 		return $parser;

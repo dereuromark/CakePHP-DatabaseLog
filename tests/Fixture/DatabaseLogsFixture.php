@@ -64,7 +64,7 @@ class DatabaseLogsFixture extends TestFixture {
 				'uri' => 'Lorem ipsum dolor sit amet',
 				'refer' => 'Lorem ipsum dolor sit amet',
 				'user_agent' => 'Lorem ipsum dolor sit amet',
-				'count' => 1
+				'count' => 1,
 			],
 		];
 		parent::init();

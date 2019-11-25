@@ -38,6 +38,6 @@ return [
 
 			$databaseLog->message .= PHP_EOL . 'Language: ' . $currentSessionLanguage;
 		},
-		'isSearchEnabled' => null // Auto-detect
-	]
+		'isSearchEnabled' => null, // Auto-detect
+	],
 ];

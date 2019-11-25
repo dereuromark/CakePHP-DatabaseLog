@@ -128,7 +128,7 @@ class LogsController extends AppController {
 		$type = $this->request->getQuery('type');
 		if ($type) {
 			$this->DatabaseLogs->deleteAll([
-				'type' => $type
+				'type' => $type,
 			]);
 		} else {
 			$this->DatabaseLogs->truncate();

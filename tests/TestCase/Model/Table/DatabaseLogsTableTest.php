@@ -27,7 +27,7 @@ class DatabaseLogsTableTest extends TestCase {
 	 * @var array
 	 */
 	public $fixtures = [
-		'plugin.DatabaseLog.DatabaseLogs'
+		'plugin.DatabaseLog.DatabaseLogs',
 	];
 
 	/**
@@ -113,7 +113,7 @@ class DatabaseLogsTableTest extends TestCase {
 		$data = [
 			'type' => 'bar',
 			'summary' => 'some text',
-			'message' => 'some more text'
+			'message' => 'some more text',
 		];
 		$log = $this->Logs->newEntity($data);
 		$res = $this->Logs->save($log);
@@ -133,7 +133,7 @@ class DatabaseLogsTableTest extends TestCase {
 		$data = [
 			'type' => 'Foo',
 			'summary' => 'some text',
-			'message' => 'some text'
+			'message' => 'some text',
 		];
 		$log = $this->Logs->newEntity($data);
 		$res = $this->Logs->save($log);
@@ -142,7 +142,7 @@ class DatabaseLogsTableTest extends TestCase {
 		$data = [
 			'type' => 'Bar',
 			'summary' => 'some text',
-			'message' => 'some more text'
+			'message' => 'some more text',
 		];
 		$log = $this->Logs->newEntity($data);
 		$res = $this->Logs->save($log);

@@ -233,7 +233,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 					'type' => $log['type'],
 					$field => $log[$field],
 				],
-				'order' => ['created' => 'DESC']
+				'order' => ['created' => 'DESC'],
 			];
 			$entries = $this->find('list', $options)->toArray();
 
