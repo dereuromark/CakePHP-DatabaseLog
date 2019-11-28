@@ -1,4 +1,5 @@
 <?php
+
 namespace DatabaseLog;
 
 use Cake\Core\BasePlugin;

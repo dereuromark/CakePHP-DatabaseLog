@@ -1,4 +1,5 @@
 <?php
+
 namespace DatabaseLog\Model\Entity;
 
 use Cake\ORM\Entity;

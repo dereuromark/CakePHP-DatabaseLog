@@ -1,4 +1,5 @@
 <?php
+
 namespace DatabaseLog\View\Helper;
 
 use Cake\Core\Configure;
