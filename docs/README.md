@@ -27,7 +27,7 @@ You can adjust both values in your app.php config:
 ```php
 	'DatabaseLog' => [
 		'limit' => 999999,
-		'maxLength' => '-1 year' // Older than a year
+		'maxLength' => '-1 year', // Older than a year
 ```
 The `limit` config defaults to `999999` as basic protection. The `maxLength` is disabled by default.
 
@@ -45,12 +45,12 @@ You can also adjust the label colors of the log types with Configure and
 		'typeMap' => [
 			// Custom class mapping (defaults to bootstrap markup)
 		],
-	]
+	],
 ```
 If you want to disable it completely, set `'map'` to `false`.
 
 ## CLI View
-A very basic command line view is also available, especially if the web backend is not available (or the whole site in maintenance mode). 
+A very basic command line view is also available, especially if the web backend is not available (or the whole site in maintenance mode).
 ```
 bin/cake database_log show [type]
 ```
@@ -117,15 +117,15 @@ Just enable it via Configure:
 			foreach ($logs as $log) {
 				$content .= $logsTable->format($log);
 			}
-			
+
 			$mailer = new \Cake\Mailer\Mailer();
 			$subject = count($logs) . ' new error log entries';
 			// TODO Implement
-		}
+		},
 	],
 ```
 
-The `notificationInterval` is important to set high enough, so you won't get every x minutes a new email. 
+The `notificationInterval` is important to set high enough, so you won't get every x minutes a new email.
 
 The callback via Configure is optional, you can also directly attach any method of your classes to the fired `DatabaseLog.alert` event:
 ```php
@@ -136,7 +136,7 @@ class AlertTheAdmin implements EventListenerInterface {
 			'DatabaseLog.alert' => 'methodToRun',
 		];
 	}
-	
+
 	public function methodToRun($event, $entity) {
 		...
 	}
@@ -185,7 +185,7 @@ And this would be your config:
 			'levels' => ['info'],
 			'scopes' => ['bounce'],
 		],
-	],	
+	],
 ```
 
 Now you can see all those in a specific new type category in your backend (probably /admin/database-log/logs?type=bounce).
@@ -198,7 +198,7 @@ If disabled, it will at least still be able to filter by error type.
 
 ## Tips
 
-### 404 logs should not be part of your error log. 
+### 404 logs should not be part of your error log.
 See [Tools plugin ErrorHandler documentation](https://github.com/dereuromark/cakephp-tools/blob/master/docs/Error/ErrorHandler.md).
 
 ### Looking into more advanced toolings
@@ -222,4 +222,3 @@ There are a few guidelines:
 
 - Coding standards passing: `composer cs-check` to check and `composer cs-fix` to fix.
 - Tests passing for Windows and Unix: `php phpunit.phar` to run them.
-
