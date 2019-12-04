@@ -34,6 +34,7 @@ require CORE_PATH . 'config/bootstrap.php';
 
 Configure::write('App', [
 	'namespace' => 'App',
+	'encoding' => 'UTF-8',
 	'paths' => [
 		'templates' => [ROOT . DS . 'tests' . DS . 'test_app' . DS . 'templates' . DS],
 	],
@@ -78,6 +79,9 @@ Log::setConfig($config['Log']);
 Cache::setConfig($cache);
 
 Cake\Core\Plugin::getCollection()->add(new \DatabaseLog\Plugin());
+
+//class_alias(\TestApp\Controller\AppController::class, 'App\Controller\AppController');
+class_alias(\Cake\View\View::class, 'App\View\AppView');
 
 // Ensure default test connection is defined
 if (!getenv('db_class')) {

@@ -53,6 +53,8 @@ class LogsControllerTest extends IntegrationTestCase {
 	 * @return void
 	 */
 	public function testIndex() {
+		$this->disableErrorHandlerMiddleware();
+
 		$this->get(['prefix' => 'Admin', 'plugin' => 'DatabaseLog', 'controller' => 'Logs']);
 
 		$this->assertResponseNotEmpty();
@@ -65,6 +67,8 @@ class LogsControllerTest extends IntegrationTestCase {
 	 * @return void
 	 */
 	public function testView() {
+		$this->disableErrorHandlerMiddleware();
+
 		$this->get(['prefix' => 'Admin', 'plugin' => 'DatabaseLog', 'controller' => 'Logs', 'action' => 'view', '1']);
 
 		$this->assertResponseNotEmpty();
@@ -89,6 +93,8 @@ class LogsControllerTest extends IntegrationTestCase {
 	 * @return void
 	 */
 	public function testDelete() {
+		$this->disableErrorHandlerMiddleware();
+
 		$this->post(
 			['prefix' => 'Admin', 'plugin' => 'DatabaseLog', 'controller' => 'Logs', 'action' => 'delete', 1]
 		);
@@ -116,6 +122,8 @@ class LogsControllerTest extends IntegrationTestCase {
 	 * @return void
 	 */
 	public function testReset() {
+		$this->disableErrorHandlerMiddleware();
+
 		$logModel = TableRegistry::get('DatabaseLog.DatabaseLogs');
 		$count = $logModel->find()->count();
 
@@ -137,6 +145,8 @@ class LogsControllerTest extends IntegrationTestCase {
 	 * @return void
 	 */
 	public function testRemoveDuplicates() {
+		$this->disableErrorHandlerMiddleware();
+
 		$this->post(['prefix' => 'Admin', 'plugin' => 'DatabaseLog', 'controller' => 'Logs', 'action' => 'removeDuplicates']);
 
 		$logModel = TableRegistry::get('DatabaseLog.DatabaseLogs');
