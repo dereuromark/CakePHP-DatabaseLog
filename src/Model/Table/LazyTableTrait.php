@@ -56,7 +56,7 @@ trait LazyTableTrait {
 
 		foreach ($fixtures as $name) {
 			$class = App::className($name, 'Test/Fixture', 'Fixture');
-			if ($class === false) {
+			if ($class === null) {
 				throw new RuntimeException("Unknown fixture '$name'.");
 			}
 			/** @var \Cake\TestSuite\Fixture\TestFixture $fixture */

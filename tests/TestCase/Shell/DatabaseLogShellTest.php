@@ -42,7 +42,7 @@ class DatabaseLogShellTest extends TestCase {
 	/**
 	 * @return void
 	 */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 
 		if (!is_dir(LOGS)) {
@@ -69,7 +69,7 @@ class DatabaseLogShellTest extends TestCase {
 	/**
 	 * @return void
 	 */
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 		unset($this->Shell);
 	}
@@ -83,7 +83,7 @@ class DatabaseLogShellTest extends TestCase {
 		$this->Shell->runCommand(['show']);
 		$output = (string)$this->out->output();
 
-		$this->assertContains(': info - one', $output, $output);
+		$this->assertStringContainsString(': info - one', $output, $output);
 	}
 
 	/**
@@ -99,7 +99,7 @@ class DatabaseLogShellTest extends TestCase {
 		$this->Shell->runCommand(['export']);
 		$output = (string)$this->out->output();
 
-		$this->assertContains('entries written to export-info.txt', $output, $output);
+		$this->assertStringContainsString('entries written to export-info.txt', $output, $output);
 	}
 
 	/**
@@ -115,7 +115,7 @@ class DatabaseLogShellTest extends TestCase {
 		$this->Shell->runCommand(['monitor']);
 		$output = (string)$this->out->output();
 
-		$this->assertContains(' new log entries reported', $output, $output);
+		$this->assertStringContainsString(' new log entries reported', $output, $output);
 	}
 
 	/**
@@ -127,7 +127,7 @@ class DatabaseLogShellTest extends TestCase {
 		$this->Shell->runCommand(['monitor']);
 		$output = (string)$this->out->output();
 
-		$this->assertContains('Just ran... Will run again in 1 min', $output, $output);
+		$this->assertStringContainsString('Just ran... Will run again in 1 min', $output, $output);
 	}
 
 	/**
@@ -154,8 +154,8 @@ class DatabaseLogShellTest extends TestCase {
 		$output = (string)$this->out->output();
 		$this->assertNotEmpty($output);
 
-		$this->assertContains('10 outdated logs removed', $output);
-		$this->assertContains('1 duplicates removed', $output);
+		$this->assertStringContainsString('10 outdated logs removed', $output);
+		$this->assertStringContainsString('1 duplicates removed', $output);
 
 		$count = $this->Logs->find()->count();
 		$this->assertSame(1, $count);

@@ -7,8 +7,12 @@ use Cake\Controller\Controller;
 class AppController extends Controller {
 
 	/**
-	 * @var array
+	 * @return void
 	 */
-	public $components = ['Flash'];
+	public function initialize(): void {
+		parent::initialize();
+
+		$this->loadComponent('Flash');
+	}
 
 }

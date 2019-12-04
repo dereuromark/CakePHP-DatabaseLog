@@ -1,11 +1,12 @@
-/phpunit.phar
-/vendor/
-/tmp/
-/composer.lock
-/composer.phar
-/config/Migrations/schema-dump-default.lock
+vendor/
+tmp/
+composer.lock
+composer.phar
+phpunit.phar
+.phpunit.result.cache
+config/Migrations/schema-dump-default.lock
 
 # IDE and editor specific files #
 #################################
-/nbproject
-.idea
+nbproject/
+.idea/

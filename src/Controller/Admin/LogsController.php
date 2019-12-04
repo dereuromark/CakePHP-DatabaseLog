@@ -11,6 +11,7 @@
 namespace DatabaseLog\Controller\Admin;
 
 use App\Controller\AppController;
+use Cake\Event\EventInterface;
 use DatabaseLog\Model\Table\DatabaseLogsTable;
 
 /**
@@ -21,18 +22,9 @@ class LogsController extends AppController {
 	/**
 	 * Explicitly use the Log model.
 	 *
-	 * Fixes problems with the controller test.
-	 *
 	 * @var string
 	 */
 	public $modelClass = 'DatabaseLog.DatabaseLogs';
-
-	/**
-	 * Load the TimeHelper
-	 *
-	 * @var array
-	 */
-	public $helpers = ['Time', 'DatabaseLog.Log'];
 
 	/**
 	 * Setup pagination
@@ -53,7 +45,7 @@ class LogsController extends AppController {
 	/**
 	 * @return void
 	 */
-	public function initialize() {
+	public function initialize(): void {
 		parent::initialize();
 
 		if (!DatabaseLogsTable::isSearchEnabled()) {
@@ -65,9 +57,20 @@ class LogsController extends AppController {
 	}
 
 	/**
+	 * @param \Cake\Event\EventInterface $event
+	 *
+	 * @return \Cake\Http\Response|null|void
+	 */
+	public function beforeRender(EventInterface $event) {
+		parent::beforeRender($event);
+
+		$this->viewBuilder()->setHelpers(['Time', 'DatabaseLog.Log']);
+	}
+
+	/**
 	 * Index/Overview action
 	 *
-	 * @return \Cake\Http\Response|null
+	 * @return \Cake\Http\Response|null|void
 	 */
 	public function index() {
 		$currentType = $this->request->getQuery('type');
@@ -91,7 +94,7 @@ class LogsController extends AppController {
 
 	/**
 	 * @param int|null $id The log ID to view.
-	 * @return \Cake\Http\Response|null
+	 * @return \Cake\Http\Response|null|void
 	 */
 	public function view($id = null) {
 		$log = $this->DatabaseLogs->get($id);

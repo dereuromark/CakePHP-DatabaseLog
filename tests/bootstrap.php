@@ -1,9 +1,9 @@
 <?php
-/**
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
- */
 
+use Cake\Cache\Cache;
+use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
+use Cake\Log\Log;
 
 if (!defined('DS')) {
 	define('DS', DIRECTORY_SEPARATOR);
@@ -32,16 +32,16 @@ define('CAKE', CORE_PATH . APP_DIR . DS);
 require dirname(__DIR__) . '/vendor/autoload.php';
 require CORE_PATH . 'config/bootstrap.php';
 
-Cake\Core\Configure::write('App', [
+Configure::write('App', [
 	'namespace' => 'App',
 	'paths' => [
-		'templates' => [ROOT . DS . 'tests' . DS . 'test_app' . DS . 'src' . DS . 'Template' . DS],
+		'templates' => [ROOT . DS . 'tests' . DS . 'test_app' . DS . 'templates' . DS],
 	],
 ]);
 
-Cake\Core\Configure::write('debug', true);
+Configure::write('debug', true);
 
-Cake\Core\Configure::write('DatabaseLog.isSearchEnabled', true);
+Configure::write('DatabaseLog.isSearchEnabled', true);
 
 $cache = [
 	'default' => [
@@ -73,9 +73,9 @@ $config = [
 		],
 	],
 ];
-Cake\Log\Log::setConfig($config['Log']);
+Log::setConfig($config['Log']);
 
-Cake\Cache\Cache::setConfig($cache);
+Cache::setConfig($cache);
 
 Cake\Core\Plugin::getCollection()->add(new \DatabaseLog\Plugin());
 
@@ -87,11 +87,11 @@ if (!getenv('db_class')) {
 
 ConnectionManager::setConfig('test', [
 	'className' => 'Cake\Database\Connection',
-	'driver' => getenv('db_class'),
-	'dsn' => getenv('db_dsn'),
-	'database' => getenv('db_database'),
-	'username' => getenv('db_username'),
-	'password' => getenv('db_password'),
+	'driver' => getenv('db_class') ?: null,
+	'dsn' => getenv('db_dsn') ?: null,
+	//'database' => getenv('db_database'),
+	//'username' => getenv('db_username'),
+	//'password' => getenv('db_password'),
 	'timezone' => 'UTC',
 	'quoteIdentifiers' => true,
 	'cacheMetadata' => true,
@@ -99,11 +99,11 @@ ConnectionManager::setConfig('test', [
 
 ConnectionManager::setConfig('test_database_log', [
 	'className' => 'Cake\Database\Connection',
-	'driver' => getenv('db_class'),
-	'dsn' => getenv('db_dsn'),
-	'database' => getenv('db_database'),
-	'username' => getenv('db_username'),
-	'password' => getenv('db_password'),
+	'driver' => getenv('db_class') ?: null,
+	'dsn' => getenv('db_dsn') ?: null,
+	//'database' => getenv('db_database'),
+	//'username' => getenv('db_username'),
+	//'password' => getenv('db_password'),
 	'timezone' => 'UTC',
 	'quoteIdentifiers' => true,
 	'cacheMetadata' => true,

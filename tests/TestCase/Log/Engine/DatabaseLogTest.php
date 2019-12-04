@@ -15,11 +15,6 @@ use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use Cake\View\View;
 
-/**
- * DatabaseLog Test
- *
- * @coversDefaultClass DatabaseLog
- */
 class DatabaseLogTest extends TestCase {
 
 	/**
@@ -41,7 +36,7 @@ class DatabaseLogTest extends TestCase {
 	 *
 	 * @return void
 	 */
-	public function setUp() {
+	public function setUp(): void {
 		//Log::drop('default');
 		//Log::config('default', array('className' => 'DatabaseLog.Database'));
 		$this->Logs = TableRegistry::get('DatabaseLog.DatabaseLogs');
@@ -54,7 +49,7 @@ class DatabaseLogTest extends TestCase {
 	 *
 	 * @return void
 	 */
-	public function tearDown() {
+	public function tearDown(): void {
 		//Log::drop('default');
 		//Log::config('default', array('className' => 'FileLog'));
 		parent::tearDown();

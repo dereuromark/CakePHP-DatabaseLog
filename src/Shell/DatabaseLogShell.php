@@ -2,6 +2,7 @@
 
 namespace DatabaseLog\Shell;
 
+use Cake\Console\ConsoleOptionParser;
 use Cake\Console\Shell;
 use Cake\Core\Configure;
 use Cake\Log\Log;
@@ -183,7 +184,7 @@ class DatabaseLogShell extends Shell {
 	/**
 	 * @return \Cake\Console\ConsoleOptionParser
 	 */
-	public function getOptionParser() {
+	public function getOptionParser(): ConsoleOptionParser {
 		$parser = parent::getOptionParser();
 		$parser->addSubcommand('show', [
 			'help' => 'List log entries. Optionally per type only.',

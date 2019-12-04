@@ -15,6 +15,7 @@ use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
 use Cake\Datasource\ResultSetInterface;
 use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\Utility\Hash;
 use Cake\Utility\Text;
 use DatabaseLog\Model\Entity\DatabaseLog;
@@ -46,7 +47,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	 * @param array $config Config data.
 	 * @return void
 	 */
-	public function initialize(array $config) {
+	public function initialize(array $config): void {
 		$this->setDisplayField('type');
 		$this->addBehavior('Timestamp', ['modified' => false]);
 		if (static::isSearchEnabled()) {
@@ -108,7 +109,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	 * @param \ArrayObject $options
 	 * @return void
 	 */
-	public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options) {
+	public function beforeSave(EventInterface $event, EntityInterface $entity, ArrayObject $options) {
 		$entity['ip'] = env('REMOTE_ADDR');
 		$entity['hostname'] = env('HTTP_HOST') ?: gethostname();
 		$entity['uri'] = env('REQUEST_URI');
@@ -288,7 +289,9 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	 * @return void
 	 */
 	public function truncate() {
-		$sql = $this->getSchema()->truncateSql($this->_connection);
+		/** @var \Cake\Database\Schema\TableSchema $tableSchema */
+		$tableSchema = $this->getSchema();
+		$sql = $tableSchema->truncateSql($this->_connection);
 		foreach ($sql as $snippet) {
 			$this->_connection->execute($snippet);
 		}

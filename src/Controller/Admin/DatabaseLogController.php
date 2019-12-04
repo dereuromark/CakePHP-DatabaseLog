@@ -11,6 +11,7 @@
 namespace DatabaseLog\Controller\Admin;
 
 use App\Controller\AppController;
+use Cake\Event\EventInterface;
 
 /**
  * @property \DatabaseLog\Model\Table\DatabaseLogsTable $DatabaseLogs
@@ -20,23 +21,24 @@ class DatabaseLogController extends AppController {
 	/**
 	 * Explicitly use the Log model.
 	 *
-	 * Fixes problems with the controller test.
-	 *
 	 * @var string
 	 */
 	public $modelClass = 'DatabaseLog.DatabaseLogs';
 
 	/**
-	 * Load the TimeHelper
+	 * @param \Cake\Event\EventInterface $event
 	 *
-	 * @var array
+	 * @return \Cake\Http\Response|null|void
 	 */
-	public $helpers = ['Time', 'DatabaseLog.Log'];
+	public function beforeRender(EventInterface $event) {
+		parent::beforeRender($event);
 
+		$this->viewBuilder()->setHelpers(['Time', 'DatabaseLog.Log']);
+	}
 	/**
 	 * Overview action
 	 *
-	 * @return \Cake\Http\Response|null
+	 * @return \Cake\Http\Response|null|void
 	 */
 	public function index() {
 		$logs = [];

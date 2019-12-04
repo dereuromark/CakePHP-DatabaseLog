@@ -35,7 +35,7 @@ class DatabaseLogControllerTest extends IntegrationTestCase {
 	 *
 	 * @return void
 	 */
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 
 		$this->Logs = TableRegistry::get('DatabaseLog.DatabaseLogs');
@@ -50,7 +50,7 @@ class DatabaseLogControllerTest extends IntegrationTestCase {
 	 * @return void
 	 */
 	public function testIndex() {
-		$this->get(['prefix' => 'admin', 'plugin' => 'DatabaseLog', 'controller' => 'DatabaseLog', 'action' => 'index']);
+		$this->get(['prefix' => 'Admin', 'plugin' => 'DatabaseLog', 'controller' => 'DatabaseLog', 'action' => 'index']);
 
 		$this->assertResponseNotEmpty();
 		$this->assertResponseCode(200);
