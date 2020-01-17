@@ -7,20 +7,20 @@ use Cake\Core\Configure;
 use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
 use DatabaseLog\Shell\DatabaseLogShell;
-use Tools\TestSuite\ConsoleOutput;
-use Tools\TestSuite\TestCase;
+use Shim\TestSuite\ConsoleOutput;
+use Shim\TestSuite\TestCase;
 
 class DatabaseLogShellTest extends TestCase {
 
 	/**
 	 * @var array
 	 */
-	public $fixtures = [
+	protected $fixtures = [
 		'plugin.DatabaseLog.DatabaseLogs',
 	];
 
 	/**
-	 * @var \DatabaseLog\Shell\DatabaseLogShell|\PHPUnit_Framework_MockObject_MockObject
+	 * @var \DatabaseLog\Shell\DatabaseLogShell|\PHPUnit\Framework\MockObject\MockObject
 	 */
 	protected $Shell;
 
@@ -30,12 +30,12 @@ class DatabaseLogShellTest extends TestCase {
 	protected $Logs;
 
 	/**
-	 * @var \Tools\TestSuite\ConsoleOutput
+	 * @var \Shim\TestSuite\ConsoleOutput
 	 */
 	protected $out;
 
 	/**
-	 * @var \Tools\TestSuite\ConsoleOutput
+	 * @var \Shim\TestSuite\ConsoleOutput
 	 */
 	protected $err;
 
