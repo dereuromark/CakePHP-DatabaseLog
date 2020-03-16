@@ -33,7 +33,7 @@
 		"cakephp/migrations": "@stable",
 		"friendsofcake/search": "^5.0",
 		"fig-r/psr2r-sniffer": "dev-master",
-		"dereuromark/cakephp-tools": "dev-master"
+		"dereuromark/cakephp-tools": "@stable"
 	},
 	"autoload": {
 		"psr-4": {
