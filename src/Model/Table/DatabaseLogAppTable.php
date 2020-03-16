@@ -19,7 +19,7 @@ class DatabaseLogAppTable extends Table {
 	/**
 	 * Filter fields
 	 *
-	 * @var array
+	 * @var string[]
 	 */
 	public $searchFields = [];
 
@@ -29,7 +29,7 @@ class DatabaseLogAppTable extends Table {
 	 * @param string|null $filter The filter string.
 	 * @return array The generated filter conditions array.
 	 */
-	public function generateFilterConditions($filter = null) {
+	public function generateFilterConditions(?string $filter = null): array {
 		$retval = [];
 		if ($filter) {
 			foreach ($this->searchFields as $field) {

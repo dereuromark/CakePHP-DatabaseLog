@@ -129,7 +129,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 			}
 			if (!$entity['uri']) {
 				$type = 'CLI';
-				$entity['uri'] = $type . ' ' . str_replace(env('PWD'), '', implode(' ', (array)env('argv')));
+				$entity['uri'] = $type . ' ' . str_replace((string)env('PWD'), '', implode(' ', (array)env('argv')));
 			}
 			if (!$entity['user_agent']) {
 				$shell = env('SHELL') ?: 'n/a';
@@ -266,7 +266,11 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 			return $deleted;
 		}
 
+		/** @var \DatabaseLog\Model\Entity\DatabaseLog|null $record */
 		$record = $query->where()->offset($count - $limit)->first();
+		if (!$record) {
+			return $deleted;
+		}
 
 		return $deleted + $this->deleteAll(['id <' => $record->id]);
 	}
