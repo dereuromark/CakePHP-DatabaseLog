@@ -22,15 +22,20 @@ use DatabaseLog\Model\Entity\DatabaseLog;
 
 /**
  * @method \DatabaseLog\Model\Entity\DatabaseLog get($primaryKey, $options = [])
- * @method \DatabaseLog\Model\Entity\DatabaseLog newEntity($data = null, array $options = [])
+ * @method \DatabaseLog\Model\Entity\DatabaseLog newEntity(array $data, array $options = [])
  * @method \DatabaseLog\Model\Entity\DatabaseLog[] newEntities(array $data, array $options = [])
- * @method \DatabaseLog\Model\Entity\DatabaseLog|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \DatabaseLog\Model\Entity\DatabaseLog|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \DatabaseLog\Model\Entity\DatabaseLog patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \DatabaseLog\Model\Entity\DatabaseLog[] patchEntities($entities, array $data, array $options = [])
- * @method \DatabaseLog\Model\Entity\DatabaseLog findOrCreate($search, callable $callback = null, $options = [])
+ * @method \DatabaseLog\Model\Entity\DatabaseLog[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \DatabaseLog\Model\Entity\DatabaseLog findOrCreate($search, ?callable $callback = null, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @method \DatabaseLog\Model\Entity\DatabaseLog saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @mixin \Search\Model\Behavior\SearchBehavior
+ * @method \DatabaseLog\Model\Entity\DatabaseLog newEmptyEntity()
+ * @method \DatabaseLog\Model\Entity\DatabaseLog[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \DatabaseLog\Model\Entity\DatabaseLog[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \DatabaseLog\Model\Entity\DatabaseLog[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \DatabaseLog\Model\Entity\DatabaseLog[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class DatabaseLogsTable extends DatabaseLogAppTable {
 

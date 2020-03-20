@@ -24,7 +24,7 @@ class LogsController extends AppController {
 	 *
 	 * @var string
 	 */
-	public $modelClass = 'DatabaseLog.DatabaseLogs';
+	protected $modelClass = 'DatabaseLog.DatabaseLogs';
 
 	/**
 	 * Setup pagination

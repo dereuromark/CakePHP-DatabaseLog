@@ -33,7 +33,7 @@ require dirname(__DIR__) . '/vendor/autoload.php';
 require CORE_PATH . 'config/bootstrap.php';
 
 Configure::write('App', [
-	'namespace' => 'App',
+	'namespace' => 'TestApp',
 	'encoding' => 'UTF-8',
 	'paths' => [
 		'templates' => [ROOT . DS . 'tests' . DS . 'test_app' . DS . 'templates' . DS],
@@ -78,10 +78,11 @@ Log::setConfig($config['Log']);
 
 Cache::setConfig($cache);
 
-Cake\Core\Plugin::getCollection()->add(new \DatabaseLog\Plugin());
+class_alias(TestApp\Controller\AppController::class, 'App\Controller\AppController');
+class_alias(Cake\View\View::class, 'App\View\AppView');
+class_alias(TestApp\Application::class, 'App\Application');
 
-//class_alias(\TestApp\Controller\AppController::class, 'App\Controller\AppController');
-class_alias(\Cake\View\View::class, 'App\View\AppView');
+Cake\Core\Plugin::getCollection()->add(new \DatabaseLog\Plugin());
 
 // Ensure default test connection is defined
 if (!getenv('db_class')) {

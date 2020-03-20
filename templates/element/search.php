@@ -2,6 +2,8 @@
 /**
  * @var \App\View\AppView $this
  * @var array $types
+ * @var mixed $_isSearch
+ * @var mixed $url
  */
 ?>
 <div class="databaselog-search-logs" style="float: right">
