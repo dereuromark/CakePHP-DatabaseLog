@@ -16,6 +16,7 @@ use DatabaseLog\Model\Table\DatabaseLogsTable;
 
 /**
  * @property \DatabaseLog\Model\Table\DatabaseLogsTable $DatabaseLogs
+ * @property \Search\Controller\Component\SearchComponent $Search
  */
 class LogsController extends AppController {
 
@@ -51,7 +52,7 @@ class LogsController extends AppController {
 		if (!DatabaseLogsTable::isSearchEnabled()) {
 			return;
 		}
-		$this->loadComponent('Search.Prg', [
+		$this->loadComponent('Search.Search', [
 			'actions' => ['index'],
 		]);
 	}
