@@ -74,7 +74,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 		$searchManager = $this->behaviors()->Search->searchManager();
 		$searchManager
 			->value('type')
-			->like('search', ['field' => ['summary'], 'before' => true, 'after' => true]);
+			->like('search', ['fields' => ['summary'], 'before' => true, 'after' => true]);
 			/*
 			->callback('search', ['callback' => function (Query $query, array $args, Base $filter) {
 				...
