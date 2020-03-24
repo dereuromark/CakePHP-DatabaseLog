@@ -16,7 +16,7 @@ This branch is for **CakePHP 4.0+**. See [version map](https://github.com/dereur
 - Easy setup and almost no dependencies.
 - Detailed log infos added for both Web and CLI log entries.
 - Defaults to SQLite as single app application light weight approach.
-- Ideal for multi app applications where logging to a file is just not convenient.
+- Ideal for multi-server or serverless applications where logging to a file is just not convenient.
 - If DB is used, fallback to SQLite in case the DB is not reachable.
 - Simple admin interface to view/delete logs included.
 - Basic monitoring and alert system included.
