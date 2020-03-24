@@ -30,7 +30,7 @@
 		"cakephp/cakephp": "^4.0.0"
 	},
 	"require-dev": {
-		"friendsofcake/search": "^6.0.0",
+		"friendsofcake/search": "dev-master as 6.0.0",
 		"fig-r/psr2r-sniffer": "dev-master",
 		"dereuromark/cakephp-tools": "^2.0.0"
 	},
@@ -51,7 +51,6 @@
 		}
 	},
 	"prefer-stable": true,
-	"minimum-stability": "beta",
 	"scripts": {
 		"test": "php phpunit.phar",
 		"test-setup": "[ ! -f phpunit.phar ] && wget https://phar.phpunit.de/phpunit-8.5.1.phar && mv phpunit-8.5.1.phar phpunit.phar || true",

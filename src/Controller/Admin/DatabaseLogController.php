@@ -48,7 +48,7 @@ class DatabaseLogController extends AppController {
 			->select(['summary'])
 			->where(['type' => 'error'])
 			->group('summary')
-			->orderDesc('id')
+			->orderDesc('MAX(id)')
 			->limit(10)
 			->disableHydration()
 			->all()->toArray();

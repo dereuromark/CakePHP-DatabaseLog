@@ -3,13 +3,13 @@
 [![Build Status](https://api.travis-ci.org/dereuromark/CakePHP-DatabaseLog.png?branch=master)](https://travis-ci.org/dereuromark/CakePHP-DatabaseLog)
 [![Coverage Status](https://img.shields.io/codecov/c/github/dereuromark/CakePHP-DatabaseLog/master.svg)](https://codecov.io/github/dereuromark/CakePHP-DatabaseLog?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/dereuromark/CakePHP-DatabaseLog/v/stable.svg)](https://packagist.org/packages/dereuromark/CakePHP-DatabaseLog)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%205.6-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 [![License](https://poser.pugx.org/dereuromark/CakePHP-DatabaseLog/license.png)](https://packagist.org/packages/dereuromark/CakePHP-DatabaseLog)
 [![Total Downloads](https://poser.pugx.org/dereuromark/CakePHP-DatabaseLog/d/total.png)](https://packagist.org/packages/dereuromark/CakePHP-DatabaseLog)
 
 DatabaseLog engine for CakePHP applications.
 
-This branch is for **CakePHP 3.7+**. See [version map](https://github.com/dereuromark/CakePHP-DatabaseLog/wiki#cakephp-version-map) for details.
+This branch is for **CakePHP 4.0+**. See [version map](https://github.com/dereuromark/CakePHP-DatabaseLog/wiki#cakephp-version-map) for details.
 
 ## Features
 
@@ -41,23 +41,23 @@ composer require dereuromark/cakephp-databaselog
 ```
 
 ## Setup
-Enable the plugin in your `config/bootstrap.php`:
+Enable the plugin in your `Application` class:
  ```php
- Plugin::load('DatabaseLog', ['bootstrap' => true]);
+$this->addPlugin('DatabaseLog');
  ```
 or just call:
 ```
-bin/cake plugin load DatabaseLog -b
+bin/cake plugin load DatabaseLog
 ```
 
 You can simply modify the existing config entries in your `config/app.php`:
  ```php
 	'Log' => [
 		'debug' => [
-			'className' => 'DatabaseLog.Database'
+			'className' => 'DatabaseLog.Database',
 		],
 		'error' => [
-			'className' => 'DatabaseLog.Database'
+			'className' => 'DatabaseLog.Database',
 		],
 		...
 	],
@@ -94,4 +94,4 @@ Log::write('error', 'This is a detailed message logged to the database');
 ```
 There is also a browsable web backend you can view your logs with.
 
-See [docs](/docs) for more details.
+See [Docs](/docs) for more details.
