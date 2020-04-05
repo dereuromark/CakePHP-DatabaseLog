@@ -64,7 +64,10 @@ foreach ($types as $type) {
 			}
 			?>
 			<tr>
-				<td><?php echo $this->Time->nice($log->created); ?>&nbsp;</td>
+				<td>
+					<?php echo $this->Time->nice($log->created); ?>&nbsp;
+					<div><small><span title="<?php echo h($log->user_agent); ?>"><?php echo h($log->ip); ?></span></small></div>
+				</td>
 				<td>
 					<?php echo $this->Log->typeLabel($log->type); ?>
 					<?php

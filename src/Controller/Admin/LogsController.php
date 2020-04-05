@@ -81,7 +81,7 @@ class LogsController extends AppController {
 			}
 			$query = $this->DatabaseLogs->find()->where($conditions);
 		}
-		$query = $query->select(['id', 'created', 'type', 'summary', 'count']);
+		$query = $query->select(['id', 'created', 'type', 'summary', 'count', 'ip', 'user_agent']);
 
 		$logs = $this->paginate($query);
 		$types = $this->DatabaseLogs->getTypes();
