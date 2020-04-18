@@ -32,7 +32,7 @@
 	"require-dev": {
 		"cakephp/migrations": "@stable",
 		"friendsofcake/search": "^5.0",
-		"fig-r/psr2r-sniffer": "dev-master",
+		"fig-r/psr2r-sniffer": "^0.6",
 		"dereuromark/cakephp-tools": "^1.9"
 	},
 	"autoload": {
