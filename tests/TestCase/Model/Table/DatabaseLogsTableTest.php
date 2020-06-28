@@ -80,8 +80,8 @@ class DatabaseLogsTableTest extends TestCase {
 	/**
 	 * Tests the textSearch method
 	 *
-	 * @return void
 	 * @covers ::textSearch
+	 * @return void
 	 */
 	public function testTextSearch() {
 		$res = $this->Logs->textSearch('interesting');
@@ -94,8 +94,8 @@ class DatabaseLogsTableTest extends TestCase {
 	/**
 	 * Tests the getTypes method
 	 *
-	 * @return void
 	 * @covers ::getTypes
+	 * @return void
 	 */
 	public function testGetTypes() {
 		Cache::delete('database_log_types');
@@ -127,8 +127,8 @@ class DatabaseLogsTableTest extends TestCase {
 	/**
 	 * Tests the removeDuplicates method
 	 *
-	 * @return void
 	 * @covers ::removeDuplicates
+	 * @return void
 	 */
 	public function testRemoveDuplicates() {
 		$data = [

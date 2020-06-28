@@ -140,6 +140,7 @@ class DatabaseLogShell extends Shell {
 		if ($time + $interval > time()) {
 			$secondsLeft = $time + $interval - time();
 			$this->out('Just ran... Will run again in ' . round($secondsLeft / 60) . ' min');
+
 			return;
 		}
 
@@ -159,6 +160,7 @@ class DatabaseLogShell extends Shell {
 
 		if (count($logs) < 1) {
 			$this->out('All good...');
+
 			return;
 		}
 

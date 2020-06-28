@@ -57,6 +57,7 @@ class LogHelper extends Helper {
 		}
 
 		$template = $this->getConfig('typeTemplate');
+
 		return sprintf($template, $class, h($type));
 	}
 

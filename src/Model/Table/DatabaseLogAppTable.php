@@ -36,6 +36,7 @@ class DatabaseLogAppTable extends Table {
 				$retval['OR']["$field LIKE"] = '%' . $filter . '%';
 			}
 		}
+
 		return $retval;
 	}
 
@@ -45,8 +46,8 @@ class DatabaseLogAppTable extends Table {
 	 * This method is used to get the fallback connection name if an
 	 * instance is created through the TableRegistry without a connection.
 	 *
-	 * @return string
 	 * @see \Cake\ORM\TableRegistry::get()
+	 * @return string
 	 */
 	public static function defaultConnectionName(): string {
 		return Configure::read('DatabaseLog.datasource') ?: 'database_log';

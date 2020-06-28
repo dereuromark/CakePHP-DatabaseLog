@@ -165,12 +165,15 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 		if ($query) {
 			if (strpos($query, 'type@') === 0) {
 				$query = str_replace('type@', '', $query);
+
 				return ['Log.type' => $query];
 			}
 
 			$escapedQuery = "'" . $query . "'"; // for now - $this->getDataSource()->value($query);
+
 			return ["MATCH (message) AGAINST ($escapedQuery)"];
 		}
+
 		return [];
 	}
 

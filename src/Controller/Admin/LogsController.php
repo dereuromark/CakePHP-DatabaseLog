@@ -114,9 +114,11 @@ class LogsController extends AppController {
 
 		if ($this->DatabaseLogs->delete($log)) {
 			$this->Flash->success(__('Log deleted'));
+
 			return $this->redirect(['action' => 'index']);
 		}
 		$this->Flash->error(__('Log was not deleted'));
+
 		return $this->redirect(['action' => 'index']);
 	}
 
@@ -153,6 +155,7 @@ class LogsController extends AppController {
 		$this->DatabaseLogs->removeDuplicates((bool)$this->request->getQuery('strict'));
 
 		$this->Flash->success(__('Duplicates have been removed.'));
+
 		return $this->redirect(['action' => 'index']);
 	}
 
