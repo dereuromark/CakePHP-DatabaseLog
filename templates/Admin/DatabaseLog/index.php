@@ -12,7 +12,7 @@ use DatabaseLog\Model\Table\DatabaseLogsTable;
 
 <nav class="large-3 medium-4 columns col-lg-3 col-md-4 actions">
 	<ul class="side-nav">
-		<li class="heading"><?= __('Actions') ?></li>
+		<li class="nav-item heading"><?= __('Actions') ?></li>
 		<li><?php echo $this->Form->postLink(__('Remove {0}', __('Duplicates')), ['controller' => 'Logs', 'action' => 'removeDuplicates']); ?></li>
 		<li><?php echo $this->Form->postLink(__('Remove {0}', __('Duplicates')) . ' (strict mode)', ['controller' => 'Logs', 'action' => 'removeDuplicates', '?' => ['strict' => true]]); ?></li>
 		<li><?php echo $this->Form->postLink(__('Reset {0}', __('Logs')), ['controller' => 'Logs', 'action' => 'reset'], ['confirm' => 'Sure?']); ?></li>

@@ -12,7 +12,7 @@ use DatabaseLog\Model\Table\DatabaseLogsTable;
 
 <nav class="large-3 medium-4 columns col-lg-3 col-md-4 actions">
 	<ul class="side-nav">
-		<li class="heading"><?= __('Actions') ?></li>
+		<li class="nav-item heading"><?= __('Actions') ?></li>
 		<li><?php echo $this->Html->link(__('Back to Dashboard'), ['controller' => 'DatabaseLog', 'action' => 'index']); ?></li>
 
 		<li><?php echo $this->Form->postLink(__('Remove {0}', __('Duplicates')), ['action' => 'removeDuplicates']); ?></li>
@@ -69,7 +69,7 @@ foreach ($types as $type) {
 					<?php echo $this->Log->typeLabel($log->type); ?>
 					<?php
 					if ($log->isCli()) {
-						echo '<span class="badge label label secondary round radius">cli</span>';
+						echo '<span class="badge badge-secondary label label secondary round radius">cli</span>';
 					}
 
 					echo '<div><small>' . $this->Text->truncate($log->uri, 100) . '</small></div>';

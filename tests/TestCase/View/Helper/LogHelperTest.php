@@ -46,19 +46,19 @@ class LogHelperTest extends TestCase {
 	 */
 	public function testTypeLabel() {
 		$result = $this->Log->typeLabel('error');
-		$expected = '<span class="label label-danger">error</span>';
+		$expected = '<span class="badge badge-danger">error</span>';
 		$this->assertSame($expected, $result);
 
 		$result = $this->Log->typeLabel('warning');
-		$expected = '<span class="label label-warning">warning</span>';
+		$expected = '<span class="badge badge-warning">warning</span>';
 		$this->assertSame($expected, $result);
 
 		$result = $this->Log->typeLabel('info');
-		$expected = '<span class="label label-info">info</span>';
+		$expected = '<span class="badge badge-info">info</span>';
 		$this->assertSame($expected, $result);
 
 		$result = $this->Log->typeLabel('foooo');
-		$expected = '<span class="label label-default">foooo</span>';
+		$expected = '<span class="badge badge-secondary">foooo</span>';
 		$this->assertSame($expected, $result);
 	}
 

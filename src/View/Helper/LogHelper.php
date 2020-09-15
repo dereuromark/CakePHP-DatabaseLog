@@ -20,8 +20,8 @@ class LogHelper extends Helper {
 	 * @var array
 	 */
 	protected $_defaultConfig = [
-		'typeTemplate' => '<span class="label label-%s">%s</span>',
-		'typeDefaultClass' => 'default',
+		'typeTemplate' => '<span class="badge badge-%s">%s</span>',
+		'typeDefaultClass' => 'secondary',
 		'typeMap' => [
 			'error' => 'danger',
 			'cli-error' => 'danger',

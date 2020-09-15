@@ -7,7 +7,7 @@
 
 <nav class="large-3 medium-4 columns col-lg-3 col-md-4 actions">
 	<ul class="side-nav">
-		<li class="heading"><?= __('Actions') ?></li>
+		<li class="nav-item heading"><?= __('Actions') ?></li>
 		<li><?php echo $this->Form->postLink(__('Delete {0}', __('Log Entry')), ['action' => 'delete', $log->id], ['confirm' => __('Are you sure?')]); ?></li>
 		<li><?php echo $this->Html->link(__('Back'), ['action' => 'index', '?' => $this->request->getQuery()]); ?></li>
 	</ul>
@@ -28,7 +28,7 @@
 			<?php
 			$isCli = $log->isCli();
 			if ($isCli) {
-				echo '<span class="badge label label secondary round radius">cli</span>';
+				echo '<span class="badge badge-secondary label label secondary round radius">cli</span>';
 			}
 			?>
 		</dd>
