@@ -35,6 +35,7 @@ class DatabaseLogController extends AppController {
 
 		$this->viewBuilder()->setHelpers(['Time', 'DatabaseLog.Log']);
 	}
+
 	/**
 	 * Overview action
 	 *
