@@ -57,7 +57,7 @@ class DatabaseLogShell extends Shell {
 			$type = Text::tokenize($type);
 			$query->where(['type IN' => $type]);
 		}
-		$limit = $this->param('limit');
+		$limit = (string)$this->param('limit');
 		$offset = null;
 		if (!$limit) {
 			$limit = 20;
@@ -69,7 +69,7 @@ class DatabaseLogShell extends Shell {
 
 		/** @var \DatabaseLog\Model\Entity\DatabaseLog[] $logs */
 		$logs = $query->order(['created' => 'DESC'])
-			->limit($limit)
+			->limit((int)$limit)
 			->offset($offset)
 			->all();
 
@@ -173,14 +173,15 @@ class DatabaseLogShell extends Shell {
 	/**
 	 * @param string|int|null $level
 	 * @param string|null $message
-	 * @param string|null $scope
+	 * @param string|array $context
+	 *
 	 * @return void
 	 */
-	public function testEntry($level = null, $message = null, $scope = null) {
+	public function testEntry($level = null, $message = null, $context = []) {
 		$level = $level !== null ? $level : LOG_INFO;
 		$message = $message !== null ? $message : 'test';
 
-		Log::write($level, $message, $scope);
+		Log::write($level, $message, $context);
 	}
 
 	/**

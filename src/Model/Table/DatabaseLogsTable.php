@@ -303,9 +303,10 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	public function truncate() {
 		/** @var \Cake\Database\Schema\TableSchema $tableSchema */
 		$tableSchema = $this->getSchema();
-		$sql = $tableSchema->truncateSql($this->_connection);
+		$connection = $this->getConnection();
+		$sql = $tableSchema->truncateSql($connection);
 		foreach ($sql as $snippet) {
-			$this->_connection->execute($snippet);
+			$connection->execute($snippet);
 		}
 	}
 
