@@ -14,7 +14,7 @@ use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\ORM\Table;
 
-class DatabaseLogAppTable extends Table {
+abstract class DatabaseLogAppTable extends Table {
 
 	/**
 	 * Filter fields
