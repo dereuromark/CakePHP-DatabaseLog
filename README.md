@@ -1,6 +1,6 @@
 #  CakePHP DatabaseLog Plugin
 
-[![Build Status](https://api.travis-ci.com/dereuromark/CakePHP-DatabaseLog.png?branch=master)](https://github.com/dereuromark/CakePHP-DatabaseLog/actions?query=workflow%3ACI+branch%3Amaster)
+[![CI](https://github.com/dereuromark/CakePHP-DatabaseLog/workflows/CI/badge.svg?branch=master)](https://github.com/dereuromark/CakePHP-DatabaseLog/actions?query=workflow%3ACI+branch%3Amaster)
 [![Coverage Status](https://img.shields.io/codecov/c/github/dereuromark/CakePHP-DatabaseLog/master.svg)](https://codecov.io/github/dereuromark/CakePHP-DatabaseLog?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/dereuromark/CakePHP-DatabaseLog/v/stable.svg)](https://packagist.org/packages/dereuromark/CakePHP-DatabaseLog)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
