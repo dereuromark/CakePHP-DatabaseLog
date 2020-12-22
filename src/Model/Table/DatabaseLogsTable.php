@@ -355,6 +355,9 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 		}
 
 		$config = $this->getConnection()->config();
+		if (empty($config['database'])) {
+			return null;
+		}
 
 		return filesize($config['database']);
 	}
