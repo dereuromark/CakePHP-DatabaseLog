@@ -19,6 +19,7 @@ use Cake\Event\EventInterface;
 use Cake\Utility\Hash;
 use Cake\Utility\Text;
 use DatabaseLog\Model\Entity\DatabaseLog;
+use RuntimeException;
 
 /**
  * @method \DatabaseLog\Model\Entity\DatabaseLog get($primaryKey, $options = [])
@@ -347,6 +348,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	}
 
 	/**
+	 * @throws \RuntimeException
 	 * @return int|null Bytes
 	 */
 	public function databaseSize(): ?int {
@@ -359,7 +361,12 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 			return null;
 		}
 
-		return filesize($config['database']);
+		$size = filesize($config['database']);
+		if ($size === false) {
+			throw new RuntimeException('Cannot access DB ' . $config['database']);
+		}
+
+		return $size;
 	}
 
 }

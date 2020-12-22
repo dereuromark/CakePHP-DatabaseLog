@@ -18,7 +18,7 @@ You can install a cronjob to hourly trigger the cleanup shell command:
 ```
 bin/cake database_log cleanup
 ```
-See the [CakePHP Cronjob docs](https://book.cakephp.org/3.0/en/console-and-shells/cron-jobs.html) for details.
+See the [CakePHP Cronjob docs](https://book.cakephp.org/4.0/en/console-and-shells/cron-jobs.html) for details.
 
 It will combine the log entries of the same content (and increase the count), and on top
 also clean out old records, either by date or by total record count.
@@ -108,10 +108,10 @@ Just enable it via Configure:
 		'notificationInterval' => 4 * HOUR, // In seconds
 		'monitorCallback' => function (\Cake\Event\Event $event) {
 			/** @var \DatabaseLog\Model\Table\DatabaseLogsTable $logsTable */
-			$logsTable = $event->subject();
+			$logsTable = $event->getSubject();
 
 			/* @var \DatabaseLog\Model\Entity\DatabaseLog[] $logs */
-			$logs = $event->data('logs');
+			$logs = $event->getData('logs');
 
 			$content = '';
 			foreach ($logs as $log) {
@@ -144,7 +144,7 @@ class AlertTheAdmin implements EventListenerInterface {
 }
 
 // Attach it somewhere
-...->eventManager()->on(new AlertTheAdmin());
+...->getEventManager()->on(new AlertTheAdmin());
 ```
 
 You could even have it manually set up in your bootstrap:
@@ -154,7 +154,7 @@ EventManager::instance()->on(
 	$myCallback
 );
 ```
-Read more about this in the [CakePHP docs](https://book.cakephp.org/3.0/en/core-libraries/events.html).
+Read more about this in the [CakePHP docs](https://book.cakephp.org/4.0/en/core-libraries/events.html).
 
 To set up a cronjob here, you can for example use crontab:
 ```
@@ -221,4 +221,4 @@ Feel free to fork and pull request.
 There are a few guidelines:
 
 - Coding standards passing: `composer cs-check` to check and `composer cs-fix` to fix.
-- Tests passing for Windows and Unix: `php phpunit.phar` to run them.
+- Tests passing for Windows and Unix: `composer test` to run them.
