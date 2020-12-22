@@ -122,7 +122,7 @@ class DatabaseLogShell extends Shell {
 				->all();
 			$contentArray = [];
 			foreach ($logs as $log) {
-				$content = $this->DatabaseLogs->format($log) . PHP_EOL . PHP_EOL;
+				$content = $this->DatabaseLogs->format($log) . PHP_EOL;
 
 				$contentArray[] = $content;
 			}

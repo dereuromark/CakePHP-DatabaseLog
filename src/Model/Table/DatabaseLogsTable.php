@@ -332,7 +332,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 		if ($log->refer) {
 			$content .= ' - Referer: ' . $log->refer;
 		}
-		$content .= PHP_EOL . $log->message;
+		$content .= PHP_EOL . $log->message . PHP_EOL;
 
 		return $content;
 	}
