@@ -106,7 +106,7 @@ Just enable it via Configure:
 			...
 		],
 		'notificationInterval' => 4 * HOUR, // In seconds
-		'monitorCallback' => function (\Cake\Event\Event $event) {
+		'monitorCallback' => function (\Cake\Event\EventInterface $event) {
 			/** @var \DatabaseLog\Model\Table\DatabaseLogsTable $logsTable */
 			$logsTable = $event->getSubject();
 

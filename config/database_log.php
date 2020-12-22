@@ -14,7 +14,7 @@ return [
 			'error',
 			'warning',
 		],
-		'monitorCallback' => function (\Cake\Event\Event $event) {
+		'monitorCallback' => function (\Cake\Event\EventInterface $event) {
 			/** @var \DatabaseLog\Model\Table\DatabaseLogsTable $logsTable */
 			$logsTable = $event->getSubject();
 
@@ -26,7 +26,7 @@ return [
 				$content .= $logsTable->format($log);
 			}
 
-			$email = new \Cake\Mailer\Email();
+			$mailer = new \Cake\Mailer\Mailer();
 			$subject = count($logs) . ' new error log entries';
 			// TODO Implement
 		},
