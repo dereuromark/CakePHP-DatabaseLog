@@ -15,7 +15,7 @@ if (!Configure::read('DatabaseLog.datasource')) {
 			'className' => 'Cake\Database\Connection',
 			'driver' => 'Cake\Database\Driver\Sqlite',
 			'database' => LOGS . 'database_log.sqlite',
-			'encoding' => 'utf8',
+			'encoding' => 'utf8mb4',
 			'cacheMetadata' => true,
 			'quoteIdentifiers' => false,
 		]);

@@ -4,6 +4,8 @@
  * @var \DatabaseLog\Model\Entity\DatabaseLog[] $logs
  * @var int[] $typesWithCount
  * @var array $lastErrors
+ * @var string $databaseType
+ * @var int|null $databaseSize
  */
 
 use DatabaseLog\Model\Table\DatabaseLogsTable;
@@ -22,6 +24,13 @@ use DatabaseLog\Model\Table\DatabaseLogsTable;
 <div class="large-9 medium-8 columns col-lg-9 col-md-8 content">
 
 <h1>Logs</h1>
+
+	<p>
+		Database <b><?php echo h($databaseType); ?></b>
+		<?php if ($databaseSize !== null) {
+			echo '(' . $this->Number->toReadableSize($databaseSize) . ')';
+		} ?>
+	</p>
 
 <?php
 if (DatabaseLogsTable::isSearchEnabled()) {

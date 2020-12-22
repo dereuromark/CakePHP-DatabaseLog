@@ -42,6 +42,9 @@ class DatabaseLogController extends AppController {
 	 * @return \Cake\Http\Response|null|void
 	 */
 	public function index() {
+		$databaseType = $this->DatabaseLogs->databaseType();
+		$databaseSize = $this->DatabaseLogs->databaseSize();
+
 		$logs = [];
 		$typesWithCount = $this->DatabaseLogs->getTypesWithCount();
 
@@ -54,7 +57,7 @@ class DatabaseLogController extends AppController {
 			->disableHydration()
 			->all()->toArray();
 
-		$this->set(compact('logs', 'typesWithCount', 'lastErrors'));
+		$this->set(compact('logs', 'typesWithCount', 'lastErrors', 'databaseType', 'databaseSize'));
 	}
 
 }

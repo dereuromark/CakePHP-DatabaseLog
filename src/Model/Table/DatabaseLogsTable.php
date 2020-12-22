@@ -336,4 +336,27 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 		return $content;
 	}
 
+	/**
+	 * @return string SQL DB type
+	 */
+	public function databaseType(): string {
+		$config = $this->getConnection()->config();
+		$type = $config['driver'];
+
+		return substr($type, strrpos($type, '\\') + 1);
+	}
+
+	/**
+	 * @return int|null Bytes
+	 */
+	public function databaseSize(): ?int {
+		if ($this->databaseType() !== 'Sqlite') {
+			return null;
+		}
+
+		$config = $this->getConnection()->config();
+
+		return filesize($config['database']);
+	}
+
 }

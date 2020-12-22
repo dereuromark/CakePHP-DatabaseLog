@@ -5,13 +5,11 @@ namespace DatabaseLog\Shell;
 use Cake\Console\ConsoleOptionParser;
 use Cake\Console\Shell;
 use Cake\Core\Configure;
+use Cake\I18n\Number;
 use Cake\Log\Log;
 use Cake\Utility\Text;
 
 /**
- * @author Mark Scherer
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
- *
  * @property \DatabaseLog\Model\Table\DatabaseLogsTable $DatabaseLogs
  */
 class DatabaseLogShell extends Shell {
@@ -19,7 +17,7 @@ class DatabaseLogShell extends Shell {
 	/**
 	 * @var string
 	 */
-	public $modelClass = 'DatabaseLog.DatabaseLogs';
+	protected $modelClass = 'DatabaseLog.DatabaseLogs';
 
 	/**
 	 * @return void
@@ -52,10 +50,20 @@ class DatabaseLogShell extends Shell {
 	 * @return void
 	 */
 	public function show($type = null) {
+		if ($this->param('verbose')) {
+			$dbType = $this->DatabaseLogs->databaseType();
+			$out = 'DB type: ' . $dbType;
+			$dbSize = $this->DatabaseLogs->databaseSize();
+			if ($dbSize !== null) {
+				$out .= ' (' . Number::toReadableSize($dbSize) . ')';
+			}
+			$this->out($out);
+		}
+
 		$query = $this->DatabaseLogs->find();
 		if ($type) {
-			$type = Text::tokenize($type);
-			$query->where(['type IN' => $type]);
+			$types = Text::tokenize($type);
+			$query->where(['type IN' => $types]);
 		}
 		$limit = (string)$this->param('limit');
 		$offset = null;
@@ -190,7 +198,7 @@ class DatabaseLogShell extends Shell {
 	public function getOptionParser(): ConsoleOptionParser {
 		$parser = parent::getOptionParser();
 		$parser->addSubcommand('show', [
-			'help' => 'List log entries. Optionally per type only.',
+			'help' => 'List log entries. Optionally per type only. Use -v for db related details.',
 			'parser' => [
 				'options' => [
 					'limit' => [
