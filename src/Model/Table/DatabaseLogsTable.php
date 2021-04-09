@@ -110,7 +110,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	}
 
 	/**
-	 * @param \Cake\Event\Event $event
+	 * @param \Cake\Event\EventInterface $event
 	 * @param \DatabaseLog\Model\Entity\DatabaseLog $entity
 	 * @param \ArrayObject $options
 	 * @return void
