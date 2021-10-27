@@ -3,19 +3,19 @@
 [![CI](https://github.com/dereuromark/CakePHP-DatabaseLog/workflows/CI/badge.svg?branch=master)](https://github.com/dereuromark/CakePHP-DatabaseLog/actions?query=workflow%3ACI+branch%3Amaster)
 [![Coverage Status](https://img.shields.io/codecov/c/github/dereuromark/CakePHP-DatabaseLog/master.svg)](https://codecov.io/github/dereuromark/CakePHP-DatabaseLog/branch/master)
 [![Latest Stable Version](https://poser.pugx.org/dereuromark/CakePHP-DatabaseLog/v/stable.svg)](https://packagist.org/packages/dereuromark/CakePHP-DatabaseLog)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 [![License](https://poser.pugx.org/dereuromark/CakePHP-DatabaseLog/license.png)](https://packagist.org/packages/dereuromark/CakePHP-DatabaseLog)
 [![Total Downloads](https://poser.pugx.org/dereuromark/CakePHP-DatabaseLog/d/total.png)](https://packagist.org/packages/dereuromark/CakePHP-DatabaseLog)
 
 DatabaseLog engine for CakePHP applications.
 
-This branch is for **CakePHP 4.0+**. See [version map](https://github.com/dereuromark/CakePHP-DatabaseLog/wiki#cakephp-version-map) for details.
+This branch is for **CakePHP 4.2+**. See [version map](https://github.com/dereuromark/CakePHP-DatabaseLog/wiki#cakephp-version-map) for details.
 
 ## Features
 
 - Easy setup and almost no dependencies.
 - Detailed log infos added for both Web and CLI log entries.
-- Defaults to SQLite as single app application light weight approach.
+- Defaults to SQLite as single app application lightweight approach.
 - Ideal for multi-server or serverless applications where logging to a file is just not convenient.
 - If DB is used, fallback to SQLite in case the DB is not reachable.
 - Simple admin interface to view/delete logs included.
@@ -72,11 +72,11 @@ Create a config setting in your `config/app.php` what database connection it sho
 ]
 ```
 It is recommended to not use the same datasource as your production server (`default`) because when the DB is not reachable logging to it will
-also not be possible. In that case it will fallback to SQLite file logging on this server instance, though.
+also not be possible. In that case it will fall back to SQLite file logging on this server instance, though.
 
 Once the datasource is reachable and once the first log entry is being written, the database table (defaulting to `database_logs`) will be automatically
 created. No need to manually run any migration or SQL script here.
-You can also manually create the table before hand, if you prefer:
+You can also manually create the table beforehand, if you prefer:
 ```
 bin/cake Migrations migrate -p DatabaseLog
 ```
