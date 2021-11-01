@@ -44,7 +44,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	use LazyTableTrait;
 
 	/**
-	 * @var array
+	 * @var array<string>
 	 */
 	public $searchFields = ['DatabaseLogs.type'];
 
