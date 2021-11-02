@@ -25,10 +25,10 @@ use RuntimeException;
 /**
  * @method \DatabaseLog\Model\Entity\DatabaseLog get($primaryKey, $options = [])
  * @method \DatabaseLog\Model\Entity\DatabaseLog newEntity(array $data, array $options = [])
- * @method \DatabaseLog\Model\Entity\DatabaseLog[] newEntities(array $data, array $options = [])
+ * @method array<\DatabaseLog\Model\Entity\DatabaseLog> newEntities(array $data, array $options = [])
  * @method \DatabaseLog\Model\Entity\DatabaseLog|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \DatabaseLog\Model\Entity\DatabaseLog patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \DatabaseLog\Model\Entity\DatabaseLog[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method array<\DatabaseLog\Model\Entity\DatabaseLog> patchEntities(iterable $entities, array $data, array $options = [])
  * @method \DatabaseLog\Model\Entity\DatabaseLog findOrCreate($search, ?callable $callback = null, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @method \DatabaseLog\Model\Entity\DatabaseLog saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])

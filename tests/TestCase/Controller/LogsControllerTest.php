@@ -96,7 +96,7 @@ class LogsControllerTest extends IntegrationTestCase {
 		$this->disableErrorHandlerMiddleware();
 
 		$this->post(
-			['prefix' => 'Admin', 'plugin' => 'DatabaseLog', 'controller' => 'Logs', 'action' => 'delete', 1]
+			['prefix' => 'Admin', 'plugin' => 'DatabaseLog', 'controller' => 'Logs', 'action' => 'delete', 1],
 		);
 		$logModel = TableRegistry::get('DatabaseLog.DatabaseLogs');
 		$count = $logModel->find()->count();

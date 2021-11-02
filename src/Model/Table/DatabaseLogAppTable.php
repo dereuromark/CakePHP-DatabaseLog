@@ -19,7 +19,7 @@ abstract class DatabaseLogAppTable extends Table {
 	/**
 	 * Filter fields
 	 *
-	 * @var string[]
+	 * @var array<string>
 	 */
 	public $searchFields = [];
 

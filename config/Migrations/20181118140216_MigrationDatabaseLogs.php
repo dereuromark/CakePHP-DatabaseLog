@@ -1,17 +1,18 @@
 <?php
+
 use Migrations\AbstractMigration;
 
-class MigrationDatabaseLogs extends AbstractMigration
-{
+class MigrationDatabaseLogs extends AbstractMigration {
+
 	/**
 	 * Change Method.
 	 *
 	 * More information on this method is available here:
 	 * http://docs.phinx.org/en/latest/migrations.html#the-change-method
+	 *
 	 * @return void
 	 */
-	public function change()
-	{
+	public function change() {
 		$this->table('database_logs')
 			->changeColumn('ip', 'string', [
 				'default' => null,
@@ -28,4 +29,5 @@ class MigrationDatabaseLogs extends AbstractMigration
 				'null' => false,
 			])->update();
 	}
+
 }

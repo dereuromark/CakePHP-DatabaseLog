@@ -75,7 +75,7 @@ class DatabaseLogShell extends Shell {
 			$limit = (int)$elements[1];
 		}
 
-		/** @var \DatabaseLog\Model\Entity\DatabaseLog[] $logs */
+		/** @var array<\DatabaseLog\Model\Entity\DatabaseLog> $logs */
 		$logs = $query->order(['created' => 'DESC'])
 			->limit((int)$limit)
 			->offset($offset)
@@ -115,7 +115,7 @@ class DatabaseLogShell extends Shell {
 		foreach ($types as $type) {
 			$query = $this->DatabaseLogs->find();
 
-			/** @var \DatabaseLog\Model\Entity\DatabaseLog[] $logs */
+			/** @var array<\DatabaseLog\Model\Entity\DatabaseLog> $logs */
 			$logs = $query->where(['type' => $type])
 				->limit($limit)
 				->order(['created' => 'DESC'])
@@ -181,13 +181,13 @@ class DatabaseLogShell extends Shell {
 	/**
 	 * @param string|int|null $level
 	 * @param string|null $message
-	 * @param string|array $context
+	 * @param array|string $context
 	 *
 	 * @return void
 	 */
 	public function testEntry($level = null, $message = null, $context = []) {
-		$level = $level !== null ? $level : LOG_INFO;
-		$message = $message !== null ? $message : 'test';
+		$level = $level ?? LOG_INFO;
+		$message = $message ?? 'test';
 
 		Log::write($level, $message, $context);
 	}
