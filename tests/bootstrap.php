@@ -85,18 +85,15 @@ class_alias(TestApp\Application::class, 'App\Application');
 Cake\Core\Plugin::getCollection()->add(new \DatabaseLog\Plugin());
 
 // Ensure default test connection is defined
-if (!getenv('db_class')) {
-	putenv('db_class=Cake\Database\Driver\Sqlite');
-	putenv('db_dsn=sqlite::memory:');
+if (!getenv('DB_CLASS')) {
+	putenv('DB_CLASS=Cake\Database\Driver\Sqlite');
+	putenv('DB_URL=sqlite::memory:');
 }
 
 ConnectionManager::setConfig('test', [
 	'className' => 'Cake\Database\Connection',
-	'driver' => getenv('db_class') ?: null,
-	'dsn' => getenv('db_dsn') ?: null,
-	//'database' => getenv('db_database'),
-	//'username' => getenv('db_username'),
-	//'password' => getenv('db_password'),
+	'driver' => getenv('DB_CLASS') ?: null,
+	'dsn' => getenv('DB_URL') ?: null,
 	'timezone' => 'UTC',
 	'quoteIdentifiers' => true,
 	'cacheMetadata' => true,
@@ -104,11 +101,8 @@ ConnectionManager::setConfig('test', [
 
 ConnectionManager::setConfig('test_database_log', [
 	'className' => 'Cake\Database\Connection',
-	'driver' => getenv('db_class') ?: null,
-	'dsn' => getenv('db_dsn') ?: null,
-	//'database' => getenv('db_database'),
-	//'username' => getenv('db_username'),
-	//'password' => getenv('db_password'),
+	'driver' => getenv('DB_CLASS') ?: null,
+	'dsn' => getenv('DB_URL') ?: null,
 	'timezone' => 'UTC',
 	'quoteIdentifiers' => true,
 	'cacheMetadata' => true,
