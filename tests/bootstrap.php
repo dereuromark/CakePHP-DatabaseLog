@@ -84,7 +84,13 @@ class_alias(TestApp\Application::class, 'App\Application');
 
 Cake\Core\Plugin::getCollection()->add(new \DatabaseLog\Plugin());
 
-// Ensure default test connection is defined
+// Allow local overwrite
+// E.g. in your console: export DB_URL="mysql://root:secret@127.0.0.1/cake_test"
+if (!getenv('DB_CLASS') && getenv('DB_URL')) {
+	ConnectionManager::setConfig('test', ['url' => getenv('DB_URL')]);
+
+	return;
+}
 if (!getenv('DB_CLASS')) {
 	putenv('DB_CLASS=Cake\Database\Driver\Sqlite');
 	putenv('DB_URL=sqlite::memory:');
