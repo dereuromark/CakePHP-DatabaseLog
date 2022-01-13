@@ -2,7 +2,13 @@
 	"name": "dereuromark/cakephp-databaselog",
 	"description": "CakePHP DatabaseLog Plugin",
 	"type": "cakephp-plugin",
-	"keywords": ["cakephp", "database", "logging", "logs", "plugin"],
+	"keywords": [
+		"cakephp",
+		"database",
+		"logging",
+		"logs",
+		"plugin"
+	],
 	"homepage": "https://github.com/dereuromark/CakePHP-DatabaseLog/",
 	"license": "MIT",
 	"authors": [
@@ -61,5 +67,10 @@
 		"lowest": "validate-prefer-lowest",
 		"cs-check": "phpcs --extensions=php",
 		"cs-fix": "phpcbf --extensions=php"
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
 	}
 }
