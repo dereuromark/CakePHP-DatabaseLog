@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="tests/bootstrap.php">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="tests/bootstrap.php" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+    <coverage>
+        <include>
+            <directory suffix=".php">src/</directory>
+        </include>
+    </coverage>
     <php>
         <ini name="memory_limit" value="-1"/>
         <ini name="apc.enable_cli" value="1"/>
-		<!-- E_ALL & ~E_USER_DEPRECATED (16383)-->
-		<!-- E_ALL (32767) -->
-		<ini name="error_reporting" value="16383"/>
+        <!-- E_ALL & ~E_USER_DEPRECATED (16383)-->
+        <!-- E_ALL (32767) -->
+        <ini name="error_reporting" value="16383"/>
     </php>
-
     <!-- Add any additional test suites you want to run here -->
     <testsuites>
         <testsuite name="database-log">
             <directory>tests/TestCase/</directory>
         </testsuite>
     </testsuites>
-
     <!-- Setup a listener for fixtures -->
     <listeners>
         <listener class="Cake\TestSuite\Fixture\FixtureInjector">
@@ -23,12 +26,5 @@
             </arguments>
         </listener>
     </listeners>
-
     <!-- Prevent coverage reports from looking in tests and vendors -->
-    <filter>
-        <whitelist>
-            <directory suffix=".php">src/</directory>
-        </whitelist>
-    </filter>
-
 </phpunit>

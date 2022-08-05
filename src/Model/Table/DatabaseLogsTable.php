@@ -34,10 +34,10 @@ use RuntimeException;
  * @method \DatabaseLog\Model\Entity\DatabaseLog saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @mixin \Search\Model\Behavior\SearchBehavior
  * @method \DatabaseLog\Model\Entity\DatabaseLog newEmptyEntity()
- * @method \DatabaseLog\Model\Entity\DatabaseLog[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \DatabaseLog\Model\Entity\DatabaseLog[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \DatabaseLog\Model\Entity\DatabaseLog[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \DatabaseLog\Model\Entity\DatabaseLog[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method \Cake\Datasource\ResultSetInterface<\DatabaseLog\Model\Entity\DatabaseLog>|false saveMany(iterable $entities, $options = [])
+ * @method \Cake\Datasource\ResultSetInterface<\DatabaseLog\Model\Entity\DatabaseLog> saveManyOrFail(iterable $entities, $options = [])
+ * @method \Cake\Datasource\ResultSetInterface<\DatabaseLog\Model\Entity\DatabaseLog>|false deleteMany(iterable $entities, $options = [])
+ * @method \Cake\Datasource\ResultSetInterface<\DatabaseLog\Model\Entity\DatabaseLog> deleteManyOrFail(iterable $entities, $options = [])
  */
 class DatabaseLogsTable extends DatabaseLogAppTable {
 
