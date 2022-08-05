@@ -29,6 +29,11 @@ class LogsController extends AppController {
 	protected $modelClass = 'DatabaseLog.DatabaseLogs';
 
 	/**
+	 * @var string
+	 */
+	protected $defaultTable = 'DatabaseLog.DatabaseLogs';
+
+	/**
 	 * Setup pagination
 	 *
 	 * @var array
