@@ -27,6 +27,11 @@ class DatabaseLogController extends AppController {
 	protected $modelClass = 'DatabaseLog.DatabaseLogs';
 
 	/**
+	 * @var string
+	 */
+	protected $defaultTable = 'DatabaseLog.DatabaseLogs';
+
+	/**
 	 * @param \Cake\Event\EventInterface $event
 	 *
 	 * @return \Cake\Http\Response|null|void
