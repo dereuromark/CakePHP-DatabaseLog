@@ -2,6 +2,7 @@
 
 namespace DatabaseLog\Shell;
 
+use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Cake\Console\Shell;
 use Cake\Core\Configure;
@@ -95,7 +96,7 @@ class DatabaseLogShell extends Shell {
 				$this->out($content);
 			}
 
-			$this->out($log->message, 2, Shell::VERBOSE);
+			$this->out($log->message, 2, ConsoleIo::VERBOSE);
 		}
 	}
 

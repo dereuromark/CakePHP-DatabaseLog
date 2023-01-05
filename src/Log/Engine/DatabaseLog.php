@@ -12,6 +12,7 @@ namespace DatabaseLog\Log\Engine;
 
 use Cake\Log\Engine\BaseLog;
 use Cake\ORM\TableRegistry;
+use Stringable;
 
 /**
  * DatabaseLog Engine
@@ -34,7 +35,7 @@ class DatabaseLog extends BaseLog {
 		parent::__construct($config);
 		$model = !empty($config['model']) ? $config['model'] : 'DatabaseLog.DatabaseLogs';
 		/** @var \DatabaseLog\Model\Table\DatabaseLogsTable $Logs */
-		$Logs = TableRegistry::get($model);
+		$Logs = TableRegistry::getTableLocator()->get($model);
 		$this->Logs = $Logs;
 	}
 
@@ -42,18 +43,18 @@ class DatabaseLog extends BaseLog {
 	 * Write the log to database
 	 *
 	 * @param string $level
-	 * @param string $message
-	 * @param array $context
-	 * @return bool Success
+	 * @param \Stringable|string $message
+	 * @param array<mixed> $context
+	 * @return void
 	 */
-	public function log($level, $message, array $context = []) {
+	public function log($level, string|Stringable $message, array $context = []): void {
 		if ($this->getConfig('type')) {
 			$level = $this->getConfig('type');
 		} elseif ($this->getConfig('file')) {
 			$level = $this->getConfig('file');
 		}
 
-		return $this->Logs->log($level, $message, $context);
+		$this->Logs->log($level, $message, $context);
 	}
 
 }

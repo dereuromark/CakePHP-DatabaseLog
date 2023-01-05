@@ -29,16 +29,16 @@ class LogsController extends AppController {
 	protected $modelClass = 'DatabaseLog.DatabaseLogs';
 
 	/**
-	 * @var string
+	 * @var string|null
 	 */
-	protected $defaultTable = 'DatabaseLog.DatabaseLogs';
+	protected ?string $defaultTable = 'DatabaseLog.DatabaseLogs';
 
 	/**
 	 * Setup pagination
 	 *
-	 * @var array
+	 * @var array<string, mixed>
 	 */
-	public $paginate = [
+	protected array $paginate = [
 		'order' => ['created' => 'DESC'],
 		'fields' => [
 			'created',

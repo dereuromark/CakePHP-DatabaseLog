@@ -3,13 +3,13 @@
 [![CI](https://github.com/dereuromark/CakePHP-DatabaseLog/workflows/CI/badge.svg?branch=master)](https://github.com/dereuromark/CakePHP-DatabaseLog/actions?query=workflow%3ACI+branch%3Amaster)
 [![Coverage Status](https://img.shields.io/codecov/c/github/dereuromark/CakePHP-DatabaseLog/master.svg)](https://codecov.io/github/dereuromark/CakePHP-DatabaseLog/branch/master)
 [![Latest Stable Version](https://poser.pugx.org/dereuromark/CakePHP-DatabaseLog/v/stable.svg)](https://packagist.org/packages/dereuromark/CakePHP-DatabaseLog)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.4-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.1-8892BF.svg)](https://php.net/)
 [![License](https://poser.pugx.org/dereuromark/CakePHP-DatabaseLog/license.png)](https://packagist.org/packages/dereuromark/CakePHP-DatabaseLog)
 [![Total Downloads](https://poser.pugx.org/dereuromark/CakePHP-DatabaseLog/d/total.png)](https://packagist.org/packages/dereuromark/CakePHP-DatabaseLog)
 
 DatabaseLog engine for CakePHP applications.
 
-This branch is for **CakePHP 4.2+**. See [version map](https://github.com/dereuromark/CakePHP-DatabaseLog/wiki#cakephp-version-map) for details.
+This branch is for **CakePHP 5.0+**. See [version map](https://github.com/dereuromark/CakePHP-DatabaseLog/wiki#cakephp-version-map) for details.
 
 ## Features
 

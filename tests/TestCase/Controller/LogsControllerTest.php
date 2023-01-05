@@ -11,12 +11,15 @@
 namespace DatabaseLog\TestCase\Controller;
 
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\IntegrationTestCase;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\TestCase;
 
 /**
  * @coversDefaultClass LogsController
  */
-class LogsControllerTest extends IntegrationTestCase {
+class LogsControllerTest extends TestCase {
+
+	use IntegrationTestTrait;
 
 	/**
 	 * @var \DatabaseLog\Model\Table\DatabaseLogsTable
@@ -28,9 +31,9 @@ class LogsControllerTest extends IntegrationTestCase {
 	 *
 	 * @var array
 	 */
-	protected $fixtures = [
+	protected array $fixtures = [
 		'plugin.DatabaseLog.DatabaseLogs',
-		'core.Sessions',
+		'plugin.DatabaseLog.Sessions',
 	];
 
 	/**
@@ -41,7 +44,7 @@ class LogsControllerTest extends IntegrationTestCase {
 	public function setUp(): void {
 		parent::setUp();
 
-		$this->Logs = TableRegistry::get('DatabaseLog.DatabaseLogs');
+		$this->Logs = TableRegistry::getTableLocator()->get('DatabaseLog.DatabaseLogs');
 		if (!$this->Logs->find()->count()) {
 			$this->Logs->log('warning', 'Foo Warning', ['x' => 'y']);
 		}
@@ -98,7 +101,7 @@ class LogsControllerTest extends IntegrationTestCase {
 		$this->post(
 			['prefix' => 'Admin', 'plugin' => 'DatabaseLog', 'controller' => 'Logs', 'action' => 'delete', 1],
 		);
-		$logModel = TableRegistry::get('DatabaseLog.DatabaseLogs');
+		$logModel = TableRegistry::getTableLocator()->get('DatabaseLog.DatabaseLogs');
 		$count = $logModel->find()->count();
 
 		$this->assertSame(0, $count);
@@ -124,7 +127,7 @@ class LogsControllerTest extends IntegrationTestCase {
 	public function testReset() {
 		$this->disableErrorHandlerMiddleware();
 
-		$logModel = TableRegistry::get('DatabaseLog.DatabaseLogs');
+		$logModel = TableRegistry::getTableLocator()->get('DatabaseLog.DatabaseLogs');
 		$count = $logModel->find()->count();
 
 		$this->assertSame(1, $count);
@@ -149,7 +152,7 @@ class LogsControllerTest extends IntegrationTestCase {
 
 		$this->post(['prefix' => 'Admin', 'plugin' => 'DatabaseLog', 'controller' => 'Logs', 'action' => 'removeDuplicates']);
 
-		$logModel = TableRegistry::get('DatabaseLog.DatabaseLogs');
+		$logModel = TableRegistry::getTableLocator()->get('DatabaseLog.DatabaseLogs');
 		$count = $logModel->find()->count();
 
 		$this->assertSame(1, $count);

@@ -2,6 +2,8 @@ parameters:
 	level: 8
 	paths:
 		- src/
+	excludePaths:
+		- src/Shell/
 	bootstrapFiles:
 		- tests/bootstrap.php
 		- tests/shim.php

@@ -14,12 +14,12 @@ class LogHelper extends Helper {
 	/**
 	 * @var array
 	 */
-	public $helpers = ['Html'];
+	protected array $helpers = ['Html'];
 
 	/**
 	 * @var array<string, mixed>
 	 */
-	protected $_defaultConfig = [
+	protected array $_defaultConfig = [
 		'typeTemplate' => '<span class="badge badge-%s">%s</span>',
 		'typeDefaultClass' => 'secondary',
 		'typeMap' => [

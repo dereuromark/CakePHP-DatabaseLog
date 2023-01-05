@@ -15,7 +15,7 @@ use Cake\ORM\Entity;
  * @property string|null $refer
  * @property string|null $user_agent
  * @property int $count
- * @property \Cake\I18n\FrozenTime $created
+ * @property \Cake\I18n\DateTime $created
  * @property string $summary
  */
 class DatabaseLog extends Entity {
@@ -29,7 +29,7 @@ class DatabaseLog extends Entity {
 	 *
 	 * @var array<string, bool>
 	 */
-	protected $_accessible = [
+	protected array $_accessible = [
 		'*' => true,
 		'id' => false,
 	];

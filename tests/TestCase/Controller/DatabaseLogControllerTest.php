@@ -11,9 +11,12 @@
 namespace DatabaseLog\TestCase\Controller;
 
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\IntegrationTestCase;
+use Cake\TestSuite\IntegrationTestTrait;
+use Cake\TestSuite\TestCase;
 
-class DatabaseLogControllerTest extends IntegrationTestCase {
+class DatabaseLogControllerTest extends TestCase {
+
+	use IntegrationTestTrait;
 
 	/**
 	 * @var \DatabaseLog\Model\Table\DatabaseLogsTable
@@ -25,9 +28,9 @@ class DatabaseLogControllerTest extends IntegrationTestCase {
 	 *
 	 * @var array
 	 */
-	protected $fixtures = [
+	protected array $fixtures = [
 		'plugin.DatabaseLog.DatabaseLogs',
-		'core.Sessions',
+		'plugin.DatabaseLog.Sessions',
 	];
 
 	/**
@@ -38,7 +41,7 @@ class DatabaseLogControllerTest extends IntegrationTestCase {
 	public function setUp(): void {
 		parent::setUp();
 
-		$this->Logs = TableRegistry::get('DatabaseLog.DatabaseLogs');
+		$this->Logs = TableRegistry::getTableLocator()->get('DatabaseLog.DatabaseLogs');
 		if (!$this->Logs->find()->count()) {
 			$this->Logs->log('warning', 'Foo Warning', ['x' => 'y']);
 		}

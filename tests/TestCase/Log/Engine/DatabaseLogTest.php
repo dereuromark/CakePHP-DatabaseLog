@@ -27,7 +27,7 @@ class DatabaseLogTest extends TestCase {
 	 *
 	 * @var array
 	 */
-	protected $fixtures = [
+	protected array $fixtures = [
 		'plugin.DatabaseLog.DatabaseLogs',
 	];
 
@@ -39,7 +39,7 @@ class DatabaseLogTest extends TestCase {
 	public function setUp(): void {
 		//Log::drop('default');
 		//Log::config('default', array('className' => 'DatabaseLog.Database'));
-		$this->Logs = TableRegistry::get('DatabaseLog.DatabaseLogs');
+		$this->Logs = TableRegistry::getTableLocator()->get('DatabaseLog.DatabaseLogs');
 
 		parent::setUp();
 	}

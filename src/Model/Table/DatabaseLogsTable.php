@@ -16,7 +16,7 @@ use Cake\Datasource\EntityInterface;
 use Cake\Datasource\ResultSetInterface;
 use Cake\Event\Event;
 use Cake\Event\EventInterface;
-use Cake\I18n\FrozenTime;
+use Cake\I18n\DateTime;
 use Cake\Utility\Hash;
 use Cake\Utility\Text;
 use DatabaseLog\Model\Entity\DatabaseLog;
@@ -294,7 +294,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 			return 0;
 		}
 
-		$date = new FrozenTime($age);
+		$date = new DateTime($age);
 
 		return $this->deleteAll(['created <' => $date]);
 	}
