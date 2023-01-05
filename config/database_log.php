@@ -6,6 +6,9 @@
  * Copy this content to your config/app.php
  * and customize it to your needs.
  */
+use Cake\Event\EventInterface;
+use Cake\Mailer\Mailer;
+use DatabaseLog\Model\Entity\DatabaseLog;
 
 return [
 	'DatabaseLog' => [
@@ -14,7 +17,7 @@ return [
 			'error',
 			'warning',
 		],
-		'monitorCallback' => function (\Cake\Event\EventInterface $event) {
+		'monitorCallback' => function (EventInterface $event) {
 			/** @var \DatabaseLog\Model\Table\DatabaseLogsTable $logsTable */
 			$logsTable = $event->getSubject();
 
@@ -26,11 +29,11 @@ return [
 				$content .= $logsTable->format($log);
 			}
 
-			$mailer = new \Cake\Mailer\Mailer();
+			$mailer = new Mailer();
 			$subject = count($logs) . ' new error log entries';
 			// TODO Implement
 		},
-		'saveCallback' => function (\DatabaseLog\Model\Entity\DatabaseLog $databaseLog) {
+		'saveCallback' => function (DatabaseLog $databaseLog) {
 			if (empty($_SESSION) || empty($_SESSION['language'])) {
 				return;
 			}

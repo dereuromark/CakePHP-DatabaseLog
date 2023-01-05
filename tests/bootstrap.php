@@ -4,6 +4,7 @@ use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\Log\Log;
+use DatabaseLog\Plugin;
 
 if (!defined('DS')) {
 	define('DS', DIRECTORY_SEPARATOR);
@@ -83,7 +84,7 @@ class_alias(TestApp\Controller\AppController::class, 'App\Controller\AppControll
 class_alias(Cake\View\View::class, 'App\View\AppView');
 class_alias(TestApp\Application::class, 'App\Application');
 
-Cake\Core\Plugin::getCollection()->add(new \DatabaseLog\Plugin());
+Cake\Core\Plugin::getCollection()->add(new Plugin());
 
 // Ensure default test connection is defined
 if (!getenv('DB_CLASS')) {
