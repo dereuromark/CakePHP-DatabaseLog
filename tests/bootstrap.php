@@ -2,9 +2,13 @@
 
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
 use Cake\Log\Log;
-use DatabaseLog\Plugin;
+use Cake\View\View;
+use DatabaseLog\Plugin as DatabasePlugin;
+use TestApp\Application;
+use TestApp\Controller\AppController;
 
 if (!defined('DS')) {
 	define('DS', DIRECTORY_SEPARATOR);
@@ -80,11 +84,11 @@ Log::setConfig($config['Log']);
 
 Cache::setConfig($cache);
 
-class_alias(TestApp\Controller\AppController::class, 'App\Controller\AppController');
-class_alias(Cake\View\View::class, 'App\View\AppView');
-class_alias(TestApp\Application::class, 'App\Application');
+class_alias(AppController::class, 'App\Controller\AppController');
+class_alias(View::class, 'App\View\AppView');
+class_alias(Application::class, 'App\Application');
 
-Cake\Core\Plugin::getCollection()->add(new Plugin());
+Plugin::getCollection()->add(new DatabasePlugin());
 
 // Ensure default test connection is defined
 if (!getenv('DB_CLASS')) {

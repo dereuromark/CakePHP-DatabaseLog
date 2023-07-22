@@ -34,7 +34,7 @@ use DatabaseLog\Model\Table\DatabaseLogsTable;
 	?>
 
 <ul class="list-inline">
-	<li><?php echo $this->Html->link('ALL', ['controller' => 'Logs', 'action' => 'index']); ?></li>
+	<li class="list-inline-item"><?php echo $this->Html->link('ALL', ['controller' => 'Logs', 'action' => 'index']); ?></li>
 <?php
 foreach ($types as $type) {
 	echo '<li>';
