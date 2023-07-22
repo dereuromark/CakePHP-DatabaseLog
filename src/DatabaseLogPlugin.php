@@ -8,7 +8,7 @@ use Cake\Routing\RouteBuilder;
 /**
  * Plugin for DatabaseLog
  */
-class Plugin extends BasePlugin {
+class DatabaseLogPlugin extends BasePlugin {
 
 	/**
 	 * @var bool

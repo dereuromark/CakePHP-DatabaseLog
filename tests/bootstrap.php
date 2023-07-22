@@ -5,8 +5,9 @@ use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Datasource\ConnectionManager;
 use Cake\Log\Log;
+use Cake\TestSuite\Fixture\SchemaLoader;
 use Cake\View\View;
-use DatabaseLog\Plugin as DatabasePlugin;
+use DatabaseLog\DatabaseLogPlugin;
 use TestApp\Application;
 use TestApp\Controller\AppController;
 
@@ -37,6 +38,8 @@ define('CAKE', CORE_PATH . APP_DIR . DS);
 
 require dirname(__DIR__) . '/vendor/autoload.php';
 require CORE_PATH . 'config/bootstrap.php';
+
+require CAKE_CORE_INCLUDE_PATH . '/src/functions.php';
 
 Configure::write('App', [
 	'namespace' => 'TestApp',
@@ -88,7 +91,7 @@ class_alias(AppController::class, 'App\Controller\AppController');
 class_alias(View::class, 'App\View\AppView');
 class_alias(Application::class, 'App\Application');
 
-Plugin::getCollection()->add(new DatabasePlugin());
+Plugin::getCollection()->add(new DatabaseLogPlugin());
 
 // Ensure default test connection is defined
 if (!getenv('DB_CLASS')) {
@@ -115,6 +118,6 @@ ConnectionManager::setConfig('test_database_log', [
 ]);
 
 if (env('FIXTURE_SCHEMA_METADATA')) {
-	$loader = new Cake\TestSuite\Fixture\SchemaLoader();
+	$loader = new SchemaLoader();
 	$loader->loadInternalFile(env('FIXTURE_SCHEMA_METADATA'));
 }
