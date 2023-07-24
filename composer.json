@@ -39,7 +39,7 @@
 		"friendsofcake/search": "dev-cake-5",
 		"fig-r/psr2r-sniffer": "dev-next",
 		"dereuromark/cakephp-tools": "dev-cake5",
-		"phpunit/phpunit": "^9.5.16"
+		"phpunit/phpunit": "^10.2"
 	},
 	"suggest": {
 		"cakephp/migrations": "For migrations to run."

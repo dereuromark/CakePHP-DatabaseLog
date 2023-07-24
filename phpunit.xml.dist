@@ -9,19 +9,20 @@
 
 		<env name="FIXTURE_SCHEMA_METADATA" value="tests/schema.php"/>
 	</php>
-	<!-- Add any additional test suites you want to run here -->
+
 	<testsuites>
 		<testsuite name="database-log">
 			<directory>tests/TestCase/</directory>
 		</testsuite>
 	</testsuites>
+
 	<extensions>
-		<extension class="\Cake\TestSuite\Fixture\PHPUnitExtension"/>
+		<bootstrap class="\Cake\TestSuite\Fixture\Extension\PHPUnitExtension"/>
 	</extensions>
 
-	<coverage>
+	<source>
 		<include>
 			<directory suffix=".php">src/</directory>
 		</include>
-	</coverage>
+	</source>
 </phpunit>
