@@ -58,7 +58,7 @@ class DatabaseLogShellTest extends TestCase {
 		$io = new ConsoleIo($this->out, $this->err);
 
 		$this->Shell = $this->getMockBuilder(DatabaseLogShell::class)
-			->setMethods(['in', '_stop'])
+			->onlyMethods(['in', '_stop'])
 			->setConstructorArgs([$io])
 			->getMock();
 

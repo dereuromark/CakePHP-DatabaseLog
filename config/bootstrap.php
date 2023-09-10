@@ -25,3 +25,13 @@ if (!Configure::read('DatabaseLog.datasource')) {
 if (Configure::read('debug') && !is_dir(LOGS)) {
 	mkdir(LOGS, 0770, true);
 }
+
+if (!defined('SECOND')) {
+    define('SECOND', 1);
+    define('MINUTE', 60);
+    define('HOUR', 3600);
+    define('DAY', 86400);
+    define('WEEK', 604800);
+    define('MONTH', 2592000);
+    define('YEAR', 31536000);
+}

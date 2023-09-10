@@ -40,6 +40,8 @@ require dirname(__DIR__) . '/vendor/autoload.php';
 require CORE_PATH . 'config/bootstrap.php';
 require CAKE_CORE_INCLUDE_PATH . '/src/functions.php';
 
+require ROOT . '/config/bootstrap.php';
+
 Configure::write('App', [
 	'namespace' => 'TestApp',
 	'encoding' => 'UTF-8',
