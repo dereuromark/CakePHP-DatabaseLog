@@ -13,7 +13,8 @@
 
 namespace DatabaseLog\Model\Table;
 
-use Cake\Core\App;
+use Cake\Database\Schema\TableSchema;
+use PDOException;
 use RuntimeException;
 
 /**
@@ -43,29 +44,50 @@ trait LazyTableTrait {
 	 * @return void
 	 */
 	public function ensureTables(array $fixtures) {
+		/** @var \Cake\Database\Connection $connection */
 		$connection = $this->getConnection();
-
-		if (static::$invoked) {
-			// When exceptions are encountered we try to avoid loops
-			return;
-		}
-		static::$invoked = true;
-
 		$schema = $connection->getSchemaCollection();
-		$existing = $schema->listTables();
 
-		foreach ($fixtures as $name) {
-			$class = App::className($name, 'Test/Fixture', 'Fixture');
-			if ($class === null) {
-				throw new RuntimeException("Unknown fixture '$name'.");
+		try {
+			$existing = $schema->listTables();
+		} catch (PDOException $e) {
+			// Handle errors when SQLite blows up if the schema has changed.
+			if (strpos($e->getMessage(), 'schema has changed') !== false) {
+				$existing = $schema->listTables();
+			} else {
+				throw $e;
 			}
-			/** @var \Cake\TestSuite\Fixture\TestFixture $fixture */
-			$fixture = new $class($this->getConnection()->configName());
-			$table = $fixture->table;
-			if (in_array($table, $existing, true)) {
-				continue;
+		}
+
+		try {
+			$config = require dirname(__DIR__, 3) . '/config/schema.php';
+			$driver = $connection->getDriver();
+			foreach ($config as $table) {
+				if (in_array($table['table'], $existing, true)) {
+					continue;
+				}
+				if (!in_array($table['table'], $fixtures, true)) {
+					continue;
+				}
+
+				// Use Database/Schema primitives to generate dialect specific
+				// CREATE TABLE statements and run them.
+				$schema = new TableSchema($table['table'], $table['columns']);
+				foreach ($table['constraints'] as $name => $itemConfig) {
+					$schema->addConstraint($name, $itemConfig);
+				}
+				foreach ($schema->createSql($connection) as $sql) {
+					$driver->execute($sql);
+				}
 			}
-			$fixture->create($connection);
+		} catch (PDOException $e) {
+			if (strpos($e->getMessage(), 'unable to open')) {
+				throw new RuntimeException(
+					'Could not create a SQLite database. ' .
+					'Ensure that your webserver has write access to the database file and folder it is in.'
+				);
+			}
+			throw $e;
 		}
 	}
 
