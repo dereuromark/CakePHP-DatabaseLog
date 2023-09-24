@@ -136,7 +136,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 			}
 			if (!$entity['uri']) {
 				$type = 'CLI';
-				$entity['uri'] = $type . ' ' . str_replace((string)env('PWD'), '', implode(' ', (array)env('argv')));
+				$entity['uri'] = $type . ' ' . str_replace((string)env('PWD'), '', implode(' ', (array)($_SERVER['argv'] ?? null)));
 			}
 			if (!$entity['user_agent']) {
 				$shell = env('SHELL') ?: 'n/a';
