@@ -59,6 +59,10 @@ trait LazyTableTrait {
 			}
 		}
 
+		if (in_array('database_logs', $existing, true)) {
+			return;
+		}
+
 		try {
 			$config = require dirname(__DIR__, 3) . '/config/schema.php';
 			$driver = $connection->getDriver();

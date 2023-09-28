@@ -60,7 +60,11 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 		if (static::isSearchEnabled()) {
 			$this->addBehavior('Search.Search');
 		}
-		$this->ensureTables(['DatabaseLog.DatabaseLogs']);
+
+		$callback = Configure::read('DatabaseLog.disableAutoTable');
+		if ($callback !== true) {
+			$this->ensureTables(['DatabaseLog.DatabaseLogs']);
+		}
 
 		$callback = Configure::read('DatabaseLog.monitorCallback');
 		if (!$callback) {

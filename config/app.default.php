@@ -41,6 +41,7 @@ return [
 
 			$databaseLog->message .= PHP_EOL . 'Language: ' . $currentSessionLanguage;
 		},
+		'disableAutoTable' => null, // Set to true to avoid lazy auto logs table creation
 		'isSearchEnabled' => null, // Auto-detect
 	],
 ];
