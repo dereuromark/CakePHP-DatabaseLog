@@ -72,7 +72,7 @@ foreach ($types as $type) {
 						echo '<span class="badge badge-secondary label label secondary round radius">cli</span>';
 					}
 
-					echo '<div><small>' . $this->Text->truncate($log->uri, 100) . '</small></div>';
+					echo '<div><small>' . ($log->uri ? $this->Text->truncate($log->uri, 100) : '') . '</small></div>';
 					?>
 
 					<?php if ($log->count > 1) { ?>
