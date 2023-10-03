@@ -38,7 +38,7 @@
 	"require-dev": {
 		"friendsofcake/search": "^7.0.0",
 		"fig-r/psr2r-sniffer": "dev-next",
-		"dereuromark/cakephp-tools": "dev-cake5",
+		"dereuromark/cakephp-tools": "^3.0.0",
 		"phpunit/phpunit": "^10.2"
 	},
 	"suggest": {
