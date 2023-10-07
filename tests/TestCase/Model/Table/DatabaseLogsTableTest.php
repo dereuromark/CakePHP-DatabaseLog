@@ -37,10 +37,10 @@ class DatabaseLogsTableTest extends TestCase {
 	 * @return void
 	 */
 	public function setUp(): void {
+		parent::setUp();
+
 		$this->Logs = TableRegistry::getTableLocator()->get('DatabaseLog.DatabaseLogs');
 		$this->Logs->truncate();
-
-		parent::setUp();
 	}
 
 	/**

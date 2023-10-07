@@ -6,7 +6,6 @@ parameters:
 		- src/Shell/
 	bootstrapFiles:
 		- tests/bootstrap.php
-		- tests/shim.php
 	checkMissingIterableValueType: false
 	checkGenericClassInNonGenericObjectType: false
 	ignoreErrors:
