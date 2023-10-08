@@ -10,3 +10,6 @@ parameters:
 	checkGenericClassInNonGenericObjectType: false
 	ignoreErrors:
 		- '#Access to an undefined property Cake\\ORM\\BehaviorRegistry::\$Search#'
+
+includes:
+	- vendor/cakedc/cakephp-phpstan/extension.neon

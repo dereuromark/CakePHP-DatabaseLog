@@ -22,7 +22,7 @@ return [
 		],
 		'_options' => [
 			'engine' => 'InnoDB',
-			'collation' => 'utf8mb4_unicode_ci'
+			'collation' => 'utf8mb4_unicode_ci',
 		],
 	],
 ];

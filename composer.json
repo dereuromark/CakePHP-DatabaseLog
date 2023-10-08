@@ -36,6 +36,7 @@
 		"cakephp/cakephp": "^5.0.0"
 	},
 	"require-dev": {
+		"cakedc/cakephp-phpstan": "^3.0.0",
 		"friendsofcake/search": "^7.0.0",
 		"fig-r/psr2r-sniffer": "dev-next",
 		"dereuromark/cakephp-tools": "^3.0.0",

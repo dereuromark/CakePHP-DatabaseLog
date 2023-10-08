@@ -2,8 +2,14 @@
 
 namespace DatabaseLog;
 
+use Cake\Console\CommandCollection;
 use Cake\Core\BasePlugin;
 use Cake\Routing\RouteBuilder;
+use DatabaseLog\Command\CleanupCommand;
+use DatabaseLog\Command\ExportCommand;
+use DatabaseLog\Command\MonitorCommand;
+use DatabaseLog\Command\ResetCommand;
+use DatabaseLog\Command\ShowCommand;
 
 /**
  * Plugin for DatabaseLog
@@ -27,6 +33,19 @@ class DatabaseLogPlugin extends BasePlugin {
 				$routes->fallbacks();
 			});
 		});
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function console(CommandCollection $commands): CommandCollection {
+		$commands->add('database_logs show', ShowCommand::class);
+		$commands->add('database_logs monitor', MonitorCommand::class);
+		$commands->add('database_logs cleanup', CleanupCommand::class);
+		$commands->add('database_logs reset', ResetCommand::class);
+		$commands->add('database_logs export', ExportCommand::class);
+
+		return $commands;
 	}
 
 }

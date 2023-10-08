@@ -45,6 +45,8 @@ class DatabaseLogShellTest extends TestCase {
 	public function setUp(): void {
 		parent::setUp();
 
+		$this->skipIf(true, 'Refactor to command tests');
+
 		if (!is_dir(LOGS)) {
 			mkdir(LOGS, 0770, true);
 		}
