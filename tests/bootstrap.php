@@ -121,4 +121,5 @@ ConnectionManager::setConfig('test_database_log', [
 if (env('FIXTURE_SCHEMA_METADATA')) {
 	$loader = new SchemaLoader();
 	$loader->loadInternalFile(env('FIXTURE_SCHEMA_METADATA'));
+	$loader->loadInternalFile(env('FIXTURE_SCHEMA_METADATA'), 'test_database_log');
 }
