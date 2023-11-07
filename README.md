@@ -1,6 +1,6 @@
 #  CakePHP DatabaseLog Plugin
 
-[![CI](https://github.com/dereuromark/CakePHP-DatabaseLog/workflows/CI/badge.svg?branch=master)](https://github.com/dereuromark/CakePHP-DatabaseLog/actions?query=workflow%3ACI+branch%3Amaster)
+[![CI](https://github.com/dereuromark/CakePHP-DatabaseLog/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/dereuromark/CakePHP-DatabaseLog/actions/workflows/ci.yml?query=branch%3Amaster)
 [![Coverage Status](https://img.shields.io/codecov/c/github/dereuromark/CakePHP-DatabaseLog/master.svg)](https://codecov.io/github/dereuromark/CakePHP-DatabaseLog/branch/master)
 [![Latest Stable Version](https://poser.pugx.org/dereuromark/CakePHP-DatabaseLog/v/stable.svg)](https://packagist.org/packages/dereuromark/CakePHP-DatabaseLog)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.1-8892BF.svg)](https://php.net/)
@@ -26,7 +26,7 @@ This branch is for **CakePHP 5.0+**. See [version map](https://github.com/dereur
 While file handling requires file log rotation and splitting into chunks of (compressed) files, a database approach can more easily keep the logs together in a single database. This is more convinient when looking through them or searching for something specific.
 
 This plugin internally combines log entries of the exact same "content" into a single row with an increased count.
-Additionally you would want to add a cronjob triggered cleanup shell to keep the total size and row count below a certain threshold.
+Additionally, you would want to add a cronjob triggered cleanup shell to keep the total size and row count below a certain threshold.
 
 ## Demo
 Clone and install the [sandbox app](https://github.com/dereuromark/cakephp-sandbox), create some errors and browse the admin backend for the logs overview.
