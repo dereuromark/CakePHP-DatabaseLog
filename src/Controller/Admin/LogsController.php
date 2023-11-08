@@ -40,13 +40,6 @@ class LogsController extends AppController {
 	 */
 	protected array $paginate = [
 		'order' => ['created' => 'DESC'],
-		'fields' => [
-			'created',
-			'type',
-			'uri',
-			'message',
-			'id',
-		],
 	];
 
 	/**
