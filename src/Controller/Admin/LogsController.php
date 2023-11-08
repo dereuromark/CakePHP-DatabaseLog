@@ -81,7 +81,7 @@ class LogsController extends AppController {
 		$currentType = $this->request->getQuery('type');
 
 		if (DatabaseLogsTable::isSearchEnabled()) {
-			$query = $this->DatabaseLogs->find('search', ['search' => $this->request->getQuery()]);
+			$query = $this->DatabaseLogs->find('search', search: $this->request->getQueryParams());
 		} else {
 			$conditions = $this->DatabaseLogs->textSearch();
 			if ($currentType) {
