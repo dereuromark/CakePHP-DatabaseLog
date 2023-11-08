@@ -46,7 +46,7 @@ abstract class DatabaseLogAppTable extends Table {
 	 * This method is used to get the fallback connection name if an
 	 * instance is created through the TableRegistry without a connection.
 	 *
-	 * @see \Cake\ORM\TableRegistry::get()
+	 * @see \Cake\ORM\TableRegistry::getTableLocator()->get()
 	 * @return string
 	 */
 	public static function defaultConnectionName(): string {
