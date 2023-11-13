@@ -96,7 +96,6 @@ Plugin::getCollection()->add(new DatabaseLogPlugin());
 
 // Ensure default test connection is defined
 if (!getenv('DB_URL')) {
-	putenv('DB_CLASS=Cake\Database\Driver\Sqlite');
 	putenv('DB_URL=sqlite:///:memory:');
 }
 
