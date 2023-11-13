@@ -95,24 +95,20 @@ class_alias(Application::class, 'App\Application');
 Plugin::getCollection()->add(new DatabaseLogPlugin());
 
 // Ensure default test connection is defined
-if (!getenv('DB_CLASS')) {
+if (!getenv('DB_URL')) {
 	putenv('DB_CLASS=Cake\Database\Driver\Sqlite');
-	putenv('DB_URL=sqlite::memory:');
+	putenv('DB_URL=sqlite:///:memory:');
 }
 
 ConnectionManager::setConfig('test', [
-	'className' => 'Cake\Database\Connection',
-	'driver' => getenv('DB_CLASS') ?: null,
-	'dsn' => getenv('DB_URL') ?: null,
+	'url' => getenv('DB_URL') ?: null,
 	'timezone' => 'UTC',
 	'quoteIdentifiers' => true,
 	'cacheMetadata' => true,
 ]);
 
 ConnectionManager::setConfig('test_database_log', [
-	'className' => 'Cake\Database\Connection',
-	'driver' => getenv('DB_CLASS') ?: null,
-	'dsn' => getenv('DB_URL') ?: null,
+	'url' => getenv('DB_URL') ?: null,
 	'timezone' => 'UTC',
 	'quoteIdentifiers' => true,
 	'cacheMetadata' => true,
