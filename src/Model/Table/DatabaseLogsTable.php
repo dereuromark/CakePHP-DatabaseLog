@@ -362,7 +362,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 		}
 
 		$config = $this->getConnection()->config();
-		if (empty($config['database'])) {
+		if (empty($config['database']) || $config['database'] === ':memory:') {
 			return null;
 		}
 
