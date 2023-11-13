@@ -57,7 +57,6 @@ class DatabaseLogControllerTest extends TestCase {
 		$connectionConfig = $this->Logs->getConnection()->config();
 		$this->skipIf($connectionConfig['driver'] === Postgres::class, 'Only for MySQL/Sqlite for now');
 
-
 		$this->disableErrorHandlerMiddleware();
 
 		$this->get(['prefix' => 'Admin', 'plugin' => 'DatabaseLog', 'controller' => 'DatabaseLog', 'action' => 'index']);
