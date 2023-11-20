@@ -20,7 +20,7 @@ class LogHelper extends Helper {
 	 * @var array<string, mixed>
 	 */
 	protected array $_defaultConfig = [
-		'typeTemplate' => '<span class="badge badge-%s">%s</span>',
+		'typeTemplate' => '<span class="badge badge-%s bg-%s">%s</span>',
 		'typeDefaultClass' => 'secondary',
 		'typeMap' => [
 			'error' => 'danger',
@@ -58,7 +58,7 @@ class LogHelper extends Helper {
 
 		$template = $this->getConfig('typeTemplate');
 
-		return sprintf($template, $class, h($type));
+		return sprintf($template, $class, $class, h($type));
 	}
 
 }
