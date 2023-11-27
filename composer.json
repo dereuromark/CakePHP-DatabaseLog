@@ -45,7 +45,7 @@
 	"suggest": {
 		"cakephp/migrations": "For migrations to run."
 	},
-	"minimum-stability": "RC",
+	"minimum-stability": "stable",
 	"prefer-stable": true,
 	"autoload": {
 		"psr-4": {
