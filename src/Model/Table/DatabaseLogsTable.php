@@ -13,7 +13,6 @@ namespace DatabaseLog\Model\Table;
 use ArrayObject;
 use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
-use Cake\Datasource\ResultSetInterface;
 use Cake\Event\Event;
 use Cake\Event\EventInterface;
 use Cake\I18n\DateTime;
