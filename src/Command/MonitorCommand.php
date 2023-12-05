@@ -49,7 +49,7 @@ class MonitorCommand extends Command {
 		}
 
 		$logs = $query->orderBy(['created' => 'DESC'])
-			->all();
+			->all()->toArray();
 
 		if (count($logs) < 1) {
 			$io->out('All good...');

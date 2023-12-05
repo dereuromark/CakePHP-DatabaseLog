@@ -317,10 +317,10 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	}
 
 	/**
-	 * @param \Cake\Datasource\ResultSetInterface $logs
+	 * @param array<\DatabaseLog\Model\Entity\DatabaseLog> $logs
 	 * @return void
 	 */
-	public function notify(ResultSetInterface $logs) {
+	public function notify(array $logs): void {
 		$event = new Event('DatabaseLog.alert', $this, ['logs' => $logs]);
 		$this->getEventManager()->dispatch($event);
 	}
@@ -329,7 +329,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	 * @param \DatabaseLog\Model\Entity\DatabaseLog $log
 	 * @return string
 	 */
-	public function format(DatabaseLog $log) {
+	public function format(DatabaseLog $log): string {
 		$content = $log->created . ': ' . $log->type;
 		if ($log->ip) {
 			$content .= ' - IP: ' . $log->ip;
