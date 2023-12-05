@@ -110,7 +110,7 @@ Just enable it via Configure:
 			/** @var \DatabaseLog\Model\Table\DatabaseLogsTable $logsTable */
 			$logsTable = $event->getSubject();
 
-			/* @var \DatabaseLog\Model\Entity\DatabaseLog[] $logs */
+			/* @var array<\DatabaseLog\Model\Entity\DatabaseLog> $logs */
 			$logs = $event->getData('logs');
 
 			$content = '';
@@ -120,7 +120,9 @@ Just enable it via Configure:
 
 			$mailer = new \Cake\Mailer\Mailer();
 			$subject = count($logs) . ' new error log entries';
-			// TODO Implement
+			$email->setSubject(__('Error Log Report'));
+			// TODO Implement TO/FROM
+			$email->deliver($content);
 		},
 	],
 ```
