@@ -39,11 +39,12 @@ trait LazyTableTrait {
 	 *
 	 * If the tables do not exist, they will be created on the current model's connection.
 	 *
-	 * @param array $fixtures The fixture names to check and/or insert.
+	 * @param array<string> $tableNames The table names to check and/or insert.
+	 *
 	 * @throws \RuntimeException When fixtures are missing/unknown/fail.
 	 * @return void
 	 */
-	public function ensureTables(array $fixtures) {
+	public function ensureTables(array $tableNames) {
 		/** @var \Cake\Database\Connection $connection */
 		$connection = $this->getConnection();
 		$schema = $connection->getSchemaCollection();
@@ -70,13 +71,18 @@ trait LazyTableTrait {
 				if (in_array($table['table'], $existing, true)) {
 					continue;
 				}
-				if (!in_array($table['table'], $fixtures, true)) {
+				if (!in_array($table['table'], $tableNames, true)) {
 					continue;
 				}
 
+				$map = [
+					'DatabaseLog.DatabaseLogs' => 'database_logs',
+				];
+				$tableName = $map[$table['table']] ?? $table['table'];
+
 				// Use Database/Schema primitives to generate dialect specific
 				// CREATE TABLE statements and run them.
-				$schema = new TableSchema($table['table'], $table['columns']);
+				$schema = new TableSchema($tableName, $table['columns']);
 				foreach ($table['constraints'] as $name => $itemConfig) {
 					$schema->addConstraint($name, $itemConfig);
 				}
