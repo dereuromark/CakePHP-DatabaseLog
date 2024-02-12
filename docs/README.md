@@ -60,7 +60,7 @@ Options:
 - `-v`/`--verbose` for full content
 
 ## Generating text files
-In case you want store them in a different format, you can generate for example TXT files per type:
+In case you want to store them in a different format, you can generate for example TXT files per type:
 ```
 bin/cake database_log export [type]
 ```
@@ -95,7 +95,7 @@ You can add additional infos into the stacktrace via custom `saveCallback` calla
 This will run after all the internal processing of the entity has been done, prior to actually saving the log.
 
 ## Monitor
-You can run a very basic cronjob based monitoring on your log files, alerting you via eMail, SMS or alike if any critical issues arise.
+You can run a very basic cronjob-based monitoring on your log files, alerting you via eMail, SMS or alike if any critical issues arise.
 Just enable it via Configure:
 ```php
 	'DatabaseLog' => [
@@ -216,6 +216,10 @@ Then your tests should just use basic file writing for logs again.
 
 Make sure you clear the cache, and also remove the local sqlite DB (as this doesn't get cleared automatically).
 Especially when you get errors after upgrading, like `General error: 1 no such column: DatabaseLogs.summary` etc.
+
+For SQlite or any custom connection, make sure to run the migrations correctly:
+
+    bin/cake migrations migrate -p DatabaseLog -c sqlite
 
 ## Contributing
 Feel free to fork and pull request.
