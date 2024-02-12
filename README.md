@@ -88,7 +88,7 @@ bin/cake Migrations migrate -p DatabaseLog -c custom
 Fully tested so far are PostgreSQL and MySQL, but by using the ORM all major databases should be supported.
 
 For default connection usage only:
-You can also just copy the migration file into your app `/config/Migrations`, modify if needed,
+You can also just copy the migration file(s) into your app `/config/Migrations/`, modify if needed,
 and then run it as part of your app migrations.
 
 ## Usage
