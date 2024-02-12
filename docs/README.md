@@ -217,7 +217,7 @@ Then your tests should just use basic file writing for logs again.
 Make sure you clear the cache, and also remove the local sqlite DB (as this doesn't get cleared automatically).
 Especially when you get errors after upgrading, like `General error: 1 no such column: DatabaseLogs.summary` etc.
 
-For SQlite or any custom connection, make sure to run the migrations correctly:
+For SQlite or any custom connection, make sure to run the migrations correctly, if  schema changed, or if `disableAutoTable` is enabled:
 
     bin/cake migrations migrate -p DatabaseLog -c sqlite
 
