@@ -76,6 +76,7 @@ also not be possible. In that case it will fall back to SQLite file logging on t
 
 Once the connection is reachable, the database table (defaulting to `database_logs`) will be automatically
 created. No need to manually run any migration or SQL script here.
+
 You can also manually create the table beforehand, if you prefer:
 ```
 bin/cake Migrations migrate -p DatabaseLog
