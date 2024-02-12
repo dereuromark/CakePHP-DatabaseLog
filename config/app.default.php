@@ -12,7 +12,7 @@ use DatabaseLog\Model\Entity\DatabaseLog;
 
 return [
 	'DatabaseLog' => [
-		'datasource' => null, // DataSource to use, 'default' will use your live DB instead of SQLite
+		'connection' => null, // Connection to use, 'default' will use your live DB instead of SQLite
 		'monitor' => [
 			'error',
 			'warning',

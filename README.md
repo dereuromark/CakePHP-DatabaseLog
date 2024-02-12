@@ -68,26 +68,28 @@ This will use the `database_log` connection and an SQLite file database by defau
 Create a config setting in your `config/app.php` what database connection it should log to:
 ```php
 'DatabaseLog' => [
-	'datasource' => 'my_datasource', // DataSource to use
-]
+	'connection' => 'custom',
+],
 ```
-It is recommended to not use the same datasource as your production server (`default`) because when the DB is not reachable logging to it will
+It is recommended to not use the same connection as your production server (`default`) because when the DB is not reachable logging to it will
 also not be possible. In that case it will fall back to SQLite file logging on this server instance, though.
 
-Once the datasource is reachable and once the first log entry is being written, the database table (defaulting to `database_logs`) will be automatically
+Once the connection is reachable, the database table (defaulting to `database_logs`) will be automatically
 created. No need to manually run any migration or SQL script here.
 You can also manually create the table beforehand, if you prefer:
 ```
 bin/cake Migrations migrate -p DatabaseLog
 ```
-Or just copy the migration file into your app `/config/Migrations`, modify if needed, and then run it as part of your app migrations.
+If you use a custom connection, make sure to set the connection here for migrations:
+```
+bin/cake Migrations migrate -p DatabaseLog -c custom
+```
 
 Fully tested so far are PostgreSQL and MySQL, but by using the ORM all major databases should be supported.
 
-If you use a custom datasource, make sure to set the connection here for migrations:
-```
-bin/cake Migrations migrate -p DatabaseLog -c my_datasource
-```
+For default connection usage only:
+You can also just copy the migration file into your app `/config/Migrations`, modify if needed,
+and then run it as part of your app migrations.
 
 ## Usage
 

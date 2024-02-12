@@ -4,11 +4,12 @@ use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\Http\Exception\InternalErrorException;
 
-if (!Configure::read('DatabaseLog.datasource')) {
+$connection = Configure::read('DatabaseLog.connection') ?: Configure::read('DatabaseLog.datasource');
+if (!$connection) {
 	$hasDatabaseLogConfig = ConnectionManager::getConfig('database_log');
 	if (!$hasDatabaseLogConfig && !in_array('sqlite', PDO::getAvailableDrivers())) {
 		throw new InternalErrorException('You need to either install pdo_sqlite, ' .
-			'or define the "database_log" connection name.');
+			'or define the `connection` name in the `DatabaseLog` config.');
 	}
 	if (!$hasDatabaseLogConfig) {
 		ConnectionManager::setConfig('database_log', [
