@@ -4,6 +4,7 @@ use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\Http\Exception\InternalErrorException;
 
+// Deprecated: Use connection instead of datasource here moving forward.
 $connection = Configure::read('DatabaseLog.connection') ?: Configure::read('DatabaseLog.datasource');
 if (!$connection) {
 	$hasDatabaseLogConfig = ConnectionManager::getConfig('database_log');

@@ -50,6 +50,7 @@ abstract class DatabaseLogAppTable extends Table {
 	 * @return string
 	 */
 	public static function defaultConnectionName(): string {
+		// Deprecated: Use connection instead of datasource here moving forward.
 		$connection = Configure::read('DatabaseLog.connection') ?: Configure::read('DatabaseLog.datasource');
 
 		return $connection ?: 'database_log';
