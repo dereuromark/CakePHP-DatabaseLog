@@ -221,6 +221,10 @@ For SQlite or any custom connection, make sure to run the migrations correctly, 
 
     bin/cake migrations migrate -p DatabaseLog -c sqlite
 
+## Upgrading notes
+
+See [Upgrading](upgrading.md).
+
 ## Contributing
 Feel free to fork and pull request.
 
