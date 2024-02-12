@@ -84,6 +84,11 @@ Or just copy the migration file into your app `/config/Migrations`, modify if ne
 
 Fully tested so far are PostgreSQL and MySQL, but by using the ORM all major databases should be supported.
 
+If you use a custom datasource, make sure to set the connection here for migrations:
+```
+bin/cake Migrations migrate -p DatabaseLog -c my_datasource
+```
+
 ## Usage
 
 Anywhere in your app where you call `$this->log()` or `Log::write()` the DatabaseLog engine will be used.
