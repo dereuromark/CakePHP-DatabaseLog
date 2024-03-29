@@ -37,7 +37,7 @@
 	},
 	"require-dev": {
 		"friendsofcake/search": "^6.0.0",
-		"fig-r/psr2r-sniffer": "dev-master",
+		"fig-r/psr2r-sniffer": "^1.5.1",
 		"dereuromark/cakephp-tools": "^2.0.0",
 		"phpunit/phpunit": "^9.5"
 	},
