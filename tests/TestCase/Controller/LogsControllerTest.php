@@ -8,14 +8,14 @@
  * @link https://github.com/dereuromark/CakePHP-DatabaseLog
  */
 
-namespace DatabaseLog\TestCase\Controller;
+namespace DatabaseLog\Test\TestCase\Controller;
 
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
- * @coversDefaultClass LogsController
+ * @coversDefaultClass \DatabaseLog\Controller\Admin\LogsController
  */
 class LogsControllerTest extends TestCase {
 

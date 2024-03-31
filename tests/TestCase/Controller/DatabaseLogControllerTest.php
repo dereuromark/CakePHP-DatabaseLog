@@ -8,7 +8,7 @@
  * @link https://github.com/dereuromark/CakePHP-DatabaseLog
  */
 
-namespace DatabaseLog\TestCase\Controller;
+namespace DatabaseLog\Test\TestCase\Controller;
 
 use Cake\Database\Driver\Postgres;
 use Cake\ORM\TableRegistry;

@@ -8,7 +8,7 @@
  * @link https://github.com/dereuromark/CakePHP-DatabaseLog
  */
 
-namespace DatabaseLog\TestCase\Log\Engine;
+namespace DatabaseLog\Test\TestCase\Log\Engine;
 
 use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
