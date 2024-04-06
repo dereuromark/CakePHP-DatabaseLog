@@ -13,7 +13,7 @@ use Shim\TestSuite\TestCase;
 class DatabaseLogShellTest extends TestCase {
 
 	/**
-	 * @var array
+	 * @var array<string>
 	 */
 	protected array $fixtures = [
 		'plugin.DatabaseLog.DatabaseLogs',

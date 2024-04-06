@@ -25,7 +25,7 @@ class DatabaseLogsTableTest extends TestCase {
 	public $Logs;
 
 	/**
-	 * @var array
+	 * @var array<string>
 	 */
 	protected array $fixtures = [
 		'plugin.DatabaseLog.DatabaseLogs',
