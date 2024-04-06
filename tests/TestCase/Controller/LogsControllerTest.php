@@ -98,13 +98,16 @@ class LogsControllerTest extends TestCase {
 	public function testDelete() {
 		$this->disableErrorHandlerMiddleware();
 
-		$this->post(
-			['prefix' => 'Admin', 'plugin' => 'DatabaseLog', 'controller' => 'Logs', 'action' => 'delete', 1],
-		);
 		$logModel = TableRegistry::getTableLocator()->get('DatabaseLog.DatabaseLogs');
 		$count = $logModel->find()->count();
 
-		$this->assertSame(0, $count);
+		$this->post(
+			['prefix' => 'Admin', 'plugin' => 'DatabaseLog', 'controller' => 'Logs', 'action' => 'delete', 1],
+		);
+
+		$countNew = $logModel->find()->count();
+
+		$this->assertSame($count - 1, $countNew);
 	}
 
 	/**
@@ -130,7 +133,7 @@ class LogsControllerTest extends TestCase {
 		$logModel = TableRegistry::getTableLocator()->get('DatabaseLog.DatabaseLogs');
 		$count = $logModel->find()->count();
 
-		$this->assertSame(1, $count);
+		$this->assertSame(8, $count);
 
 		$this->post(['prefix' => 'Admin', 'plugin' => 'DatabaseLog', 'controller' => 'Logs', 'action' => 'reset']);
 
