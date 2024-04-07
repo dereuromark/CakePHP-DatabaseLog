@@ -37,8 +37,6 @@ class DatabaseLogTest extends TestCase {
 	 * @return void
 	 */
 	public function setUp(): void {
-		//Log::drop('default');
-		//Log::config('default', array('className' => 'DatabaseLog.Database'));
 		$this->Logs = TableRegistry::getTableLocator()->get('DatabaseLog.DatabaseLogs');
 
 		parent::setUp();
