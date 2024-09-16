@@ -42,6 +42,8 @@ class DatabaseLogControllerTest extends TestCase {
 	public function setUp(): void {
 		parent::setUp();
 
+		$this->loadPlugins(['DatabaseLog']);
+
 		$this->Logs = TableRegistry::getTableLocator()->get('DatabaseLog.DatabaseLogs');
 		if (!$this->Logs->find()->count()) {
 			$this->Logs->log('warning', 'Foo Warning', ['x' => 'y']);
