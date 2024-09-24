@@ -89,6 +89,9 @@ class ShowCommand extends Command {
 	 */
 	public function getOptionParser(): ConsoleOptionParser {
 		$parser = parent::getOptionParser();
+		$parser->addArgument('type', [
+			'help' => 'Type or list of types (comma separated)',
+		]);
 		$parser->addOptions([
 			'limit' => [
 				'help' => 'Limit (and optional offset, comma separated).',

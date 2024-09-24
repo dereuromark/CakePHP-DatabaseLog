@@ -100,13 +100,16 @@ class LogsControllerTest extends TestCase {
 	public function testDelete() {
 		$this->disableErrorHandlerMiddleware();
 
+		$logModel = TableRegistry::getTableLocator()->get('DatabaseLog.DatabaseLogs');
+		$count = $logModel->find()->count();
+
 		$this->post(
 			['prefix' => 'Admin', 'plugin' => 'DatabaseLog', 'controller' => 'Logs', 'action' => 'delete', 1],
 		);
 		$logModel = TableRegistry::getTableLocator()->get('DatabaseLog.DatabaseLogs');
-		$count = $logModel->find()->count();
+		$countAfter = $logModel->find()->count();
 
-		$this->assertSame(0, $count);
+		$this->assertSame($count - 1, $countAfter);
 	}
 
 	/**

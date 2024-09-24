@@ -58,6 +58,9 @@ class ExportCommand extends Command {
 	 */
 	public function getOptionParser(): ConsoleOptionParser {
 		$parser = parent::getOptionParser();
+		$parser->addArgument('type', [
+			'help' => 'Type or list of types (comma separated)',
+		]);
 		$parser->addOptions([
 			'limit' => [
 				'help' => 'Limit.',

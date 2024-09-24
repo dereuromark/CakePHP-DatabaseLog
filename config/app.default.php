@@ -43,5 +43,6 @@ return [
 		},
 		'disableAutoTable' => null, // Set to true to avoid lazy auto logs table creation
 		'isSearchEnabled' => null, // Auto-detect
+		'notificationInterval' => 4 * HOUR, // In seconds
 	],
 ];

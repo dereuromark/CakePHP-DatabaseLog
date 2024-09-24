@@ -7,6 +7,7 @@ use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Cake\Core\Configure;
+use RuntimeException;
 
 class MonitorCommand extends Command {
 
@@ -23,7 +24,10 @@ class MonitorCommand extends Command {
 	public function execute(Arguments $args, ConsoleIo $io) {
 		parent::execute($args, $io);
 
-		$interval = Configure::read('DatabaseLog.notificationInterval');
+		$interval = (int)Configure::read('DatabaseLog.notificationInterval');
+		if (!$interval) {
+			throw new RuntimeException('You need to define an interval as config `DatabaseLog.notificationInterval`');
+		}
 
 		$time = null;
 		if (file_exists(LOGS . 'export')) {
