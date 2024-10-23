@@ -24,7 +24,7 @@ class LogsController extends AppController {
 	/**
 	 * Explicitly use the Log model.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
 	protected ?string $modelClass = 'DatabaseLog.DatabaseLogs';
 
