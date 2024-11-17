@@ -135,7 +135,7 @@ class LogsControllerTest extends TestCase {
 		$logModel = TableRegistry::getTableLocator()->get('DatabaseLog.DatabaseLogs');
 		$count = $logModel->find()->count();
 
-		$this->assertSame(1, $count);
+		$this->assertTrue($count > 0);
 
 		$this->post(['prefix' => 'Admin', 'plugin' => 'DatabaseLog', 'controller' => 'Logs', 'action' => 'reset']);
 

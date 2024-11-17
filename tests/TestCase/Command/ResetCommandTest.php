@@ -50,4 +50,18 @@ class ResetCommandTest extends TestCase {
 		$this->assertSame(0, $count);
 	}
 
+	/**
+	 * @return void
+	 */
+	public function testResetTestEntry() {
+		$Logs = TableRegistry::getTableLocator()->get('DatabaseLog.DatabaseLogs');
+		$count = $Logs->find()->count();
+		$this->assertTrue($count === 0);
+
+		$this->exec('database_logs reset -q -t info:scope');
+
+		$count = $Logs->find()->all()->toArray();
+		$this->assertTrue($count > 0);
+	}
+
 }

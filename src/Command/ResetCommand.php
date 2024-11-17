@@ -27,6 +27,16 @@ class ResetCommand extends Command {
 
 		$this->fetchTable('DatabaseLog.DatabaseLogs')->truncate();
 		$io->success('Reset done');
+
+		if ($args->getOption('test-entry')) {
+			$level = (string)$args->getOption('test-entry');
+			$context = [];
+			if (str_contains($level, ':')) {
+				[$level, $context] = explode(':', $level, 2);
+			}
+			Log::write($level, 'A test message from CLI' . ($context ? ' with scope `' . $context . '`' : ''), $context);
+			$io->success('Test entry written with level `' . $level . '`' . ($context ? ' and scope `' . $context . '`' : ''));
+		}
 	}
 
 	/**
