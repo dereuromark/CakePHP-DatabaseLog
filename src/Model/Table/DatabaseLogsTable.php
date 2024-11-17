@@ -50,7 +50,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	/**
 	 * initialize method
 	 *
-	 * @param array $config Config data.
+	 * @param array<string, mixed> $config Config data.
 	 * @return void
 	 */
 	public function initialize(array $config): void {

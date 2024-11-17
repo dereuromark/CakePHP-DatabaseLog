@@ -29,7 +29,7 @@ class DatabaseLog extends BaseLog {
 	/**
 	 * Construct the model class
 	 *
-	 * @param array $config
+	 * @param array<string, mixed> $config
 	 */
 	public function __construct($config = []) {
 		parent::__construct($config);
