@@ -259,7 +259,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 				$this->deleteAll(['id IN' => $entries]);
 			}
 			$countExpression = new QueryExpression('count = count + ' . count($entries));
-			$count += $this->updateAll(['count' => $countExpression], ['id' => $keep]);
+			$count += $this->updateAll([$countExpression], ['id' => $keep]);
 		}
 
 		return $count;
