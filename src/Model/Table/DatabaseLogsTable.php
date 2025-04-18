@@ -192,7 +192,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 		$types = $query
 			->select(['type', 'count' => 'COUNT(*)'])
 			->distinct('type')
-			->order('type ASC')
+			->orderByAsc('type')
 			->disableHydration()
 			->toArray();
 
@@ -208,7 +208,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 		$types = $this->find()
 			->select(['type'])
 			->distinct('type')
-			->order('type ASC')
+			->orderByAsc('type')
 			->disableHydration()
 			->toArray();
 
@@ -270,7 +270,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 		$deleted = $this->_cleanByAge();
 
 		$query = $this->find()
-			->order(['id' => 'ASC']);
+			->orderByAsc('id');
 
 		$count = $query->count();
 
