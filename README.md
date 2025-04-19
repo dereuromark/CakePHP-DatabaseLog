@@ -41,11 +41,7 @@ composer require dereuromark/cakephp-databaselog
 ```
 
 ## Setup
-Enable the plugin in your `Application` class:
- ```php
-$this->addPlugin('DatabaseLog');
- ```
-or just call:
+Load the plugin:
 ```
 bin/cake plugin load DatabaseLog
 ```
