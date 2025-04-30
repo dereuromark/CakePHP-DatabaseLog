@@ -71,7 +71,7 @@ class DatabaseLogsTableTest extends TestCase {
 		$this->assertTrue($result);
 
 		/** @var \DatabaseLog\Model\Entity\DatabaseLog $log */
-		$log = $this->Logs->find()->orderDesc('id')->firstOrFail();
+		$log = $this->Logs->find()->orderByDesc('id')->firstOrFail();
 
 		$this->assertNotEmpty($log->message);
 		$this->assertSame(255, mb_strlen($log->summary));

@@ -62,8 +62,8 @@ class DatabaseLogController extends AppController {
 		$lastErrors = $this->DatabaseLogs->find()
 			->select(['summary'])
 			->where(['type' => 'error'])
-			->group('summary')
-			->orderDesc('MAX(id)')
+			->groupBy('summary')
+			->orderByDesc('MAX(id)')
 			->limit(10)
 			->disableHydration()
 			->all()->toArray();
