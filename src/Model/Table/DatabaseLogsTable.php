@@ -119,7 +119,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	 * @param \ArrayObject $options
 	 * @return void
 	 */
-	public function beforeSave(EventInterface $event, EntityInterface $entity, ArrayObject $options) {
+	public function beforeSave(EventInterface $event, EntityInterface $entity, ArrayObject $options): void {
 		$entity['ip'] = env('REMOTE_ADDR');
 		$entity['hostname'] = env('HTTP_HOST') ?: gethostname();
 		$entity['uri'] = env('REQUEST_URI');

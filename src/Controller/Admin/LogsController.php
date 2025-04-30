@@ -59,9 +59,9 @@ class LogsController extends AppController {
 	/**
 	 * @param \Cake\Event\EventInterface $event
 	 *
-	 * @return \Cake\Http\Response|null|void
+	 * @return void
 	 */
-	public function beforeRender(EventInterface $event) {
+	public function beforeRender(EventInterface $event): void {
 		parent::beforeRender($event);
 
 		$version = Configure::version();
