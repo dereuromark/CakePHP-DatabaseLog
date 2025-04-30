@@ -233,7 +233,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 			//'having' => $this->alias . '__count > 0',
 			//'order' => ['created' => 'DESC']
 		];
-		$logs = $query->find('all', $options)->disableHydration()->toArray();
+		$logs = $query->find('all', ...$options)->disableHydration()->toArray();
 
 		$count = 0;
 		foreach ($logs as $key => $log) {
@@ -250,7 +250,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 				],
 				'order' => ['created' => 'DESC'],
 			];
-			$entries = $this->find('list', $options)->toArray();
+			$entries = $this->find('list', ...$options)->toArray();
 
 			// keep the newest entry
 			$keep = array_shift($entries);
