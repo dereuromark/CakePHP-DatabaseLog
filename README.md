@@ -9,7 +9,7 @@
 
 DatabaseLog engine for CakePHP applications.
 
-This branch is for **CakePHP 5.0+**. See [version map](https://github.com/dereuromark/CakePHP-DatabaseLog/wiki#cakephp-version-map) for details.
+This branch is for **CakePHP 5.1+**. See [version map](https://github.com/dereuromark/CakePHP-DatabaseLog/wiki#cakephp-version-map) for details.
 
 ## Features
 
