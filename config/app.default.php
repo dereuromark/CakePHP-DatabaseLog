@@ -17,7 +17,7 @@ return [
 			'error',
 			'warning',
 		],
-		'monitorCallback' => function (EventInterface $event) {
+		'monitorCallback' => function (EventInterface $event): void {
 			/** @var \DatabaseLog\Model\Table\DatabaseLogsTable $logsTable */
 			$logsTable = $event->getSubject();
 
