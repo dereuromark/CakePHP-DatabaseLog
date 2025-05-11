@@ -100,12 +100,20 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	public function log($level, $message, array $context = []) {
 		$message = trim($message);
 		$summary = Text::truncate($message, 255);
+		$context = trim(print_r($context, true));
+
+		if (mb_strlen($message) > 65535) {
+			$message = mb_substr($message, 0, 65535);
+		}
+		if (mb_strlen($context) > 65535) {
+			$context = mb_substr($context, 0, 65535);
+		}
 
 		$data = [
 			'type' => $level,
 			'summary' => $summary,
 			'message' => $message,
-			'context' => trim(print_r($context, true)),
+			'context' => $context,
 			'count' => 1,
 		];
 		$log = $this->newEntity($data);
