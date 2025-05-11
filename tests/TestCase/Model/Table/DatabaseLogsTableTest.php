@@ -66,14 +66,9 @@ class DatabaseLogsTableTest extends TestCase {
 	 * @return void
 	 */
 	public function testSaveHugeText() {
-		$data = [
-			'type' => 'Foo',
-			'summary' => $this->string(1000),
-			'message' => $this->string(66000),
-		];
-		$log = $this->Logs->newEntity($data);
-		$res = $this->Logs->save($log);
-		$this->assertTrue((bool)$res);
+		$string = $this->string(66000);
+		$result = $this->Logs->log(LOG_INFO, $string, [$string]);
+		$this->assertTrue($result);
 	}
 
 	/**
