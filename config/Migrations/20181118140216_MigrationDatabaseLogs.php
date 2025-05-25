@@ -1,8 +1,8 @@
 <?php
 
-use Migrations\AbstractMigration;
+use Migrations\BaseMigration;
 
-class MigrationDatabaseLogs extends AbstractMigration {
+class MigrationDatabaseLogs extends BaseMigration {
 
 	/**
 	 * Change Method.

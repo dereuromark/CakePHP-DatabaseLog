@@ -1,6 +1,6 @@
 <?php
 
-use Migrations\AbstractMigration;
+use Migrations\BaseMigration;
 
 /**
  * Add this for PostgreSQL via:
@@ -8,7 +8,7 @@ use Migrations\AbstractMigration;
  *
  * It uses the default database collation and encoding (utf8 or utf8mb4 etc).
  */
-class InitDatabaseLogs extends AbstractMigration {
+class InitDatabaseLogs extends BaseMigration {
 
 	/**
 	 * @return void
