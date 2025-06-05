@@ -46,7 +46,7 @@
 		"cakephp/migrations": "For migrations to run."
 	},
 	"conflict": {
-		"cakephp/migrations": "<4.5",
+		"cakephp/migrations": "<4.5"
 	},
 	"minimum-stability": "stable",
 	"prefer-stable": true,
