@@ -73,7 +73,7 @@ class ShowCommand extends Command {
 			$content .= ' - ' . $shortMessage;
 
 			if ($log->type === 'error') {
-				$io->err($content);
+				$io->error($content);
 			} elseif ($log->type === 'warning' || $log->type === 'notice') {
 				$io->warning($content);
 			} else {
