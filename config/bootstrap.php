@@ -9,8 +9,8 @@ $connection = Configure::read('DatabaseLog.connection') ?: Configure::read('Data
 if (!$connection) {
 	$hasDatabaseLogConfig = ConnectionManager::getConfig('database_log');
 	if (!$hasDatabaseLogConfig && !in_array('sqlite', PDO::getAvailableDrivers())) {
-		throw new InternalErrorException('You need to either install pdo_sqlite, ' .
-			'or define the `connection` name in the `DatabaseLog` config.');
+		throw new InternalErrorException('You need to either install pdo_sqlite, '
+			. 'or define the `connection` name in the `DatabaseLog` config.');
 	}
 	if (!$hasDatabaseLogConfig) {
 		ConnectionManager::setConfig('database_log', [

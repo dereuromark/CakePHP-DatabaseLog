@@ -14,6 +14,7 @@
 namespace DatabaseLog\Model\Table;
 
 use Cake\Database\Schema\TableSchema;
+use Cake\Datasource\ConnectionManager;
 use PDOException;
 use RuntimeException;
 
@@ -46,14 +47,14 @@ trait LazyTableTrait {
 	 */
 	public function ensureTables(array $tableNames) {
 		/** @var \Cake\Database\Connection $connection */
-		$connection = $this->getConnection();
+		$connection = ConnectionManager::get('database_log');
 		$schema = $connection->getSchemaCollection();
 
 		try {
 			$existing = $schema->listTables();
 		} catch (PDOException $e) {
 			// Handle errors when SQLite blows up if the schema has changed.
-			if (strpos($e->getMessage(), 'schema has changed') !== false) {
+			if (str_contains($e->getMessage(), 'schema has changed')) {
 				$existing = $schema->listTables();
 			} else {
 				throw $e;
@@ -93,8 +94,8 @@ trait LazyTableTrait {
 		} catch (PDOException $e) {
 			if (strpos($e->getMessage(), 'unable to open')) {
 				throw new RuntimeException(
-					'Could not create a SQLite database. ' .
-					'Ensure that your webserver has write access to the database file and folder it is in.',
+					'Could not create a SQLite database. '
+					. 'Ensure that your webserver has write access to the database file and folder it is in.',
 				);
 			}
 
