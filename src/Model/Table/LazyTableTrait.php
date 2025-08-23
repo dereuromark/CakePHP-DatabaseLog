@@ -14,7 +14,6 @@
 namespace DatabaseLog\Model\Table;
 
 use Cake\Database\Schema\TableSchema;
-use Cake\Datasource\ConnectionManager;
 use PDOException;
 use RuntimeException;
 
@@ -47,7 +46,7 @@ trait LazyTableTrait {
 	 */
 	public function ensureTables(array $tableNames) {
 		/** @var \Cake\Database\Connection $connection */
-		$connection = ConnectionManager::get('database_log');
+		$connection = $this->getConnection();
 		$schema = $connection->getSchemaCollection();
 
 		try {
