@@ -22,7 +22,7 @@ class DatabaseLogsFixture extends TestFixture {
 	 *
 	 * @var array
 	 */
-	// @codingStandardsIgnoreStart
+	// phpcs:disable
 	public array $fields = [
 		'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
 		'type' => ['type' => 'string', 'length' => 50, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
@@ -44,7 +44,7 @@ class DatabaseLogsFixture extends TestFixture {
 			'collation' => 'utf8mb4_unicode_ci'
 		],
 	];
-	// @codingStandardsIgnoreEnd
+	// phpcs:enable
 
 	/**
 	 * Init method
