@@ -57,7 +57,9 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 		$this->setDisplayField('type');
 		$this->addBehavior('Timestamp', ['modified' => false]);
 		if (static::isSearchEnabled()) {
-			$this->addBehavior('Search.Search');
+			$this->addBehavior('Search.Search', [
+				'collectionClass' => 'DatabaseLog\Model\Filter\DatabaseLogsCollection',
+			]);
 		}
 
 		$callback = Configure::read('DatabaseLog.disableAutoTable');
