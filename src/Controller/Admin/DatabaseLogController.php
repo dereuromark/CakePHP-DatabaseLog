@@ -11,7 +11,6 @@
 namespace DatabaseLog\Controller\Admin;
 
 use App\Controller\AppController;
-use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 
 /**
@@ -39,12 +38,7 @@ class DatabaseLogController extends AppController {
 	public function beforeRender(EventInterface $event): void {
 		parent::beforeRender($event);
 
-		$version = Configure::version();
-		if (version_compare($version, '4.3.0') >= 0) {
-			$this->viewBuilder()->addHelpers(['Time', 'DatabaseLog.Log']);
-		} else {
-			$this->viewBuilder()->setHelpers(['Time', 'DatabaseLog.Log']);
-		}
+		$this->viewBuilder()->addHelpers(['Time', 'DatabaseLog.Log']);
 	}
 
 	/**
