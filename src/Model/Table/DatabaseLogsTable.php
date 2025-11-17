@@ -130,36 +130,36 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	 * @return void
 	 */
 	public function beforeSave(EventInterface $event, EntityInterface $entity, ArrayObject $options): void {
-		$entity['ip'] = env('REMOTE_ADDR');
-		$entity['hostname'] = env('HTTP_HOST') ?: gethostname();
-		$entity['uri'] = env('REQUEST_URI');
-		$entity['refer'] = env('HTTP_REFERER');
-		$entity['user_agent'] = env('HTTP_USER_AGENT');
+		$entity->ip = (string)env('REMOTE_ADDR') ?: null;
+		$entity->hostname = (string)env('HTTP_HOST') ?: gethostname() ?: null;
+		$entity->uri = (string)env('REQUEST_URI') ?: null;
+		$entity->refer = (string)env('HTTP_REFERER') ?: null;
+		$entity->user_agent = (string)env('HTTP_USER_AGENT') ?: null;
 
 		if (PHP_SAPI === 'cli') {
-			if (!$entity['hostname']) {
-				$entity['hostname'] = env('SERVER_NAME');
+			if (!$entity->hostname) {
+				$entity->hostname = (string)env('SERVER_NAME') ?: null;
 			}
-			if (!$entity['hostname']) {
+			if (!$entity->hostname) {
 				$user = env('USER');
 				$logName = env('LOGNAME');
 				if ($user || $logName) {
-					$entity['hostname'] = $user . '@' . $logName;
+					$entity->hostname = $user . '@' . $logName;
 				}
 			}
-			if (!$entity['uri']) {
+			if (!$entity->uri) {
 				$type = 'CLI';
-				$entity['uri'] = $type . ' ' . str_replace((string)env('PWD'), '', implode(' ', (array)($_SERVER['argv'] ?? null)));
+				$entity->uri = $type . ' ' . str_replace((string)env('PWD'), '', implode(' ', (array)($_SERVER['argv'] ?? null)));
 			}
-			if (!$entity['user_agent']) {
+			if (!$entity->user_agent) {
 				$shell = env('SHELL') ?: 'n/a';
-				$entity['user_agent'] = $shell . ' (' . php_uname() . ')';
+				$entity->user_agent = $shell . ' (' . php_uname() . ')';
 			}
 		}
 
 		$env = getenv('APPLICATION_ENV');
 		if ($env) {
-			$entity['user_agent'] .= ($entity['user_agent'] ? '' : 'n/a') . ' [' . $env . ']';
+			$entity->user_agent .= ($entity->user_agent ? '' : 'n/a') . ' [' . $env . ']';
 		}
 
 		$callback = Configure::read('DatabaseLog.saveCallback');
