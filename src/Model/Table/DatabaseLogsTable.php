@@ -19,6 +19,7 @@ use Cake\I18n\DateTime;
 use Cake\Utility\Hash;
 use Cake\Utility\Text;
 use DatabaseLog\Model\Entity\DatabaseLog;
+use DatabaseLog\Model\Filter\DatabaseLogsCollection;
 use RuntimeException;
 
 /**
@@ -58,7 +59,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 		$this->addBehavior('Timestamp', ['modified' => false]);
 		if (static::isSearchEnabled()) {
 			$this->addBehavior('Search.Search', [
-				'collectionClass' => 'DatabaseLog\Model\Filter\DatabaseLogsCollection',
+				'collectionClass' => DatabaseLogsCollection::class,
 			]);
 		}
 
@@ -72,23 +73,6 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 			return;
 		}
 		$this->getEventManager()->on('DatabaseLog.alert', $callback);
-	}
-
-	/**
-	 * @return \Search\Manager
-	 */
-	public function searchManager() {
-		$searchManager = $this->behaviors()->Search->searchManager();
-		$searchManager
-			->value('type')
-			->like('search', ['fields' => ['summary'], 'before' => true, 'after' => true]);
-			/*
-			->callback('search', ['callback' => function (Query $query, array $args, Base $filter) {
-				...
-		 	}])
-			*/
-
-		return $searchManager;
 	}
 
 	/**
