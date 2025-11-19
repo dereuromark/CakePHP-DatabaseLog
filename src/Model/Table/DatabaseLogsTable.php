@@ -102,7 +102,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	public function log($level, $message, array $context = []) {
 		$message = trim($message);
 		$summary = Text::truncate($message, 255);
-		$context = json_encode($context, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+		$context = json_encode($context, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?: '';
 
 		if (mb_strlen($message) > 65535) {
 			$message = mb_substr($message, 0, 65535);
@@ -186,7 +186,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 
 			// Use proper escaping for fulltext search
 			$connection = $this->getConnection();
-			$escapedQuery = $connection->quote($query);
+			$escapedQuery = $connection->getDriver()->quote($query);
 
 			return ["MATCH (message) AGAINST ($escapedQuery)"];
 		}
@@ -396,7 +396,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 
 			$result = $this->getConnection()->execute(
 				'SELECT SUM(data_length + index_length) as size FROM information_schema.TABLES WHERE table_schema = ?',
-				[$database]
+				[$database],
 			)->fetch('assoc');
 
 			return $result['size'] ? (int)$result['size'] : null;
@@ -409,8 +409,8 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 			}
 
 			$result = $this->getConnection()->execute(
-				"SELECT pg_database_size(?) as size",
-				[$database]
+				'SELECT pg_database_size(?) as size',
+				[$database],
 			)->fetch('assoc');
 
 			return $result['size'] ? (int)$result['size'] : null;
