@@ -52,7 +52,7 @@ foreach ($types as $type) {
 			<th class="actions"><?php echo __('Actions');?></th>
 		</tr>
 		<?php
-		foreach ($logs as $log):
+		foreach ($logs as $log) {
 			$message = $log->summary;
 			$pos = strpos($message, 'Stack Trace:');
 			if ($pos) {
@@ -89,7 +89,7 @@ foreach ($types as $type) {
 					<?php echo $this->Form->postLink(__('Delete'), ['action' => 'delete', $log->id], ['confirm' => __('Are you sure you want to delete this log # {0}?', $log->id)]); ?>
 				</td>
 			</tr>
-		<?php endforeach; ?>
+		<?php } ?>
 	</table>
 	<?php echo $this->element('DatabaseLog.paging'); ?>
 
