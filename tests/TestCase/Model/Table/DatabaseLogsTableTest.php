@@ -11,7 +11,6 @@
 namespace DatabaseLog\Test\TestCase\Model\Table;
 
 use Cake\Cache\Cache;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -39,7 +38,7 @@ class DatabaseLogsTableTest extends TestCase {
 	public function setUp(): void {
 		parent::setUp();
 
-		$this->Logs = TableRegistry::getTableLocator()->get('DatabaseLog.DatabaseLogs');
+		$this->Logs = $this->fetchTable('DatabaseLog.DatabaseLogs');
 		$this->Logs->truncate();
 	}
 
@@ -54,7 +53,7 @@ class DatabaseLogsTableTest extends TestCase {
 		];
 		$log = $this->Logs->newEntity($data);
 		$res = $this->Logs->save($log);
-		$this->assertTrue(!empty($res));
+		$this->assertNotFalse($res);
 
 		$this->assertNotEmpty($log->hostname);
 		$this->assertNotEmpty($log->uri);
@@ -122,7 +121,7 @@ class DatabaseLogsTableTest extends TestCase {
 	public function testGetTypes() {
 		Cache::delete('database_log_types');
 
-		$this->Logs->deleteAll('1=1');
+		$this->Logs->deleteAll([]);
 
 		$data = [
 			'type' => 'foo',
@@ -131,7 +130,7 @@ class DatabaseLogsTableTest extends TestCase {
 		];
 		$log = $this->Logs->newEntity($data);
 		$res = $this->Logs->save($log);
-		$this->assertTrue(!empty($res));
+		$this->assertNotFalse($res);
 
 		$data = [
 			'type' => 'bar',
@@ -140,7 +139,7 @@ class DatabaseLogsTableTest extends TestCase {
 		];
 		$log = $this->Logs->newEntity($data);
 		$res = $this->Logs->save($log);
-		$this->assertTrue((bool)$res);
+		$this->assertNotFalse($res);
 
 		$res = $this->Logs->getTypes();
 		$this->assertSame(['bar' => 'bar', 'foo' => 'foo'], $res);
@@ -160,7 +159,7 @@ class DatabaseLogsTableTest extends TestCase {
 		];
 		$log = $this->Logs->newEntity($data);
 		$res = $this->Logs->save($log);
-		$this->assertTrue(!empty($res));
+		$this->assertNotFalse($res);
 
 		$data = [
 			'type' => 'Bar',
@@ -169,12 +168,12 @@ class DatabaseLogsTableTest extends TestCase {
 		];
 		$log = $this->Logs->newEntity($data);
 		$res = $this->Logs->save($log);
-		$this->assertTrue(!empty($res));
+		$this->assertNotFalse($res);
 
 		$data['message'] .= ' extra';
 		$log = $this->Logs->newEntity($data);
 		$res = $this->Logs->save($log);
-		$this->assertTrue(!empty($res));
+		$this->assertNotFalse($res);
 
 		$resBefore = $this->Logs->find()->count();
 		$this->Logs->removeDuplicates();

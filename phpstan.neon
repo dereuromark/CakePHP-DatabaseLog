@@ -7,7 +7,6 @@ parameters:
 	ignoreErrors:
 		- identifier: missingType.iterableValue
 		- identifier: missingType.generics
-		- '#Access to an undefined property Cake\\ORM\\BehaviorRegistry::\$Search#'
 
 includes:
 	- vendor/cakedc/cakephp-phpstan/extension.neon

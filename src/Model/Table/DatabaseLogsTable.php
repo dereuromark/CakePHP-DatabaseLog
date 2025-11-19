@@ -12,6 +12,7 @@ namespace DatabaseLog\Model\Table;
 
 use ArrayObject;
 use Cake\Core\Configure;
+use Cake\Database\Expression\QueryExpression;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\Event\EventInterface;
@@ -19,6 +20,7 @@ use Cake\I18n\DateTime;
 use Cake\Utility\Hash;
 use Cake\Utility\Text;
 use DatabaseLog\Model\Entity\DatabaseLog;
+use DatabaseLog\Model\Filter\DatabaseLogsCollection;
 use RuntimeException;
 
 /**
@@ -58,7 +60,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 		$this->addBehavior('Timestamp', ['modified' => false]);
 		if (static::isSearchEnabled()) {
 			$this->addBehavior('Search.Search', [
-				'collectionClass' => 'DatabaseLog\Model\Filter\DatabaseLogsCollection',
+				'collectionClass' => DatabaseLogsCollection::class,
 			]);
 		}
 
@@ -75,23 +77,6 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	}
 
 	/**
-	 * @return \Search\Manager
-	 */
-	public function searchManager() {
-		$searchManager = $this->behaviors()->Search->searchManager();
-		$searchManager
-			->value('type')
-			->like('search', ['fields' => ['summary'], 'before' => true, 'after' => true]);
-			/*
-			->callback('search', ['callback' => function (Query $query, array $args, Base $filter) {
-				...
-		 	}])
-			*/
-
-		return $searchManager;
-	}
-
-	/**
 	 * Write the log to database
 	 *
 	 * @param mixed $level
@@ -102,7 +87,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	public function log($level, $message, array $context = []) {
 		$message = trim($message);
 		$summary = Text::truncate($message, 255);
-		$context = trim(print_r($context, true));
+		$context = json_encode($context, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?: '';
 
 		if (mb_strlen($message) > 65535) {
 			$message = mb_substr($message, 0, 65535);
@@ -178,13 +163,15 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	 */
 	public function textSearch($query = null) {
 		if ($query) {
-			if (strpos($query, 'type@') === 0) {
+			if (str_contains($query, 'type@') && strpos($query, 'type@') === 0) {
 				$query = str_replace('type@', '', $query);
 
 				return ['Log.type' => $query];
 			}
 
-			$escapedQuery = "'" . $query . "'"; // for now - $this->getDataSource()->value($query);
+			// Use proper escaping for fulltext search
+			$connection = $this->getConnection();
+			$escapedQuery = $connection->getDriver()->quote($query);
 
 			return ["MATCH (message) AGAINST ($escapedQuery)"];
 		}
@@ -267,7 +254,10 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 			if ($entries) {
 				$this->deleteAll(['id IN' => $entries]);
 			}
-			$count += $this->updateAll(['count = count + ' . count($entries)], ['id' => $keep]);
+			$count += $this->updateAll(
+				['count' => new QueryExpression('count + ' . count($entries))],
+				['id' => $keep],
+			);
 		}
 
 		return $count;
@@ -362,25 +352,60 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	}
 
 	/**
+	 * Get size in bytes of the database
+	 *
+	 * Supports SQLite, MySQL, and PostgreSQL.
+	 *
 	 * @throws \RuntimeException
-	 * @return int|null Bytes
+	 * @return int|null Bytes (null if database type not supported or cannot determine size)
 	 */
 	public function databaseSize(): ?int {
-		if ($this->databaseType() !== 'Sqlite') {
-			return null;
-		}
-
+		$dbType = $this->databaseType();
 		$config = $this->getConnection()->config();
-		if (empty($config['database']) || $config['database'] === ':memory:') {
-			return null;
+
+		if ($dbType === 'Sqlite') {
+			if (!$config['database'] || $config['database'] === ':memory:') {
+				return null;
+			}
+
+			$size = filesize($config['database']);
+			if ($size === false) {
+				throw new RuntimeException('Cannot access DB ' . $config['database']);
+			}
+
+			return $size;
 		}
 
-		$size = filesize($config['database']);
-		if ($size === false) {
-			throw new RuntimeException('Cannot access DB ' . $config['database']);
+		if ($dbType === 'Mysql') {
+			$database = $config['database'] ?? null;
+			if (!$database) {
+				return null;
+			}
+
+			$result = $this->getConnection()->execute(
+				'SELECT SUM(data_length + index_length) as size FROM information_schema.TABLES WHERE table_schema = ?',
+				[$database],
+			)->fetch('assoc');
+
+			return $result['size'] ? (int)$result['size'] : null;
 		}
 
-		return $size;
+		if ($dbType === 'Postgres') {
+			$database = $config['database'] ?? null;
+			if (!$database) {
+				return null;
+			}
+
+			$result = $this->getConnection()->execute(
+				'SELECT pg_database_size(?) as size',
+				[$database],
+			)->fetch('assoc');
+
+			return $result['size'] ? (int)$result['size'] : null;
+		}
+
+		// Unsupported database type
+		return null;
 	}
 
 }
