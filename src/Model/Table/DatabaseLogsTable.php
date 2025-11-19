@@ -181,7 +181,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 			if (str_contains($query, 'type@') && strpos($query, 'type@') === 0) {
 				$query = str_replace('type@', '', $query);
 
-				return [$this->aliasField('type') => $query];
+				return ['Log.type' => $query];
 			}
 
 			// Use proper escaping for fulltext search
