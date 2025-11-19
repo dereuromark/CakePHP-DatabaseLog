@@ -12,6 +12,7 @@ namespace DatabaseLog\Model\Table;
 
 use ArrayObject;
 use Cake\Core\Configure;
+use Cake\Database\Expression\QueryExpression;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\Event\EventInterface;
@@ -253,7 +254,10 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 			if ($entries) {
 				$this->deleteAll(['id IN' => $entries]);
 			}
-			$count += $this->updateAll(['count = count + ' . count($entries)], ['id' => $keep]);
+			$count += $this->updateAll(
+				['count' => new QueryExpression('count + ' . count($entries))],
+				['id' => $keep],
+			);
 		}
 
 		return $count;
