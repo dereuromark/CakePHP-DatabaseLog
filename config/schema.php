@@ -18,12 +18,10 @@ return [
 			'count' => ['type' => 'integer', 'length' => 10, 'unsigned' => false, 'null' => false, 'default' => '0', 'comment' => '', 'precision' => null, 'autoIncrement' => null],
 		],
 		'constraints' => [
-			'indexes' => [
-				'type_idx' => ['type' => 'index', 'columns' => ['type'], 'length' => []],
-				'created_idx' => ['type' => 'index', 'columns' => ['created'], 'length' => []],
-				'type_created_idx' => ['type' => 'index', 'columns' => ['type', 'created'], 'length' => []],
-			],
 			'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
+			'type_idx' => ['type' => 'index', 'columns' => ['type'], 'length' => []],
+			'created_idx' => ['type' => 'index', 'columns' => ['created'], 'length' => []],
+			'type_created_idx' => ['type' => 'index', 'columns' => ['type', 'created'], 'length' => []],
 		],
 		'_options' => [
 			'engine' => 'InnoDB',

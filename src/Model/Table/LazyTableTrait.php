@@ -84,14 +84,18 @@ trait LazyTableTrait {
 				// CREATE TABLE statements and run them.
 				$schema = new TableSchema($tableName, $table['columns']);
 				foreach ($table['constraints'] as $name => $itemConfig) {
-					$schema->addConstraint($name, $itemConfig);
+					if (($itemConfig['type'] ?? '') === 'index') {
+						$schema->addIndex($name, $itemConfig);
+					} else {
+						$schema->addConstraint($name, $itemConfig);
+					}
 				}
 				foreach ($schema->createSql($connection) as $sql) {
 					$driver->execute($sql);
 				}
 			}
 		} catch (PDOException $e) {
-			if (strpos($e->getMessage(), 'unable to open')) {
+			if (str_contains($e->getMessage(), 'unable to open')) {
 				throw new RuntimeException(
 					'Could not create a SQLite database. '
 					. 'Ensure that your webserver has write access to the database file and folder it is in.',
