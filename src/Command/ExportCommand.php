@@ -11,6 +11,13 @@ use Cake\Utility\Text;
 class ExportCommand extends Command {
 
 	/**
+	 * @return string
+	 */
+	public static function getDescription(): string {
+		return 'Export log entries to files.';
+	}
+
+	/**
 	 * @param \Cake\Console\Arguments $args The command arguments.
 	 * @param \Cake\Console\ConsoleIo $io The console io
 	 * @return int|null|void The exit code or null for success

@@ -10,6 +10,13 @@ use Cake\Console\ConsoleOptionParser;
 class CleanupCommand extends Command {
 
 	/**
+	 * @return string
+	 */
+	public static function getDescription(): string {
+		return 'Log rotation and cleanup.';
+	}
+
+	/**
 	 * @param \Cake\Console\Arguments $args The command arguments.
 	 * @param \Cake\Console\ConsoleIo $io The console io
 	 * @return int|null|void The exit code or null for success
