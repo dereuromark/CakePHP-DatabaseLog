@@ -12,6 +12,13 @@ use RuntimeException;
 class MonitorCommand extends Command {
 
 	/**
+	 * @return string
+	 */
+	public static function getDescription(): string {
+		return 'Monitor logs via cronjob.';
+	}
+
+	/**
 	 * @var string|null
 	 */
 	protected ?string $defaultTable = 'DatabaseLog.DatabaseLogs';
