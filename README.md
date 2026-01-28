@@ -3,7 +3,7 @@
 [![CI](https://github.com/dereuromark/CakePHP-DatabaseLog/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/dereuromark/CakePHP-DatabaseLog/actions/workflows/ci.yml?query=branch%3Amaster)
 [![Coverage Status](https://img.shields.io/codecov/c/github/dereuromark/CakePHP-DatabaseLog/master.svg)](https://codecov.io/github/dereuromark/CakePHP-DatabaseLog/branch/master)
 [![Latest Stable Version](https://poser.pugx.org/dereuromark/CakePHP-DatabaseLog/v/stable.svg)](https://packagist.org/packages/dereuromark/CakePHP-DatabaseLog)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.1-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.2-8892BF.svg)](https://php.net/)
 [![License](https://poser.pugx.org/dereuromark/CakePHP-DatabaseLog/license.svg)](LICENSE)
 [![Total Downloads](https://poser.pugx.org/dereuromark/CakePHP-DatabaseLog/d/total.svg)](https://packagist.org/packages/dereuromark/CakePHP-DatabaseLog)
 

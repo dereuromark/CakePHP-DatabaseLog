@@ -32,7 +32,7 @@
 		"source": "https://github.com/dereuromark/CakePHP-DatabaseLog/"
 	},
 	"require": {
-		"php": ">=8.1",
+		"php": ">=8.2",
 		"cakephp/cakephp": "^5.2.0"
 	},
 	"require-dev": {
@@ -40,7 +40,7 @@
 		"dereuromark/cakephp-tools": "^3.0.0",
 		"fig-r/psr2r-sniffer": "dev-master",
 		"friendsofcake/search": "^7.0.0",
-		"phpunit/phpunit": "^10.5 || ^11.5 || ^12.1"
+		"phpunit/phpunit": "^11.5 || ^12.1"
 	},
 	"suggest": {
 		"cakephp/migrations": "For migrations to run."
