@@ -59,6 +59,7 @@ class MonitorCommand extends Command {
 			$query->andWhere(['created >' => date('Y-m-d H:i:s', $time)]);
 		}
 
+		/** @var array<\DatabaseLog\Model\Entity\DatabaseLog> $logs */
 		$logs = $query->orderBy(['created' => 'DESC'])
 			->all()->toArray();
 
