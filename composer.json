@@ -1,6 +1,6 @@
 {
 	"name": "dereuromark/cakephp-databaselog",
-	"description": "CakePHP DatabaseLog Plugin",
+	"description": "A CakePHP plugin for storing and viewing application logs in the database",
 	"license": "MIT",
 	"type": "cakephp-plugin",
 	"keywords": [
@@ -9,7 +9,9 @@
 		"logging",
 		"logs",
 		"plugin",
-		"admin-panel"
+		"admin-panel",
+		"monitoring",
+		"debugging"
 	],
 	"authors": [
 		{
