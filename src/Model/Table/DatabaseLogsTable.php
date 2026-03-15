@@ -17,6 +17,7 @@ use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\Event\EventInterface;
 use Cake\I18n\DateTime;
+use Cake\Routing\Router;
 use Cake\Utility\Hash;
 use Cake\Utility\Text;
 use DatabaseLog\Model\Entity\DatabaseLog;
@@ -115,7 +116,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	 * @return void
 	 */
 	public function beforeSave(EventInterface $event, EntityInterface $entity, ArrayObject $options): void {
-		$entity->ip = (string)env('REMOTE_ADDR') ?: null;
+		$entity->ip = Router::getRequest()?->clientIp() ?: null;
 		$entity->hostname = (string)env('HTTP_HOST') ?: gethostname() ?: null;
 		$entity->uri = (string)env('REQUEST_URI') ?: null;
 		$entity->refer = (string)env('HTTP_REFERER') ?: null;
