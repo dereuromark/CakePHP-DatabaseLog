@@ -10,3 +10,4 @@ config/Migrations/schema-dump-default.lock
 #################################
 nbproject/
 .idea/
+.phpcs.cache
