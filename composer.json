@@ -10,6 +10,7 @@
 		"logs",
 		"plugin",
 		"admin-panel",
+		"standalone-ui",
 		"monitoring",
 		"debugging"
 	],
