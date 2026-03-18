@@ -53,7 +53,7 @@ use DatabaseLog\Model\Table\DatabaseLogsTable;
 <?php endif; ?>
 
 <!-- Logs Table -->
-<div class="card card-dblog">
+<div class="card card-dblog mb-4">
 	<div class="table-responsive">
 		<table class="table table-dblog table-hover mb-0">
 			<thead>
