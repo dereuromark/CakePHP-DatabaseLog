@@ -80,8 +80,11 @@ $typeIcons = [
 	<div class="card-body p-0">
 		<ul class="list-group list-group-flush">
 			<?php foreach ($lastErrors as $lastError): ?>
-			<li class="list-group-item">
-				<code class="text-danger"><?= h($lastError['summary']) ?></code>
+			<li class="list-group-item d-flex justify-content-between align-items-center">
+				<code class="text-danger text-truncate me-2"><?= h($lastError['summary']) ?></code>
+				<a href="<?= $this->Url->build(['controller' => 'Logs', 'action' => 'view', $lastError['id']]) ?>" class="btn btn-outline-primary btn-sm flex-shrink-0">
+					<i class="fas fa-eye"></i>
+				</a>
 			</li>
 			<?php endforeach; ?>
 		</ul>

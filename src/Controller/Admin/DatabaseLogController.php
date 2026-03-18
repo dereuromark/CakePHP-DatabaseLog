@@ -32,7 +32,7 @@ class DatabaseLogController extends DatabaseLogAppController {
 		$typesWithCount = $this->DatabaseLogs->getTypesWithCount();
 
 		$lastErrors = $this->DatabaseLogs->find()
-			->select(['summary'])
+			->select(['id' => 'MAX(id)', 'summary'])
 			->where(['type' => 'error'])
 			->groupBy('summary')
 			->orderByDesc('MAX(id)')
