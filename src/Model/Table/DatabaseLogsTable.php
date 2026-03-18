@@ -198,6 +198,106 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	}
 
 	/**
+	 * Get log statistics grouped by time period.
+	 *
+	 * @param string $period '24h', '7d', or '30d'
+	 * @return array{labels: array<string>, datasets: array<string, array<string, int>>}
+	 */
+	public function getStatsByPeriod(string $period = '24h'): array {
+		$now = new DateTime();
+		$connection = $this->getConnection();
+		$driver = $connection->getDriver();
+		$driverClass = get_class($driver);
+
+		// Determine grouping and date range based on period
+		switch ($period) {
+			case '7d':
+				$start = $now->modify('-7 days')->startOfDay();
+				$format = 'Y-m-d';
+				$labelFormat = 'M j';
+				$interval = 'P1D';
+				break;
+			case '30d':
+				$start = $now->modify('-30 days')->startOfDay();
+				$format = 'Y-m-d';
+				$labelFormat = 'M j';
+				$interval = 'P1D';
+				break;
+			case '24h':
+			default:
+				$start = $now->modify('-24 hours');
+				$format = 'Y-m-d H';
+				$labelFormat = 'H:00';
+				$interval = 'PT1H';
+				break;
+		}
+
+		// Generate all time slots for the period
+		$slots = [];
+		$labels = [];
+		$current = clone $start;
+		$end = new DateTime();
+		while ($current <= $end) {
+			$key = $current->format($format);
+			$slots[$key] = 0;
+			$labels[$key] = $current->format($labelFormat);
+			$current = $current->add(new \DateInterval($interval));
+		}
+
+		// Build date expression based on database driver
+		if (str_contains($driverClass, 'Sqlite')) {
+			if ($period === '24h') {
+				$dateExpr = "strftime('%Y-%m-%d %H', created)";
+			} else {
+				$dateExpr = "strftime('%Y-%m-%d', created)";
+			}
+		} elseif (str_contains($driverClass, 'Postgres')) {
+			if ($period === '24h') {
+				$dateExpr = "to_char(created, 'YYYY-MM-DD HH24')";
+			} else {
+				$dateExpr = "to_char(created, 'YYYY-MM-DD')";
+			}
+		} else {
+			// MySQL
+			if ($period === '24h') {
+				$dateExpr = "DATE_FORMAT(created, '%Y-%m-%d %H')";
+			} else {
+				$dateExpr = "DATE_FORMAT(created, '%Y-%m-%d')";
+			}
+		}
+
+		// Query grouped data
+		$query = $this->find()
+			->select([
+				'period' => $dateExpr,
+				'type',
+				'count' => 'COUNT(*)',
+			])
+			->where(['created >=' => $start])
+			->groupBy(['period', 'type'])
+			->disableHydration();
+
+		$results = $query->all()->toArray();
+
+		// Organize by type
+		$data = [];
+		foreach ($results as $row) {
+			$type = $row['type'];
+			if (!isset($data[$type])) {
+				$data[$type] = $slots;
+			}
+			if (isset($data[$type][$row['period']])) {
+				$data[$type][$row['period']] = (int)$row['count'];
+			}
+		}
+
+		return [
+			'labels' => array_values($labels),
+			'datasets' => $data,
+		];
+	}
+
+	/**
 	 * Return all the unique types
 	 *
 	 * @return array Types

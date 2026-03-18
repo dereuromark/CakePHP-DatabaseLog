@@ -40,7 +40,14 @@ class DatabaseLogController extends DatabaseLogAppController {
 			->disableHydration()
 			->all()->toArray();
 
-		$this->set(compact('typesWithCount', 'lastErrors', 'databaseType', 'databaseSize'));
+		// Time-based statistics
+		$period = $this->request->getQuery('period', '24h');
+		if (!in_array($period, ['24h', '7d', '30d'], true)) {
+			$period = '24h';
+		}
+		$stats = $this->DatabaseLogs->getStatsByPeriod($period);
+
+		$this->set(compact('typesWithCount', 'lastErrors', 'databaseType', 'databaseSize', 'stats', 'period'));
 	}
 
 }

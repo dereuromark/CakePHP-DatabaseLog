@@ -10,10 +10,26 @@ use DatabaseLog\Model\Table\DatabaseLogsTable;
 
 ?>
 
-<h1 class="mb-4">
-	<i class="fas fa-list me-2 text-muted"></i>
-	<?= $currentType ? $this->Log->typeLabel($currentType) . ' ' : '' ?><?= __d('database_log', 'Logs') ?>
-</h1>
+<div class="d-flex justify-content-between align-items-center mb-4">
+	<h1 class="mb-0">
+		<i class="fas fa-list me-2 text-muted"></i>
+		<?= $currentType ? $this->Log->typeLabel($currentType) . ' ' : '' ?><?= __d('database_log', 'Logs') ?>
+	</h1>
+	<?php if ($currentType): ?>
+	<div>
+		<?= $this->Form->postLink(
+			'<i class="fas fa-trash me-1"></i>' . __d('database_log', 'Reset {0} Logs', '"' . $currentType . '"'),
+			['action' => 'reset', '?' => ['type' => $currentType]],
+			[
+				'class' => 'btn btn-outline-danger btn-sm',
+				'escapeTitle' => false,
+				'confirm' => __d('database_log', 'Delete all {0} logs? This cannot be undone.', $currentType),
+				'block' => true,
+			]
+		) ?>
+	</div>
+	<?php endif; ?>
+</div>
 
 <!-- Type Filters -->
 <div class="type-filters mb-3">
@@ -116,19 +132,3 @@ use DatabaseLog\Model\Table\DatabaseLogsTable;
 
 <!-- Pagination -->
 <?= $this->element('DatabaseLog.paging') ?>
-
-<!-- Type-specific Reset -->
-<?php if ($currentType): ?>
-<div class="mt-3">
-	<?= $this->Form->postLink(
-		'<i class="fas fa-trash me-1"></i>' . __d('database_log', 'Reset {0} Logs', '"' . $currentType . '"'),
-		['action' => 'reset', '?' => ['type' => $currentType]],
-		[
-			'class' => 'btn btn-outline-warning btn-sm',
-			'escapeTitle' => false,
-			'confirm' => __d('database_log', 'Delete all {0} logs?', $currentType),
-			'block' => true,
-		]
-	) ?>
-</div>
-<?php endif; ?>
