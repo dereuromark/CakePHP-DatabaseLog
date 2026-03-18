@@ -10,36 +10,15 @@
 
 namespace DatabaseLog\Controller\Admin;
 
-use App\Controller\AppController;
-use Cake\Event\EventInterface;
-
 /**
  * @property \DatabaseLog\Model\Table\DatabaseLogsTable $DatabaseLogs
  */
-class DatabaseLogController extends AppController {
-
-	/**
-	 * Explicitly use the Log model.
-	 *
-	 * @var string|null
-	 */
-	protected ?string $modelClass = 'DatabaseLog.DatabaseLogs';
+class DatabaseLogController extends DatabaseLogAppController {
 
 	/**
 	 * @var string|null
 	 */
 	protected ?string $defaultTable = 'DatabaseLog.DatabaseLogs';
-
-	/**
-	 * @param \Cake\Event\EventInterface $event
-	 *
-	 * @return void
-	 */
-	public function beforeRender(EventInterface $event): void {
-		parent::beforeRender($event);
-
-		$this->viewBuilder()->addHelpers(['Time', 'DatabaseLog.Log']);
-	}
 
 	/**
 	 * Overview action
@@ -50,11 +29,10 @@ class DatabaseLogController extends AppController {
 		$databaseType = $this->DatabaseLogs->databaseType();
 		$databaseSize = $this->DatabaseLogs->databaseSize();
 
-		$logs = [];
 		$typesWithCount = $this->DatabaseLogs->getTypesWithCount();
 
 		$lastErrors = $this->DatabaseLogs->find()
-			->select(['summary'])
+			->select(['id' => 'MAX(id)', 'summary'])
 			->where(['type' => 'error'])
 			->groupBy('summary')
 			->orderByDesc('MAX(id)')
@@ -62,7 +40,14 @@ class DatabaseLogController extends AppController {
 			->disableHydration()
 			->all()->toArray();
 
-		$this->set(compact('logs', 'typesWithCount', 'lastErrors', 'databaseType', 'databaseSize'));
+		// Time-based statistics
+		$period = $this->request->getQuery('period', '24h');
+		if (!in_array($period, ['24h', '7d', '30d'], true)) {
+			$period = '24h';
+		}
+		$stats = $this->DatabaseLogs->getStatsByPeriod($period);
+
+		$this->set(compact('typesWithCount', 'lastErrors', 'databaseType', 'databaseSize', 'stats', 'period'));
 	}
 
 }

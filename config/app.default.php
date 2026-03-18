@@ -13,6 +13,13 @@ use DatabaseLog\Model\Entity\DatabaseLog;
 return [
 	'DatabaseLog' => [
 		'connection' => null, // Connection to use, 'default' will use your live DB instead of SQLite
+
+		// Admin dashboard options
+		'standalone' => false, // Set to true for isolated admin that doesn't depend on the host app
+		'adminLayout' => null, // null = plugin layout, false = app layout, string = custom layout
+		'dashboardAutoRefresh' => 0, // Auto-refresh interval in seconds (0 = disabled)
+
+		// Monitoring options
 		'monitor' => [
 			'error',
 			'warning',
@@ -44,5 +51,15 @@ return [
 		'disableAutoTable' => null, // Set to true to avoid lazy auto logs table creation
 		'isSearchEnabled' => null, // Auto-detect
 		'notificationInterval' => 4 * HOUR, // In seconds
+
+		// Cleanup options (used by CleanupCommand / garbageCollector)
+		'maxLength' => null, // Global max age, e.g., '-90 days' (null = no limit)
+		'limit' => null, // Max number of logs to keep (null = no limit)
+		'retention' => [ // Per-type retention policies (overrides maxLength for specific types)
+			// 'error' => '-90 days',   // Keep errors for 90 days
+			// 'warning' => '-30 days', // Keep warnings for 30 days
+			// 'info' => '-7 days',     // Keep info for 7 days
+			// 'debug' => '-1 day',     // Keep debug for 1 day
+		],
 	],
 ];

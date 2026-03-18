@@ -10,22 +10,13 @@
 
 namespace DatabaseLog\Controller\Admin;
 
-use App\Controller\AppController;
-use Cake\Event\EventInterface;
 use DatabaseLog\Model\Table\DatabaseLogsTable;
 
 /**
  * @property \DatabaseLog\Model\Table\DatabaseLogsTable $DatabaseLogs
  * @property \Search\Controller\Component\SearchComponent $Search
  */
-class LogsController extends AppController {
-
-	/**
-	 * Explicitly use the Log model.
-	 *
-	 * @var string|null
-	 */
-	protected ?string $modelClass = 'DatabaseLog.DatabaseLogs';
+class LogsController extends DatabaseLogAppController {
 
 	/**
 	 * @var string|null
@@ -56,17 +47,6 @@ class LogsController extends AppController {
 	}
 
 	/**
-	 * @param \Cake\Event\EventInterface $event
-	 *
-	 * @return void
-	 */
-	public function beforeRender(EventInterface $event): void {
-		parent::beforeRender($event);
-
-		$this->viewBuilder()->addHelpers(['Time', 'DatabaseLog.Log']);
-	}
-
-	/**
 	 * Index/Overview action
 	 *
 	 * @return \Cake\Http\Response|null|void
@@ -83,7 +63,7 @@ class LogsController extends AppController {
 			}
 			$query = $this->DatabaseLogs->find()->where($conditions);
 		}
-		$query = $query->select(['id', 'created', 'type', 'summary', 'count']);
+		$query = $query->select(['id', 'created', 'type', 'summary', 'count', 'uri']);
 
 		$logs = $this->paginate($query);
 		$types = $this->DatabaseLogs->getTypes();
