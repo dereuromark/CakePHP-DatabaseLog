@@ -14,6 +14,10 @@ $formatted = $this->request->getQuery('formatted');
 		<?= __d('database_log', 'Log') ?> #<?= h($log->id) ?>
 	</h1>
 	<div>
+		<button type="button" class="btn btn-outline-secondary btn-sm" onclick="copyFullLog()" title="<?= __d('database_log', 'Copy full log') ?>">
+			<i class="fas fa-copy me-1"></i>
+			<?= __d('database_log', 'Copy All') ?>
+		</button>
 		<?php if ($formatted): ?>
 		<a href="<?= $this->Url->build([$log->id, '?' => array_diff_key($this->request->getQuery(), ['formatted' => true])]) ?>" class="btn btn-outline-secondary btn-sm">
 			<i class="fas fa-align-left me-1"></i>
@@ -82,46 +86,117 @@ $formatted = $this->request->getQuery('formatted');
 
 <?php if ($log->summary && !$log->message): ?>
 <div class="card card-dblog mb-4">
-	<div class="card-header">
-		<i class="fas fa-align-left me-2"></i>
-		<?= __d('database_log', 'Summary') ?>
+	<div class="card-header d-flex justify-content-between align-items-center">
+		<span>
+			<i class="fas fa-align-left me-2"></i>
+			<?= __d('database_log', 'Summary') ?>
+		</span>
+		<button type="button" class="btn btn-outline-secondary btn-sm copy-btn" data-target="summary-content" title="<?= __d('database_log', 'Copy') ?>">
+			<i class="fas fa-copy"></i>
+		</button>
 	</div>
 	<div class="card-body">
 		<?php if ($formatted): ?>
-		<pre class="mb-0"><?= trim(h($log->summary)) ?></pre>
+		<pre class="mb-0" id="summary-content"><?= trim(h($log->summary)) ?></pre>
 		<?php else: ?>
-		<p class="mb-0"><?= trim(nl2br(h($log->summary))) ?></p>
+		<div id="summary-content"><?= trim(nl2br(h($log->summary))) ?></div>
 		<?php endif; ?>
 	</div>
 </div>
 <?php endif; ?>
 
 <div class="card card-dblog mb-4">
-	<div class="card-header">
-		<i class="fas fa-envelope me-2"></i>
-		<?= __d('database_log', 'Message') ?>
+	<div class="card-header d-flex justify-content-between align-items-center">
+		<span>
+			<i class="fas fa-envelope me-2"></i>
+			<?= __d('database_log', 'Message') ?>
+		</span>
+		<button type="button" class="btn btn-outline-secondary btn-sm copy-btn" data-target="message-content" title="<?= __d('database_log', 'Copy') ?>">
+			<i class="fas fa-copy"></i>
+		</button>
 	</div>
 	<div class="card-body">
 		<?php if ($formatted): ?>
-		<pre class="mb-0"><?= trim(h($log->message)) ?></pre>
+		<pre class="mb-0" id="message-content"><?= trim(h($log->message)) ?></pre>
 		<?php else: ?>
-		<p class="mb-0"><?= trim(nl2br(h($log->message))) ?></p>
+		<div id="message-content"><?= trim(nl2br(h($log->message))) ?></div>
 		<?php endif; ?>
 	</div>
 </div>
 
 <?php if ($log->context): ?>
 <div class="card card-dblog">
-	<div class="card-header">
-		<i class="fas fa-code me-2"></i>
-		<?= __d('database_log', 'Context') ?>
+	<div class="card-header d-flex justify-content-between align-items-center">
+		<span>
+			<i class="fas fa-code me-2"></i>
+			<?= __d('database_log', 'Context') ?>
+		</span>
+		<button type="button" class="btn btn-outline-secondary btn-sm copy-btn" data-target="context-content" title="<?= __d('database_log', 'Copy') ?>">
+			<i class="fas fa-copy"></i>
+		</button>
 	</div>
 	<div class="card-body">
 		<?php if ($formatted): ?>
-		<pre class="mb-0"><?= trim(h($log->context)) ?></pre>
+		<pre class="mb-0" id="context-content"><?= trim(h($log->context)) ?></pre>
 		<?php else: ?>
-		<p class="mb-0"><?= trim(nl2br(h($log->context))) ?></p>
+		<div id="context-content"><?= trim(nl2br(h($log->context))) ?></div>
 		<?php endif; ?>
 	</div>
 </div>
 <?php endif; ?>
+
+<?php $this->append('script'); ?>
+<script>
+// Copy individual section
+document.querySelectorAll('.copy-btn').forEach(function(btn) {
+	btn.addEventListener('click', function() {
+		var targetId = this.getAttribute('data-target');
+		var content = document.getElementById(targetId);
+		if (content) {
+			copyToClipboard(content.innerText, this);
+		}
+	});
+});
+
+// Copy full log
+function copyFullLog() {
+	var fullLog = <?= json_encode([
+		'id' => $log->id,
+		'type' => $log->type,
+		'created' => $log->created ? $log->created->format('Y-m-d H:i:s') : null,
+		'uri' => $log->uri,
+		'hostname' => $log->hostname,
+		'ip' => $log->ip,
+		'message' => $log->message,
+		'context' => $log->context,
+	]) ?>;
+
+	var text = "Log #" + fullLog.id + "\n";
+	text += "Type: " + fullLog.type + "\n";
+	text += "Created: " + fullLog.created + "\n";
+	text += "URI: " + (fullLog.uri || '-') + "\n";
+	text += "Hostname: " + (fullLog.hostname || '-') + "\n";
+	text += "IP: " + (fullLog.ip || '-') + "\n";
+	text += "\n--- Message ---\n" + (fullLog.message || '-') + "\n";
+	if (fullLog.context) {
+		text += "\n--- Context ---\n" + fullLog.context + "\n";
+	}
+
+	copyToClipboard(text, document.querySelector('[onclick="copyFullLog()"]'));
+}
+
+function copyToClipboard(text, btn) {
+	navigator.clipboard.writeText(text).then(function() {
+		var originalHtml = btn.innerHTML;
+		btn.innerHTML = '<i class="fas fa-check"></i>';
+		btn.classList.remove('btn-outline-secondary');
+		btn.classList.add('btn-success');
+		setTimeout(function() {
+			btn.innerHTML = originalHtml;
+			btn.classList.remove('btn-success');
+			btn.classList.add('btn-outline-secondary');
+		}, 1500);
+	});
+}
+</script>
+<?php $this->end(); ?>

@@ -292,15 +292,39 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	/**
 	 * @return int
 	 */
-	protected function _cleanByAge() {
+	protected function _cleanByAge(): int {
+		$deleted = 0;
+
+		// Per-type retention policies
+		$retention = Configure::read('DatabaseLog.retention');
+		if ($retention && is_array($retention)) {
+			foreach ($retention as $type => $age) {
+				if (!$age) {
+					continue;
+				}
+				$date = new DateTime($age);
+				$deleted += $this->deleteAll([
+					'type' => $type,
+					'created <' => $date,
+				]);
+			}
+		}
+
+		// Global maxLength (fallback for types not in retention config)
 		$age = Configure::read('DatabaseLog.maxLength');
 		if (!$age) {
-			return 0;
+			return $deleted;
 		}
 
 		$date = new DateTime($age);
+		$conditions = ['created <' => $date];
 
-		return $this->deleteAll(['created <' => $date]);
+		// Exclude types that have their own retention policy
+		if ($retention && is_array($retention)) {
+			$conditions['type NOT IN'] = array_keys($retention);
+		}
+
+		return $deleted + $this->deleteAll($conditions);
 	}
 
 	/**
