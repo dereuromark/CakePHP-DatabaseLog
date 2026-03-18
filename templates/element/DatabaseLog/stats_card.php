@@ -32,6 +32,9 @@ $textColor = [
 	'secondary' => 'text-secondary',
 ];
 ?>
+<?php if ($link): ?>
+<a href="<?= h($link) ?>" class="text-decoration-none">
+<?php endif; ?>
 <div class="card stats-card h-100">
 	<div class="card-body">
 		<div class="d-flex align-items-center">
@@ -42,9 +45,9 @@ $textColor = [
 				<div class="stats-value"><?= h($value) ?></div>
 				<div class="stats-label"><?= h($label) ?></div>
 			</div>
-			<?php if ($link): ?>
-			<a href="<?= h($link) ?>" class="stretched-link"></a>
-			<?php endif; ?>
 		</div>
 	</div>
 </div>
+<?php if ($link): ?>
+</a>
+<?php endif; ?>

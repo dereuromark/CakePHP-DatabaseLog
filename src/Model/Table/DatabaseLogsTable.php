@@ -22,6 +22,7 @@ use Cake\Utility\Hash;
 use Cake\Utility\Text;
 use DatabaseLog\Model\Entity\DatabaseLog;
 use DatabaseLog\Model\Filter\DatabaseLogsCollection;
+use DateInterval;
 use RuntimeException;
 
 /**
@@ -216,12 +217,14 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 				$format = 'Y-m-d';
 				$labelFormat = 'M j';
 				$interval = 'P1D';
+
 				break;
 			case '30d':
 				$start = $now->modify('-30 days')->startOfDay();
 				$format = 'Y-m-d';
 				$labelFormat = 'M j';
 				$interval = 'P1D';
+
 				break;
 			case '24h':
 			default:
@@ -229,6 +232,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 				$format = 'Y-m-d H';
 				$labelFormat = 'H:00';
 				$interval = 'PT1H';
+
 				break;
 		}
 
@@ -241,7 +245,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 			$key = $current->format($format);
 			$slots[$key] = 0;
 			$labels[$key] = $current->format($labelFormat);
-			$current = $current->add(new \DateInterval($interval));
+			$current = $current->add(new DateInterval($interval));
 		}
 
 		// Build date expression based on database driver
@@ -267,17 +271,20 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 		}
 
 		// Query grouped data
-		$query = $this->find()
+		$query = $this->find();
+		$periodExpr = $query->expr($dateExpr);
+
+		$results = $query
 			->select([
-				'period' => $dateExpr,
+				'period' => $periodExpr,
 				'type',
-				'count' => 'COUNT(*)',
+				'count' => $query->func()->count('*'),
 			])
 			->where(['created >=' => $start])
-			->groupBy(['period', 'type'])
-			->disableHydration();
-
-		$results = $query->all()->toArray();
+			->groupBy([$periodExpr, 'type'])
+			->disableHydration()
+			->all()
+			->toArray();
 
 		// Organize by type
 		$data = [];

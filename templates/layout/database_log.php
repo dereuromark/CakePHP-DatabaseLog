@@ -290,12 +290,10 @@ if ($request && $request->getParam('controller') === 'DatabaseLog' && $request->
 		<?php
 		$flashTypes = ['success', 'error', 'warning', 'info'];
 		foreach ($flashTypes as $type) {
-			if ($this->Flash->render($type)) {
-				echo $this->Flash->render($type);
-			}
+			echo $this->Flash->render($type);
 		}
+		echo $this->Flash->render();
 		?>
-		<?= $this->Flash->render() ?>
 
 		<?= $this->fetch('content') ?>
 	</main>
