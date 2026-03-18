@@ -11,23 +11,21 @@
 
 use Cake\Core\Plugin;
 
-?>
-
-<?php
 if (Plugin::isLoaded('Tools')) {
 	echo $this->element('Tools.pagination');
 } else {
 ?>
-	<div class="paginator">
-		<ul class="pagination">
-			<?= $this->Paginator->first('<< ' . __('first')) ?>
-			<?= $this->Paginator->prev('< ' . __('previous')) ?>
-			<?= $this->Paginator->numbers() ?>
-			<?= $this->Paginator->next(__('next') . ' >') ?>
-			<?= $this->Paginator->last(__('last') . ' >>') ?>
-		</ul>
-		<p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
-	</div>
+<nav class="mt-3" aria-label="<?= __d('database_log', 'Page navigation') ?>">
+	<ul class="pagination justify-content-center mb-2">
+		<?= $this->Paginator->first('<i class="fas fa-angle-double-left"></i>', ['escape' => false, 'class' => 'page-link']) ?>
+		<?= $this->Paginator->prev('<i class="fas fa-angle-left"></i>', ['escape' => false, 'class' => 'page-link']) ?>
+		<?= $this->Paginator->numbers(['class' => 'page-link']) ?>
+		<?= $this->Paginator->next('<i class="fas fa-angle-right"></i>', ['escape' => false, 'class' => 'page-link']) ?>
+		<?= $this->Paginator->last('<i class="fas fa-angle-double-right"></i>', ['escape' => false, 'class' => 'page-link']) ?>
+	</ul>
+	<p class="text-center text-muted small">
+		<?= $this->Paginator->counter(__d('database_log', 'Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?>
+	</p>
+</nav>
 <?php
 }
-?>

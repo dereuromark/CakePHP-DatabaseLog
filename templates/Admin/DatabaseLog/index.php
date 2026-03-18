@@ -1,62 +1,96 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \DatabaseLog\Model\Entity\DatabaseLog[] $logs
- * @var int[] $typesWithCount
+ * @var array<string, int> $typesWithCount
  * @var array $lastErrors
  * @var string $databaseType
  * @var int|null $databaseSize
  */
 
-use DatabaseLog\Model\Table\DatabaseLogsTable;
+$typeColors = [
+	'error' => 'danger',
+	'warning' => 'warning',
+	'notice' => 'warning',
+	'info' => 'info',
+	'debug' => 'secondary',
+];
 
+$typeIcons = [
+	'error' => 'fa-exclamation-circle',
+	'warning' => 'fa-exclamation-triangle',
+	'notice' => 'fa-flag',
+	'info' => 'fa-info-circle',
+	'debug' => 'fa-bug',
+];
 ?>
 
-<nav class="large-3 medium-4 columns col-lg-3 col-md-4 actions">
-	<ul class="side-nav">
-		<li class="nav-item heading"><?= __('Actions') ?></li>
-		<li class="nav-item"><?php echo $this->Form->postLink(__('Remove {0}', __('Duplicates')), ['controller' => 'Logs', 'action' => 'removeDuplicates']); ?></li>
-		<li class="nav-item"><?php echo $this->Form->postLink(__('Remove {0}', __('Duplicates')) . ' (strict mode)', ['controller' => 'Logs', 'action' => 'removeDuplicates', '?' => ['strict' => true]]); ?></li>
-		<li class="nav-item"><?php echo $this->Form->postLink(__('Reset {0}', __('Logs')), ['controller' => 'Logs', 'action' => 'reset'], ['confirm' => 'Sure?']); ?></li>
-	</ul>
-</nav>
+<h1 class="mb-4">
+	<i class="fas fa-tachometer-alt me-2 text-muted"></i>
+	<?= __d('database_log', 'Dashboard') ?>
+</h1>
 
-<div class="large-9 medium-8 columns col-lg-9 col-md-8 content">
-
-<h1>Logs</h1>
-
-	<p>
-		Database <b><?php echo h($databaseType); ?></b>
-		<?php if ($databaseSize !== null) {
-			echo '(' . $this->Number->toReadableSize($databaseSize) . ')';
-		} ?>
-	</p>
-
-<?php
-if (DatabaseLogsTable::isSearchEnabled()) {
-	$typeKeys = array_keys($typesWithCount);
-	echo $this->element('DatabaseLog.search', ['url' => ['controller' => 'Logs', 'action' => 'index'], 'types' => array_combine($typeKeys, $typeKeys)]);
-}
-?>
-
-<ul class="list">
-	<li><?php echo $this->Html->link('ALL', ['controller' => 'Logs', 'action' => 'index']); ?></li>
-<?php
-foreach ($typesWithCount as $type => $count) {
-	echo '<li>';
-	echo $this->Html->link($this->Log->typeLabel($type), ['controller' => 'Logs', 'action' => 'index', '?' => ['type' => $type]], ['escape' => false]). ' (' . $count . 'x)';
-	echo '</li>';
-}
-?>
-</ul>
-
-<?php if ($lastErrors) { ?>
-	<h2>Last Errors</h2>
-	<ul>
-		<?php foreach ($lastErrors as $lastError) { ?>
-		<li><?php echo h($lastError['summary']); ?></li>
-		<?php } ?>
-	</ul>
-<?php } ?>
-
+<!-- Database Info Card -->
+<div class="row mb-4">
+	<div class="col-12">
+		<div class="card card-dblog">
+			<div class="card-body d-flex align-items-center">
+				<div class="stats-icon bg-primary bg-opacity-10 text-primary me-3">
+					<i class="fas fa-database"></i>
+				</div>
+				<div>
+					<h5 class="mb-0"><?= h($databaseType) ?></h5>
+					<?php if ($databaseSize !== null): ?>
+					<small class="text-muted"><?= $this->Number->toReadableSize($databaseSize) ?></small>
+					<?php endif; ?>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
+
+<!-- Stats Cards -->
+<?php if ($typesWithCount): ?>
+<div class="row g-3 mb-4">
+	<?php foreach ($typesWithCount as $type => $count): ?>
+	<div class="col-6 col-md-4 col-lg-3">
+		<?= $this->element('DatabaseLog.DatabaseLog/stats_card', [
+			'label' => ucfirst($type),
+			'value' => $count,
+			'icon' => $typeIcons[$type] ?? 'fa-file-alt',
+			'color' => $typeColors[$type] ?? 'secondary',
+			'link' => $this->Url->build(['controller' => 'Logs', 'action' => 'index', '?' => ['type' => $type]]),
+		]) ?>
+	</div>
+	<?php endforeach; ?>
+</div>
+<?php else: ?>
+<div class="alert alert-info">
+	<i class="fas fa-info-circle me-2"></i>
+	<?= __d('database_log', 'No log entries found.') ?>
+</div>
+<?php endif; ?>
+
+<!-- Last Errors -->
+<?php if ($lastErrors): ?>
+<div class="card card-dblog">
+	<div class="card-header">
+		<i class="fas fa-exclamation-circle text-danger me-2"></i>
+		<?= __d('database_log', 'Last Errors') ?>
+	</div>
+	<div class="card-body p-0">
+		<ul class="list-group list-group-flush">
+			<?php foreach ($lastErrors as $lastError): ?>
+			<li class="list-group-item">
+				<code class="text-danger"><?= h($lastError['summary']) ?></code>
+			</li>
+			<?php endforeach; ?>
+		</ul>
+	</div>
+	<div class="card-footer bg-transparent">
+		<a href="<?= $this->Url->build(['controller' => 'Logs', 'action' => 'index', '?' => ['type' => 'error']]) ?>" class="btn btn-outline-danger btn-sm">
+			<i class="fas fa-list me-1"></i>
+			<?= __d('database_log', 'View All Errors') ?>
+		</a>
+	</div>
+</div>
+<?php endif; ?>

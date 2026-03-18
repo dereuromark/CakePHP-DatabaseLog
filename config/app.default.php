@@ -13,6 +13,13 @@ use DatabaseLog\Model\Entity\DatabaseLog;
 return [
 	'DatabaseLog' => [
 		'connection' => null, // Connection to use, 'default' will use your live DB instead of SQLite
+
+		// Admin dashboard options
+		'standalone' => false, // Set to true for isolated admin that doesn't depend on the host app
+		'adminLayout' => null, // null = plugin layout, false = app layout, string = custom layout
+		'dashboardAutoRefresh' => 0, // Auto-refresh interval in seconds (0 = disabled)
+
+		// Monitoring options
 		'monitor' => [
 			'error',
 			'warning',
