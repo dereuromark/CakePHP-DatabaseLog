@@ -13,7 +13,14 @@ class AddIndexesToDatabaseLogs extends BaseMigration {
 	 * @return void
 	 */
 	public function change() {
-		$this->table('database_logs')
+		$table = $this->table('database_logs');
+
+		// Skip if indexes already exist
+		if ($table->hasIndexByName('type_idx')) {
+			return;
+		}
+
+		$table
 			->addIndex(['type'], ['name' => 'type_idx'])
 			->addIndex(['created'], ['name' => 'created_idx'])
 			->addIndex(['type', 'created'], ['name' => 'type_created_idx'])

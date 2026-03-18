@@ -13,7 +13,14 @@ class MigrationDatabaseLogMessage extends BaseMigration {
 	 * @return void
 	 */
 	public function change() {
-		$this->table('database_logs')
+		$table = $this->table('database_logs');
+
+		// Skip if summary column already exists
+		if ($table->hasColumn('summary')) {
+			return;
+		}
+
+		$table
 			->addColumn('summary', 'string', [
 				'default' => null,
 				'limit' => 255,
