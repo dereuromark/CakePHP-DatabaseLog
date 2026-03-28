@@ -49,10 +49,13 @@ $chartColors = [
 					<i class="fas fa-database"></i>
 				</div>
 				<div>
-					<h5 class="mb-0"><?= h($databaseType) ?></h5>
-					<?php if ($databaseSize !== null): ?>
-					<small class="text-muted"><?= $this->Number->toReadableSize($databaseSize) ?></small>
-					<?php endif; ?>
+					<h5 class="mb-0"><?= __d('database_log', 'Logs Table') ?></h5>
+					<small class="text-muted">
+						<?= h($databaseType) ?>
+						<?php if ($databaseSize !== null) { ?>
+						- <?= $this->Number->toReadableSize($databaseSize) ?>
+					<?php } ?>
+					</small>
 				</div>
 			</div>
 		</div>

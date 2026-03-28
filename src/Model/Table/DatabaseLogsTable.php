@@ -23,7 +23,6 @@ use Cake\Utility\Text;
 use DatabaseLog\Model\Entity\DatabaseLog;
 use DatabaseLog\Model\Filter\DatabaseLogsCollection;
 use DateInterval;
-use RuntimeException;
 
 /**
  * @method \DatabaseLog\Model\Entity\DatabaseLog get(mixed $primaryKey, array|string $finder = 'all', \Psr\SimpleCache\CacheInterface|string|null $cache = null, \Closure|string|null $cacheKey = null, mixed ...$args)
@@ -484,28 +483,26 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	}
 
 	/**
-	 * Get size in bytes of the database
+	 * Get size in bytes of the logs table.
 	 *
-	 * Supports SQLite, MySQL, and PostgreSQL.
+	 * Supports SQLite (file size), MySQL, and PostgreSQL.
 	 *
-	 * @throws \RuntimeException
 	 * @return int|null Bytes (null if database type not supported or cannot determine size)
 	 */
 	public function databaseSize(): ?int {
 		$dbType = $this->databaseType();
 		$config = $this->getConnection()->config();
+		$tableName = $this->getTable();
 
 		if ($dbType === 'Sqlite') {
+			// SQLite doesn't support per-table size queries, return total file size
 			if (!$config['database'] || $config['database'] === ':memory:') {
 				return null;
 			}
 
 			$size = filesize($config['database']);
-			if ($size === false) {
-				throw new RuntimeException('Cannot access DB ' . $config['database']);
-			}
 
-			return $size;
+			return $size !== false ? $size : null;
 		}
 
 		if ($dbType === 'Mysql') {
@@ -515,22 +512,17 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 			}
 
 			$result = $this->getConnection()->execute(
-				'SELECT SUM(data_length + index_length) as size FROM information_schema.TABLES WHERE table_schema = ?',
-				[$database],
+				'SELECT SUM(data_length + index_length) as size FROM information_schema.TABLES WHERE table_schema = ? AND table_name = ?',
+				[$database, $tableName],
 			)->fetch('assoc');
 
 			return $result['size'] ? (int)$result['size'] : null;
 		}
 
 		if ($dbType === 'Postgres') {
-			$database = $config['database'] ?? null;
-			if (!$database) {
-				return null;
-			}
-
 			$result = $this->getConnection()->execute(
-				'SELECT pg_database_size(?) as size',
-				[$database],
+				'SELECT pg_total_relation_size(?) as size',
+				[$tableName],
 			)->fetch('assoc');
 
 			return $result['size'] ? (int)$result['size'] : null;
