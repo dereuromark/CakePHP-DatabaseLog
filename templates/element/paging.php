@@ -1,29 +1,27 @@
 <?php
 /**
- * CakePHP DatabaseLog Plugin
+ * Standalone pagination element with Bootstrap 5 styling.
  *
- * Licensed under The MIT License.
+ * Sets explicit templates to avoid style leakage from app templates.
  *
- * @license http://www.opensource.org/licenses/mit-license.php MIT License
- * @link https://github.com/dereuromark/CakePHP-DatabaseLog
- * @var \App\View\AppView $this
+ * @var \Cake\View\View $this
  */
 
-use Cake\Core\Plugin;
+if (!$this->Paginator->hasPage()) {
+	return;
+}
 
-if (Plugin::isLoaded('Tools')) {
-	echo $this->element('Tools.pagination');
-} else {
-	$this->Paginator->setTemplates([
-		'nextActive' => '<li class="page-item"><a class="page-link" rel="next" href="{{url}}">{{text}}</a></li>',
-		'nextDisabled' => '<li class="page-item disabled"><a class="page-link" href="" onclick="return false;">{{text}}</a></li>',
-		'prevActive' => '<li class="page-item"><a class="page-link" rel="prev" href="{{url}}">{{text}}</a></li>',
-		'prevDisabled' => '<li class="page-item disabled"><a class="page-link" href="" onclick="return false;">{{text}}</a></li>',
-		'first' => '<li class="page-item"><a class="page-link" href="{{url}}">{{text}}</a></li>',
-		'last' => '<li class="page-item"><a class="page-link" href="{{url}}">{{text}}</a></li>',
-		'number' => '<li class="page-item"><a class="page-link" href="{{url}}">{{text}}</a></li>',
-		'current' => '<li class="page-item active"><a class="page-link" href="">{{text}}</a></li>',
-	]);
+// Set Bootstrap 5 templates explicitly to avoid app template leakage
+$this->Paginator->setTemplates([
+	'nextActive' => '<li class="page-item"><a class="page-link" rel="next" href="{{url}}">{{text}}</a></li>',
+	'nextDisabled' => '<li class="page-item disabled"><span class="page-link">{{text}}</span></li>',
+	'prevActive' => '<li class="page-item"><a class="page-link" rel="prev" href="{{url}}">{{text}}</a></li>',
+	'prevDisabled' => '<li class="page-item disabled"><span class="page-link">{{text}}</span></li>',
+	'first' => '<li class="page-item"><a class="page-link" href="{{url}}">{{text}}</a></li>',
+	'last' => '<li class="page-item"><a class="page-link" href="{{url}}">{{text}}</a></li>',
+	'number' => '<li class="page-item"><a class="page-link" href="{{url}}">{{text}}</a></li>',
+	'current' => '<li class="page-item active"><span class="page-link">{{text}}</span></li>',
+]);
 ?>
 <nav class="mt-4 pt-2" aria-label="<?= __d('database_log', 'Page navigation') ?>">
 	<ul class="pagination justify-content-center mb-2">
@@ -37,5 +35,3 @@ if (Plugin::isLoaded('Tools')) {
 		<?= $this->Paginator->counter(__d('database_log', 'Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?>
 	</p>
 </nav>
-<?php
-}
