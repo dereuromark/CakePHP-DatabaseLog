@@ -254,6 +254,9 @@ if ($request && $request->getParam('controller') === 'DatabaseLog' && $request->
 			border-radius: 0.375rem;
 			padding: 1rem;
 			overflow-x: auto;
+			white-space: pre-wrap;
+			word-wrap: break-word;
+			max-width: 100%;
 		}
 
 		/* Type filter pills */
