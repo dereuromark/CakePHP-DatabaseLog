@@ -14,23 +14,24 @@ if (!$connection) {
 	}
 	if (!$hasDatabaseLogConfig) {
 		if (!is_dir(LOGS)) {
-			mkdir(LOGS, 0770, true);
+			@mkdir(LOGS, 0770, true);
 		}
 		if (!is_writable(LOGS)) {
-			throw new InternalErrorException(
+			trigger_error(
 				sprintf('The `DatabaseLog` sqlite fallback requires the `%s` directory to be writable, ', LOGS)
 				. 'or define the `connection` name in the `DatabaseLog` config.',
+				E_USER_WARNING,
 			);
+		} else {
+			ConnectionManager::setConfig('database_log', [
+				'className' => 'Cake\Database\Connection',
+				'driver' => 'Cake\Database\Driver\Sqlite',
+				'database' => LOGS . 'database_log.sqlite',
+				'encoding' => 'utf8mb4',
+				'cacheMetadata' => true,
+				'quoteIdentifiers' => false,
+			]);
 		}
-
-		ConnectionManager::setConfig('database_log', [
-			'className' => 'Cake\Database\Connection',
-			'driver' => 'Cake\Database\Driver\Sqlite',
-			'database' => LOGS . 'database_log.sqlite',
-			'encoding' => 'utf8mb4',
-			'cacheMetadata' => true,
-			'quoteIdentifiers' => false,
-		]);
 	}
 }
 
