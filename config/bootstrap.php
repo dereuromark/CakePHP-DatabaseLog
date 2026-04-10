@@ -13,6 +13,16 @@ if (!$connection) {
 			. 'or define the `connection` name in the `DatabaseLog` config.');
 	}
 	if (!$hasDatabaseLogConfig) {
+		if (!is_dir(LOGS)) {
+			mkdir(LOGS, 0770, true);
+		}
+		if (!is_writable(LOGS)) {
+			throw new InternalErrorException(
+				sprintf('The `DatabaseLog` sqlite fallback requires the `%s` directory to be writable, ', LOGS)
+				. 'or define the `connection` name in the `DatabaseLog` config.',
+			);
+		}
+
 		ConnectionManager::setConfig('database_log', [
 			'className' => 'Cake\Database\Connection',
 			'driver' => 'Cake\Database\Driver\Sqlite',
