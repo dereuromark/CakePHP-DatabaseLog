@@ -1,7 +1,7 @@
 <?php
 
 /**
- * DatabaseLog (Default) Configuration
+ * DatabaseLog Example Configuration
  *
  * Copy this content to your config/app.php
  * and customize it to your needs.
@@ -13,6 +13,9 @@ use DatabaseLog\Model\Entity\DatabaseLog;
 return [
 	'DatabaseLog' => [
 		'connection' => null, // Connection to use, 'default' will use your live DB instead of SQLite
+
+		// Backend routing (opt-in; defaults to /database-log for BC)
+		'routePath' => '/database-log', // Path segment mounted under /admin (e.g. '/logs' for /admin/logs)
 
 		// Admin dashboard options
 		'standalone' => false, // Set to true for isolated admin that doesn't depend on the host app
