@@ -35,6 +35,15 @@ The `limit` config defaults to `999999` as basic protection. The `maxLength` is 
 Navigate to `http://your-domain.local/admin/database-log/logs` to view/search/delete your logs.
 Make sure you loaded your plugin with `'routes' => true'` in that case.
 
+### Customizing the backend URL
+The default backend path is `/admin/database-log`. You can change the path segment via Configure:
+```php
+'DatabaseLog' => [
+    'routePath' => '/logs', // Results in /admin/logs
+],
+```
+This is opt-in to keep existing URLs backwards compatible. In the next major version the default will change to `/logs`.
+
 You can customize the template with a custom theme if necessary.
 
 You can also adjust the label colors of the log types with Configure and

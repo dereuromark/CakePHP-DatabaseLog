@@ -4,6 +4,7 @@ namespace DatabaseLog;
 
 use Cake\Console\CommandCollection;
 use Cake\Core\BasePlugin;
+use Cake\Core\Configure;
 use Cake\Routing\RouteBuilder;
 use DatabaseLog\Command\CleanupCommand;
 use DatabaseLog\Command\ExportCommand;
@@ -26,8 +27,9 @@ class DatabaseLogPlugin extends BasePlugin {
 	 * @return void
 	 */
 	public function routes(RouteBuilder $routes): void {
-		$routes->prefix('Admin', function (RouteBuilder $routes): void {
-			$routes->plugin('DatabaseLog', ['path' => '/database-log'], function (RouteBuilder $routes): void {
+		$path = Configure::read('DatabaseLog.routePath', '/database-log');
+		$routes->prefix('Admin', function (RouteBuilder $routes) use ($path): void {
+			$routes->plugin('DatabaseLog', ['path' => $path], function (RouteBuilder $routes): void {
 				$routes->connect('/', ['controller' => 'DatabaseLog', 'action' => 'index']);
 
 				$routes->fallbacks();
