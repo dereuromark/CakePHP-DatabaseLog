@@ -12,6 +12,7 @@ namespace DatabaseLog\Test\TestCase\Controller;
 
 use Cake\Database\Driver\Postgres;
 use Cake\ORM\TableRegistry;
+use Cake\Routing\Router;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
@@ -65,6 +66,22 @@ class DatabaseLogControllerTest extends TestCase {
 
 		$this->assertResponseNotEmpty();
 		$this->assertResponseCode(200);
+	}
+
+	/**
+	 * Ensures the default backend path remains `/admin/database-log` (BC).
+	 *
+	 * @return void
+	 */
+	public function testDefaultRoutePath() {
+		$url = Router::url([
+			'prefix' => 'Admin',
+			'plugin' => 'DatabaseLog',
+			'controller' => 'DatabaseLog',
+			'action' => 'index',
+		]);
+
+		$this->assertSame('/admin/database-log', $url);
 	}
 
 }
