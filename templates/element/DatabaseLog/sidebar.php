@@ -39,34 +39,40 @@ $isActive = function (string $c, ?array $actions = null) use ($controller, $acti
 	<div class="nav-section">
 		<div class="nav-section-title"><?= __d('database_log', 'Quick Actions') ?></div>
 		<nav class="nav flex-column">
-			<?= $this->Form->postLink(
+			<?= $this->Form->postButton(
 				'<i class="fas fa-compress-alt"></i> ' . __d('database_log', 'Remove Duplicates'),
 				['plugin' => 'DatabaseLog', 'prefix' => 'Admin', 'controller' => 'Logs', 'action' => 'removeDuplicates'],
 				[
-					'class' => 'nav-link',
+					'class' => 'nav-link btn btn-link text-start w-100',
 					'escapeTitle' => false,
-					'confirm' => __d('database_log', 'Remove all duplicate log entries?'),
-					'block' => true,
+					'form' => [
+						'class' => 'd-inline',
+						'data-confirm-message' => __d('database_log', 'Remove all duplicate log entries?'),
+					],
 				]
 			) ?>
-			<?= $this->Form->postLink(
+			<?= $this->Form->postButton(
 				'<i class="fas fa-compress"></i> ' . __d('database_log', 'Remove Duplicates (strict)'),
 				['plugin' => 'DatabaseLog', 'prefix' => 'Admin', 'controller' => 'Logs', 'action' => 'removeDuplicates', '?' => ['strict' => true]],
 				[
-					'class' => 'nav-link',
+					'class' => 'nav-link btn btn-link text-start w-100',
 					'escapeTitle' => false,
-					'confirm' => __d('database_log', 'Remove all duplicate log entries (strict mode)?'),
-					'block' => true,
+					'form' => [
+						'class' => 'd-inline',
+						'data-confirm-message' => __d('database_log', 'Remove all duplicate log entries (strict mode)?'),
+					],
 				]
 			) ?>
-			<?= $this->Form->postLink(
+			<?= $this->Form->postButton(
 				'<i class="fas fa-trash"></i> ' . __d('database_log', 'Reset All Logs'),
 				['plugin' => 'DatabaseLog', 'prefix' => 'Admin', 'controller' => 'Logs', 'action' => 'reset'],
 				[
-					'class' => 'nav-link text-warning',
+					'class' => 'nav-link text-warning btn btn-link text-start w-100',
 					'escapeTitle' => false,
-					'confirm' => __d('database_log', 'Delete all log entries? This cannot be undone.'),
-					'block' => true,
+					'form' => [
+						'class' => 'd-inline',
+						'data-confirm-message' => __d('database_log', 'Delete all log entries? This cannot be undone.'),
+					],
 				]
 			) ?>
 		</nav>

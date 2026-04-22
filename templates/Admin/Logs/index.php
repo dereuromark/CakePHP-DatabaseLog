@@ -17,14 +17,16 @@ use DatabaseLog\Model\Table\DatabaseLogsTable;
 	</h1>
 	<?php if ($currentType): ?>
 	<div>
-		<?= $this->Form->postLink(
+		<?= $this->Form->postButton(
 			'<i class="fas fa-trash me-1"></i>' . __d('database_log', 'Reset {0} Logs', '"' . $currentType . '"'),
 			['action' => 'reset', '?' => ['type' => $currentType]],
 			[
 				'class' => 'btn btn-outline-danger btn-sm',
 				'escapeTitle' => false,
-				'confirm' => __d('database_log', 'Delete all {0} logs? This cannot be undone.', $currentType),
-				'block' => true,
+				'form' => [
+					'class' => 'd-inline',
+					'data-confirm-message' => __d('database_log', 'Delete all {0} logs? This cannot be undone.', $currentType),
+				],
 			]
 		) ?>
 	</div>
@@ -109,15 +111,17 @@ use DatabaseLog\Model\Table\DatabaseLogsTable;
 							<a href="<?= $this->Url->build(['action' => 'view', $log->id, '?' => $this->request->getQuery()]) ?>" class="btn btn-outline-primary" title="<?= __d('database_log', 'View') ?>">
 								<i class="fas fa-eye"></i>
 							</a>
-							<?= $this->Form->postLink(
+							<?= $this->Form->postButton(
 								'<i class="fas fa-trash"></i>',
 								['action' => 'delete', $log->id],
 								[
 									'class' => 'btn btn-outline-danger',
 									'escapeTitle' => false,
-									'confirm' => __d('database_log', 'Delete log #{0}?', $log->id),
 									'title' => __d('database_log', 'Delete'),
-									'block' => true,
+									'form' => [
+										'class' => 'd-inline',
+										'data-confirm-message' => __d('database_log', 'Delete log #{0}?', $log->id),
+									],
 								]
 							) ?>
 						</div>
