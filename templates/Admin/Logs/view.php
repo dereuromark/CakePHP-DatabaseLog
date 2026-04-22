@@ -14,7 +14,7 @@ $formatted = $this->request->getQuery('formatted');
 		<?= __d('database_log', 'Log') ?> #<?= h($log->id) ?>
 	</h1>
 	<div>
-		<button type="button" class="btn btn-outline-secondary btn-sm" onclick="copyFullLog()" title="<?= __d('database_log', 'Copy full log') ?>">
+		<button type="button" class="btn btn-outline-secondary btn-sm" data-action="copy-full-log" title="<?= __d('database_log', 'Copy full log') ?>">
 			<i class="fas fa-copy me-1"></i>
 			<?= __d('database_log', 'Copy All') ?>
 		</button>
@@ -33,14 +33,16 @@ $formatted = $this->request->getQuery('formatted');
 			<i class="fas fa-arrow-left me-1"></i>
 			<?= __d('database_log', 'Back') ?>
 		</a>
-		<?= $this->Form->postLink(
+		<?= $this->Form->postButton(
 			'<i class="fas fa-trash me-1"></i>' . __d('database_log', 'Delete'),
 			['action' => 'delete', $log->id],
 			[
 				'class' => 'btn btn-outline-danger btn-sm',
 				'escapeTitle' => false,
-				'confirm' => __d('database_log', 'Delete this log entry?'),
-				'block' => true,
+				'form' => [
+					'class' => 'd-inline',
+					'data-confirm-message' => __d('database_log', 'Delete this log entry?'),
+				],
 			]
 		) ?>
 	</div>
@@ -145,8 +147,11 @@ $formatted = $this->request->getQuery('formatted');
 </div>
 <?php endif; ?>
 
-<?php $this->append('script'); ?>
-<script>
+<?php
+$this->append('script');
+$cspNonce = (string)$this->getRequest()->getAttribute('cspNonce', '');
+?>
+<script<?= $cspNonce !== '' ? ' nonce="' . h($cspNonce) . '"' : '' ?>>
 // Copy individual section
 document.querySelectorAll('.copy-btn').forEach(function(btn) {
 	btn.addEventListener('click', function() {
@@ -158,8 +163,8 @@ document.querySelectorAll('.copy-btn').forEach(function(btn) {
 	});
 });
 
-// Copy full log
-function copyFullLog() {
+// Copy full log (triggered by button[data-action="copy-full-log"])
+function copyFullLog(btn) {
 	var fullLog = <?= json_encode([
 		'id' => $log->id,
 		'type' => $log->type,
@@ -182,8 +187,14 @@ function copyFullLog() {
 		text += "\n--- Context ---\n" + fullLog.context + "\n";
 	}
 
-	copyToClipboard(text, document.querySelector('[onclick="copyFullLog()"]'));
+	copyToClipboard(text, btn);
 }
+
+document.querySelectorAll('[data-action="copy-full-log"]').forEach(function(btn) {
+	btn.addEventListener('click', function() {
+		copyFullLog(this);
+	});
+});
 
 function copyToClipboard(text, btn) {
 	navigator.clipboard.writeText(text).then(function() {

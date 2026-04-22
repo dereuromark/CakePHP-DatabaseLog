@@ -15,6 +15,8 @@ $request = $this->getRequest();
 if ($request && $request->getParam('controller') === 'DatabaseLog' && $request->getParam('action') === 'index') {
 	$autoRefresh = (int)Configure::read('DatabaseLog.dashboardAutoRefresh') ?: 0;
 }
+$cspNonce = (string)$this->getRequest()->getAttribute('cspNonce', '');
+$nonceAttr = $cspNonce !== '' ? ' nonce="' . h($cspNonce) . '"' : '';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -278,7 +280,7 @@ if ($request && $request->getParam('controller') === 'DatabaseLog' && $request->
 			</a>
 
 			<!-- Mobile toggle -->
-			<button class="navbar-toggler dblog-mobile-toggle d-lg-none" type="button" onclick="document.querySelector('.dblog-sidebar').classList.toggle('show')">
+			<button class="navbar-toggler dblog-mobile-toggle d-lg-none" type="button" data-action="toggle-sidebar">
 				<i class="fas fa-bars"></i>
 			</button>
 		</div>
@@ -301,12 +303,32 @@ if ($request && $request->getParam('controller') === 'DatabaseLog' && $request->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
 	<?php if ($autoRefresh > 0): ?>
-	<script>
+	<script<?= $nonceAttr ?>>
 		setTimeout(function() {
 			window.location.reload();
 		}, <?= $autoRefresh * 1000 ?>);
 	</script>
 	<?php endif; ?>
+
+	<script<?= $nonceAttr ?>>
+	document.addEventListener('DOMContentLoaded', function() {
+		// Mobile sidebar toggle (CSP-safe replacement for inline onclick)
+		document.querySelectorAll('[data-action="toggle-sidebar"]').forEach(function(btn) {
+			btn.addEventListener('click', function() {
+				document.querySelector('.dblog-sidebar').classList.toggle('show');
+			});
+		});
+
+		// Confirmation dialogs for postButton forms (CSP-safe replacement for postLink + confirm)
+		document.querySelectorAll('form[data-confirm-message]').forEach(function(form) {
+			form.addEventListener('submit', function(e) {
+				if (!confirm(this.dataset.confirmMessage)) {
+					e.preventDefault();
+				}
+			});
+		});
+	});
+	</script>
 
 	<?= $this->fetch('script') ?>
 	<?= $this->fetch('postLink') ?>
