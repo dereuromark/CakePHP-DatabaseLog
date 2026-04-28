@@ -7,6 +7,7 @@
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.2-8892BF.svg)](https://php.net/)
 [![License](https://poser.pugx.org/dereuromark/CakePHP-DatabaseLog/license.svg)](LICENSE)
 [![Total Downloads](https://poser.pugx.org/dereuromark/CakePHP-DatabaseLog/d/total.svg)](https://packagist.org/packages/dereuromark/CakePHP-DatabaseLog)
+[![Coding Standards](https://img.shields.io/badge/cs-PSR--2--R-purple.svg?style=flat-square)](https://github.com/php-fig-rectified/fig-rectified-standards)
 
 DatabaseLog engine for CakePHP applications.
 
