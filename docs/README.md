@@ -35,6 +35,39 @@ The `limit` config defaults to `999999` as basic protection. The `maxLength` is 
 Navigate to `http://your-domain.local/admin/database-log/logs` to view/search/delete your logs.
 Make sure you loaded your plugin with `'routes' => true'` in that case.
 
+### Authorization (`DatabaseLog.adminAccess`, required)
+
+Log entries commonly contain sensitive data (stack traces with credentials,
+request bodies, internal paths, user PII). The plugin therefore **fails
+closed by default**: every request to the admin backend is rejected with
+`403` until the host app explicitly configures access.
+
+Set `DatabaseLog.adminAccess` to a `Closure` that receives the current
+request and returns literal `true` to grant access. Anything else (unset,
+non-`Closure`, returns `false`, returns a truthy non-bool, throws) yields
+a `403`.
+
+```php
+use Cake\Core\Configure;
+use Cake\Http\ServerRequest;
+
+// Example — admin role check (cakephp/authentication identity):
+Configure::write('DatabaseLog.adminAccess', function (ServerRequest $request): bool {
+    $identity = $request->getAttribute('identity');
+    return $identity !== null && in_array('admin', (array)$identity->roles, true);
+});
+```
+
+The gate runs in `beforeFilter` for every admin controller in the plugin
+and plays nicely with the cakephp/authorization plugin (it calls
+`skipAuthorization()` so the policy layer doesn't double-reject).
+`ForbiddenException` raised inside the Closure is respected as-is so
+callers can short-circuit with their own message; other throwables are
+logged via `Cake\Log\Log` and converted to a generic `403`.
+
+`DatabaseLog.adminAccess` is independent of `DatabaseLog.standalone` —
+the access gate runs in both modes.
+
 ### Customizing the backend URL
 The default backend path is `/admin/database-log`. You can change the path segment via Configure:
 ```php
