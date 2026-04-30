@@ -118,3 +118,8 @@ if (env('FIXTURE_SCHEMA_METADATA')) {
 	$loader->loadInternalFile(env('FIXTURE_SCHEMA_METADATA'));
 	$loader->loadInternalFile(env('FIXTURE_SCHEMA_METADATA'), 'test_database_log');
 }
+
+// Permissive default for test runs. Production installs MUST configure their
+// own Closure (default-deny). Individual tests may override or delete this to
+// exercise the deny path.
+Configure::write('DatabaseLog.adminAccess', fn () => true);
