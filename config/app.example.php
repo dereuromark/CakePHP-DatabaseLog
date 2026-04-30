@@ -22,6 +22,20 @@ return [
 		'adminLayout' => null, // null = plugin layout, false = app layout, string = custom layout
 		'dashboardAutoRefresh' => 0, // Auto-refresh interval in seconds (0 = disabled)
 
+		// Admin access gate. REQUIRED — the host app MUST set this to a Closure
+		// that returns true to grant access to /admin/database-log/...; anything
+		// else (unset, non-Closure, returns false, returns a truthy non-bool, or
+		// throws) yields a 403. Log entries commonly contain sensitive data
+		// (stack traces with credentials, request bodies with PII, internal
+		// paths); the default policy is deny. Independent of `standalone` —
+		// runs in both modes.
+		// Example — admin role check on the cakephp/authentication identity:
+		'adminAccess' => function (\Cake\Http\ServerRequest $request): bool {
+			$identity = $request->getAttribute('identity');
+
+			return $identity !== null && in_array('admin', (array)$identity->roles, true);
+		},
+
 		// Monitoring options
 		'monitor' => [
 			'error',
