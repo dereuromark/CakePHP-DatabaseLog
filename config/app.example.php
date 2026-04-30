@@ -7,6 +7,7 @@
  * and customize it to your needs.
  */
 use Cake\Event\EventInterface;
+use Cake\Http\ServerRequest;
 use Cake\Mailer\Mailer;
 use DatabaseLog\Model\Entity\DatabaseLog;
 
@@ -30,7 +31,7 @@ return [
 		// paths); the default policy is deny. Independent of `standalone` —
 		// runs in both modes.
 		// Example — admin role check on the cakephp/authentication identity:
-		'adminAccess' => function (\Cake\Http\ServerRequest $request): bool {
+		'adminAccess' => function (ServerRequest $request): bool {
 			$identity = $request->getAttribute('identity');
 
 			return $identity !== null && in_array('admin', (array)$identity->roles, true);
