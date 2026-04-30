@@ -10,7 +10,6 @@
 
 namespace DatabaseLog\Test\TestCase\Controller;
 
-use Cake\Database\Driver\Postgres;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use Cake\TestSuite\IntegrationTestTrait;
@@ -57,9 +56,6 @@ class DatabaseLogControllerTest extends TestCase {
 	 * @return void
 	 */
 	public function testIndex() {
-		$connectionConfig = $this->Logs->getConnection()->config();
-		$this->skipIf($connectionConfig['driver'] === Postgres::class, 'Only for MySQL/Sqlite for now');
-
 		$this->disableErrorHandlerMiddleware();
 
 		$this->get(['prefix' => 'Admin', 'plugin' => 'DatabaseLog', 'controller' => 'DatabaseLog', 'action' => 'index']);

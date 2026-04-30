@@ -186,10 +186,14 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	 * @return array Types
 	 */
 	public function getTypesWithCount() {
+		// Use GROUP BY rather than DISTINCT here — combining DISTINCT with an
+		// aggregate like COUNT(*) is rejected by Postgres in strict SQL mode
+		// ("column must appear in the GROUP BY clause") even though SQLite
+		// and MySQL silently accept it.
 		$query = $this->find();
 		$types = $query
-			->select(['type', 'count' => 'COUNT(*)'])
-			->distinct('type')
+			->select(['type', 'count' => $query->func()->count('*')])
+			->groupBy('type')
 			->orderByAsc('type')
 			->disableHydration()
 			->toArray();
