@@ -164,10 +164,10 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	 */
 	public function textSearch($query = null) {
 		if ($query) {
-			if (str_contains($query, 'type@') && strpos($query, 'type@') === 0) {
+			if (str_starts_with($query, 'type@')) {
 				$query = str_replace('type@', '', $query);
 
-				return ['Log.type' => $query];
+				return [$this->aliasField('type') => $query];
 			}
 
 			// Use proper escaping for fulltext search

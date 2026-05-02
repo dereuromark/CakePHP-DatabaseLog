@@ -35,6 +35,13 @@ class ExportCommand extends Command {
 		$limit = (int)$args->getOption('limit') ?: 100;
 
 		foreach ($types as $type) {
+			$safeType = preg_replace('/[^a-zA-Z0-9_-]/', '_', (string)$type);
+			if ($safeType === '' || $safeType === null) {
+				$io->warning('Skipping type with empty/invalid name.');
+
+				continue;
+			}
+
 			$query = $this->fetchTable('DatabaseLog.DatabaseLogs')->find();
 
 			/** @var array<\DatabaseLog\Model\Entity\DatabaseLog> $logs */
@@ -50,9 +57,9 @@ class ExportCommand extends Command {
 			}
 
 			$content = implode(PHP_EOL, $contentArray);
-			file_put_contents(LOGS . 'export-' . $type . '.txt', $content);
+			file_put_contents(LOGS . 'export-' . $safeType . '.txt', $content);
 
-			$io->success('Exporting type ' . $type . ': ' . count($logs) . ' entries written to export-' . $type . '.txt');
+			$io->success('Exporting type ' . $type . ': ' . count($logs) . ' entries written to export-' . $safeType . '.txt');
 		}
 
 		if (!$types) {

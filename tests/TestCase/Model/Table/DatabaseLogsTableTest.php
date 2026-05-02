@@ -106,10 +106,10 @@ class DatabaseLogsTableTest extends TestCase {
 	 */
 	public function testTextSearch() {
 		$res = $this->Logs->textSearch('interesting');
-		$this->assertEquals(['MATCH (message) AGAINST (\'interesting\')'], $res);
+		$this->assertSame(['MATCH (message) AGAINST (\'interesting\')'], $res);
 
 		$res = $this->Logs->textSearch('type@foo');
-		$this->assertEquals(['Log.type' => 'foo'], $res);
+		$this->assertSame(['DatabaseLogs.type' => 'foo'], $res);
 	}
 
 	/**
