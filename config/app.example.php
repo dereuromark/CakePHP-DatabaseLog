@@ -23,6 +23,14 @@ return [
 		'adminLayout' => null, // null = plugin layout, false = app layout, string = custom layout
 		'dashboardAutoRefresh' => 0, // Auto-refresh interval in seconds (0 = disabled)
 
+		// Back-to-App link in the admin header (opt-in). When set, an outline
+		// "Back to App" button appears in the header so admins can escape the
+		// plugin-isolated layout. Accepts anything Router::url() takes — Cake
+		// URL array, path string, or full URL. Use 'plugin' => false to
+		// anchor the builder to the host app.
+		// 'adminBackUrl' => ['plugin' => false, 'prefix' => 'Admin', 'controller' => 'Overview', 'action' => 'index'],
+		// 'adminBackLabel' => 'Back to admin', // Optional. Defaults to "Back to App".
+
 		// Admin access gate. REQUIRED — the host app MUST set this to a Closure
 		// that returns true to grant access to /admin/database-log/...; anything
 		// else (unset, non-Closure, returns false, returns a truthy non-bool, or
