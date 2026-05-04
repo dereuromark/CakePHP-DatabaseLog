@@ -1,0 +1,193 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2026-05-04 04:12+0200\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+msgid "DatabaseLog admin backend is not configured. Set DatabaseLog.adminAccess to a Closure that returns true for permitted callers."
+msgstr ""
+
+msgid "DatabaseLog admin access denied."
+msgstr ""
+
+msgid "Log deleted"
+msgstr ""
+
+msgid "Log was not deleted"
+msgstr ""
+
+msgid "Duplicates have been removed."
+msgstr ""
+
+msgid "Dashboard"
+msgstr ""
+
+msgid "Logs Table"
+msgstr ""
+
+msgid "No log entries found."
+msgstr ""
+
+msgid "Log Activity"
+msgstr ""
+
+msgid "24h"
+msgstr ""
+
+msgid "7 days"
+msgstr ""
+
+msgid "30 days"
+msgstr ""
+
+msgid "No data for this period."
+msgstr ""
+
+msgid "Last Errors"
+msgstr ""
+
+msgid "View All Errors"
+msgstr ""
+
+msgid "Logs"
+msgstr ""
+
+msgid "Reset {0} Logs"
+msgstr ""
+
+msgid "Delete all {0} logs? This cannot be undone."
+msgstr ""
+
+msgid "All"
+msgstr ""
+
+msgid "Created"
+msgstr ""
+
+msgid "Type"
+msgstr ""
+
+msgid "Summary"
+msgstr ""
+
+msgid "Actions"
+msgstr ""
+
+msgid "View"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+msgid "Delete log #{0}?"
+msgstr ""
+
+msgid "Log"
+msgstr ""
+
+msgid "Copy full log"
+msgstr ""
+
+msgid "Copy All"
+msgstr ""
+
+msgid "Normal"
+msgstr ""
+
+msgid "Formatted"
+msgstr ""
+
+msgid "Back"
+msgstr ""
+
+msgid "Delete this log entry?"
+msgstr ""
+
+msgid "Details"
+msgstr ""
+
+msgid "Command"
+msgstr ""
+
+msgid "URI"
+msgstr ""
+
+msgid "Referrer"
+msgstr ""
+
+msgid "Hostname"
+msgstr ""
+
+msgid "IP"
+msgstr ""
+
+msgid "User Agent"
+msgstr ""
+
+msgid "Copy"
+msgstr ""
+
+msgid "Message"
+msgstr ""
+
+msgid "Context"
+msgstr ""
+
+msgid "Navigation"
+msgstr ""
+
+msgid "Quick Actions"
+msgstr ""
+
+msgid "Remove Duplicates"
+msgstr ""
+
+msgid "Remove all duplicate log entries?"
+msgstr ""
+
+msgid "Remove Duplicates (strict)"
+msgstr ""
+
+msgid "Remove all duplicate log entries (strict mode)?"
+msgstr ""
+
+msgid "Reset All Logs"
+msgstr ""
+
+msgid "Delete all log entries? This cannot be undone."
+msgstr ""
+
+msgid "Page navigation"
+msgstr ""
+
+msgid "Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total"
+msgstr ""
+
+msgid "Auto-wildcard mode"
+msgstr ""
+
+msgid "Search (Summary)"
+msgstr ""
+
+msgid "- no filter -"
+msgstr ""
+
+msgid "Filter"
+msgstr ""
+
+msgid "Reset"
+msgstr ""
+
+msgid "Server Time"
+msgstr ""
+
