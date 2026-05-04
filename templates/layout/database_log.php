@@ -279,15 +279,15 @@ $nonceAttr = $cspNonce !== '' ? ' nonce="' . h($cspNonce) . '"' : '';
 				DatabaseLog
 			</a>
 
-			<span class="text-light small ms-auto me-3" title="<?= __d('database_log', 'Server Time') ?>">
+			<!-- Mobile toggle -->
+			<button class="navbar-toggler dblog-mobile-toggle d-lg-none ms-auto" type="button" data-action="toggle-sidebar">
+				<i class="fas fa-bars"></i>
+			</button>
+
+			<span class="text-light small ms-lg-auto ms-3" title="<?= __d('database_log', 'Server Time') ?>">
 				<i class="far fa-clock me-1"></i>
 				<?= date('Y-m-d H:i:s') ?>
 			</span>
-
-			<!-- Mobile toggle -->
-			<button class="navbar-toggler dblog-mobile-toggle d-lg-none" type="button" data-action="toggle-sidebar">
-				<i class="fas fa-bars"></i>
-			</button>
 		</div>
 	</nav>
 
