@@ -279,12 +279,24 @@ $nonceAttr = $cspNonce !== '' ? ' nonce="' . h($cspNonce) . '"' : '';
 				DatabaseLog
 			</a>
 
+			<?php
+			$adminBackUrl = Configure::read('DatabaseLog.adminBackUrl');
+			$hasAdminBack = $adminBackUrl !== null && $adminBackUrl !== '';
+			$adminBackLabel = (string)Configure::read('DatabaseLog.adminBackLabel', __d('database_log', 'Back to App'));
+			?>
+			<?php if ($hasAdminBack) { ?>
+			<a class="btn btn-outline-light btn-sm ms-auto" href="<?= $this->Url->build($adminBackUrl) ?>">
+				<i class="fas fa-arrow-left me-1"></i>
+				<?= h($adminBackLabel) ?>
+			</a>
+			<?php } ?>
+
 			<!-- Mobile toggle -->
-			<button class="navbar-toggler dblog-mobile-toggle d-lg-none ms-auto" type="button" data-action="toggle-sidebar">
+			<button class="navbar-toggler dblog-mobile-toggle d-lg-none <?= $hasAdminBack ? 'ms-2' : 'ms-auto' ?>" type="button" data-action="toggle-sidebar">
 				<i class="fas fa-bars"></i>
 			</button>
 
-			<span class="text-light small ms-lg-auto ms-3" title="<?= __d('database_log', 'Server Time') ?>">
+			<span class="text-light small <?= $hasAdminBack ? 'ms-3' : 'ms-lg-auto ms-3' ?>" title="<?= __d('database_log', 'Server Time') ?>">
 				<i class="far fa-clock me-1"></i>
 				<?= date('Y-m-d H:i:s') ?>
 			</span>
