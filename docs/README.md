@@ -35,6 +35,32 @@ The `limit` config defaults to `999999` as basic protection. The `maxLength` is 
 Navigate to `http://your-domain.local/admin/database-log/logs` to view/search/delete your logs.
 Make sure you loaded your plugin with `'routes' => true'` in that case.
 
+### Back-to-App link (`DatabaseLog.adminBackUrl`, optional)
+
+When set, an outline "Back to App" button appears in the admin header
+between the brand and the clock — gives admins a one-click escape from
+the plugin-isolated layout back to the host app's admin home.
+
+`adminBackUrl` accepts anything `Router::url()` accepts: a Cake URL
+array, a path string, or a full URL. Use `'plugin' => false` to anchor
+the URL builder to the host app rather than the plugin's namespace.
+`adminBackLabel` is optional and defaults to `"Back to App"` (translated
+through the `database_log` domain).
+
+```php
+'DatabaseLog' => [
+    'adminBackUrl' => [
+        'plugin' => false,
+        'prefix' => 'Admin',
+        'controller' => 'Overview',
+        'action' => 'index',
+    ],
+    'adminBackLabel' => __('Back to admin'), // optional
+],
+```
+
+When unset (the default), the button is hidden.
+
 ### Authorization (`DatabaseLog.adminAccess`, required)
 
 Log entries commonly contain sensitive data (stack traces with credentials,
