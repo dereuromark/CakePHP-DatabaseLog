@@ -91,11 +91,11 @@ class LogsController extends DatabaseLogAppController {
 		$log = $this->DatabaseLogs->get($id);
 
 		if ($this->DatabaseLogs->delete($log)) {
-			$this->Flash->success(__('Log deleted'));
+			$this->Flash->success(__d('database_log', 'Log deleted'));
 
 			return $this->redirect(['action' => 'index']);
 		}
-		$this->Flash->error(__('Log was not deleted'));
+		$this->Flash->error(__d('database_log', 'Log was not deleted'));
 
 		return $this->redirect(['action' => 'index']);
 	}
@@ -132,7 +132,7 @@ class LogsController extends DatabaseLogAppController {
 
 		$this->DatabaseLogs->removeDuplicates((bool)$this->request->getQuery('strict'));
 
-		$this->Flash->success(__('Duplicates have been removed.'));
+		$this->Flash->success(__d('database_log', 'Duplicates have been removed.'));
 
 		return $this->redirect(['action' => 'index']);
 	}
