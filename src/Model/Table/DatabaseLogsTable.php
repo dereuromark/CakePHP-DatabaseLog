@@ -32,14 +32,14 @@ use DateInterval;
  * @method \DatabaseLog\Model\Entity\DatabaseLog patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method array<\DatabaseLog\Model\Entity\DatabaseLog> patchEntities(iterable $entities, array $data, array $options = [])
  * @method \DatabaseLog\Model\Entity\DatabaseLog findOrCreate($search, ?callable $callback = null, array $options = [])
- * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @method \DatabaseLog\Model\Entity\DatabaseLog saveOrFail(\Cake\Datasource\EntityInterface $entity, array $options = [])
- * @mixin \Search\Model\Behavior\SearchBehavior
  * @method \DatabaseLog\Model\Entity\DatabaseLog newEmptyEntity()
  * @method \Cake\Datasource\ResultSetInterface<\DatabaseLog\Model\Entity\DatabaseLog>|false saveMany(iterable $entities, array $options = [])
  * @method \Cake\Datasource\ResultSetInterface<\DatabaseLog\Model\Entity\DatabaseLog> saveManyOrFail(iterable $entities, array $options = [])
  * @method \Cake\Datasource\ResultSetInterface<\DatabaseLog\Model\Entity\DatabaseLog>|false deleteMany(iterable $entities, array $options = [])
  * @method \Cake\Datasource\ResultSetInterface<\DatabaseLog\Model\Entity\DatabaseLog> deleteManyOrFail(iterable $entities, array $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Search\Model\Behavior\SearchBehavior
  */
 class DatabaseLogsTable extends DatabaseLogAppTable {
 
