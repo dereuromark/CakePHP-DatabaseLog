@@ -14,6 +14,7 @@ use DatabaseLog\Model\Entity\DatabaseLog;
 return [
 	'DatabaseLog' => [
 		'connection' => null, // Connection to use, 'default' will use your live DB instead of SQLite
+		// 'datasource' => null, // DEPRECATED fallback alias for 'connection'. Used only when 'connection' is empty. Use 'connection' instead. When both are empty, defaults to the 'database_log' connection.
 
 		// Backend routing (opt-in; defaults to /database-log for BC)
 		'routePath' => '/database-log', // Path segment mounted under /admin (e.g. '/logs' for /admin/logs)
