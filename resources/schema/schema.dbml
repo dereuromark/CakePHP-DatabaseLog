@@ -1,0 +1,32 @@
+// cakephp-databaselog — database schema snapshot (DBML)
+//
+// A merged snapshot of all plugin migrations under config/Migrations/.
+// Hand-maintained: update it when you add a migration that changes these tables.
+// Paste into https://dbdiagram.io (or any DBML tool) to view/diagram.
+// DBML reference: https://dbml.dbdiagram.io/docs
+
+Project cakephp_databaselog {
+  database_type: 'Generic'
+  Note: 'DatabaseLog plugin tables only.'
+}
+
+Table database_logs {
+  id integer [pk, increment]
+  type varchar(50) [not null]
+  summary varchar(255) [not null, note: 'Short one-line summary of the log entry']
+  message text [not null]
+  context text [null]
+  created datetime [not null]
+  ip varchar(100) [null]
+  hostname varchar(100) [null]
+  uri text [null]
+  refer varchar(255) [null]
+  user_agent varchar(255) [null]
+  count int [not null, default: 0]
+
+  indexes {
+    type [name: 'type_idx']
+    created [name: 'created_idx']
+    (type, created) [name: 'type_created_idx']
+  }
+}
