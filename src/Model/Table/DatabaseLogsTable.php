@@ -253,15 +253,15 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 
 		// Build date expression based on database driver
 		if (str_contains($driverClass, 'Sqlite')) {
-            $dateExpr = $period === '24h' ? "strftime('%Y-%m-%d %H', created)" : "strftime('%Y-%m-%d', created)";
-        } elseif (str_contains($driverClass, 'Postgres')) {
-            $dateExpr = $period === '24h' ? "to_char(created, 'YYYY-MM-DD HH24')" : "to_char(created, 'YYYY-MM-DD')";
-        } elseif ($period === '24h') {
-            // MySQL
-            $dateExpr = "DATE_FORMAT(created, '%Y-%m-%d %H')";
-        } else {
+			$dateExpr = $period === '24h' ? "strftime('%Y-%m-%d %H', created)" : "strftime('%Y-%m-%d', created)";
+		} elseif (str_contains($driverClass, 'Postgres')) {
+			$dateExpr = $period === '24h' ? "to_char(created, 'YYYY-MM-DD HH24')" : "to_char(created, 'YYYY-MM-DD')";
+		} elseif ($period === '24h') {
+			// MySQL
+			$dateExpr = "DATE_FORMAT(created, '%Y-%m-%d %H')";
+		} else {
 				$dateExpr = "DATE_FORMAT(created, '%Y-%m-%d')";
-			}
+		}
 
 		// Query grouped data
 		$query = $this->find();
@@ -472,7 +472,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 		$config = $this->getConnection()->config();
 		$type = $config['driver'];
 
-		return substr((string) $type, strrpos((string) $type, '\\') + 1);
+		return substr((string)$type, strrpos((string)$type, '\\') + 1);
 	}
 
 	/**

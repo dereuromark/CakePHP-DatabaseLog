@@ -75,7 +75,7 @@ class ShowCommand extends Command {
 
 		foreach ($logs as $log) {
 			$content = $log->created . ': ' . $log->type;
-			$pieces = explode("\n", trim((string) $log->message), 2);
+			$pieces = explode("\n", trim((string)$log->message), 2);
 			$shortMessage = Text::truncate(trim($pieces[0]), 100);
 			$content .= ' - ' . $shortMessage;
 
