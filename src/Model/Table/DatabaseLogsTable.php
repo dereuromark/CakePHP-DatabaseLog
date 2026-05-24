@@ -260,7 +260,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 			// MySQL
 			$dateExpr = "DATE_FORMAT(created, '%Y-%m-%d %H')";
 		} else {
-				$dateExpr = "DATE_FORMAT(created, '%Y-%m-%d')";
+			$dateExpr = "DATE_FORMAT(created, '%Y-%m-%d')";
 		}
 
 		// Query grouped data
