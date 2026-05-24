@@ -21,7 +21,7 @@ foreach ($iterator as $file) {
 		$tableObject = (new ReflectionClass($class))->getProperty('table');
 		$tableName = $tableObject->getDefaultValue();
 
-	} catch (ReflectionException $e) {
+	} catch (ReflectionException) {
 		continue;
 	}
 

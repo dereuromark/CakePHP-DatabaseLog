@@ -47,7 +47,7 @@ class DatabaseLogController extends DatabaseLogAppController {
 		}
 		$stats = $this->DatabaseLogs->getStatsByPeriod($period);
 
-		$this->set(compact('typesWithCount', 'lastErrors', 'databaseType', 'databaseSize', 'stats', 'period'));
+		$this->set(['typesWithCount' => $typesWithCount, 'lastErrors' => $lastErrors, 'databaseType' => $databaseType, 'databaseSize' => $databaseSize, 'stats' => $stats, 'period' => $period]);
 	}
 
 }
