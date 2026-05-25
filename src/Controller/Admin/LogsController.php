@@ -68,7 +68,7 @@ class LogsController extends DatabaseLogAppController {
 		$logs = $this->paginate($query);
 		$types = $this->DatabaseLogs->getTypes();
 
-		$this->set(['logs' => $logs, 'types' => $types, 'currentType' => $currentType]);
+		$this->set(compact('logs', 'types', 'currentType'));
 	}
 
 	/**
