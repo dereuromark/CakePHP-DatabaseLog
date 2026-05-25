@@ -33,7 +33,7 @@ class DatabaseLog extends BaseLog {
 	 */
 	public function __construct($config = []) {
 		parent::__construct($config);
-		$model = !empty($config['model']) ? $config['model'] : 'DatabaseLog.DatabaseLogs';
+		$model = empty($config['model']) ? 'DatabaseLog.DatabaseLogs' : $config['model'];
 		/** @var \DatabaseLog\Model\Table\DatabaseLogsTable $Logs */
 		$Logs = TableRegistry::getTableLocator()->get($model);
 		$this->Logs = $Logs;

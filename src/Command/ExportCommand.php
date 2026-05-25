@@ -26,11 +26,7 @@ class ExportCommand extends Command {
 		parent::execute($args, $io);
 
 		$type = $args->getArgument('type');
-		if ($type) {
-			$types = Text::tokenize($type);
-		} else {
-			$types = $this->fetchTable('DatabaseLog.DatabaseLogs')->getTypes();
-		}
+		$types = $type ? Text::tokenize($type) : $this->fetchTable('DatabaseLog.DatabaseLogs')->getTypes();
 
 		$limit = (int)$args->getOption('limit') ?: 100;
 

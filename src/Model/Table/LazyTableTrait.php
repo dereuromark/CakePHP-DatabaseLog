@@ -96,10 +96,8 @@ trait LazyTableTrait {
 			}
 		} catch (PDOException $e) {
 			if (str_contains($e->getMessage(), 'unable to open')) {
-				throw new RuntimeException(
-					'Could not create a SQLite database. '
-					. 'Ensure that your webserver has write access to the database file and folder it is in.',
-				);
+				throw new RuntimeException('Could not create a SQLite database. '
+					. 'Ensure that your webserver has write access to the database file and folder it is in.', 0, $e);
 			}
 
 			throw $e;

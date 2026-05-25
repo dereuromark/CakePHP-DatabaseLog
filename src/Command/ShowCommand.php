@@ -32,7 +32,7 @@ class ShowCommand extends Command {
 			$errorType = (string)$args->getOption('test-entry');
 			$context = [];
 			$scope = null;
-			if (strpos($errorType, ':') !== false) {
+			if (str_contains($errorType, ':')) {
 				[$errorType, $scope] = explode(':', $errorType, 2);
 				$context['scope'] = $scope;
 			}
@@ -75,7 +75,7 @@ class ShowCommand extends Command {
 
 		foreach ($logs as $log) {
 			$content = $log->created . ': ' . $log->type;
-			$pieces = explode("\n", trim($log->message), 2);
+			$pieces = explode("\n", trim((string)$log->message), 2);
 			$shortMessage = Text::truncate(trim($pieces[0]), 100);
 			$content .= ' - ' . $shortMessage;
 

@@ -253,24 +253,14 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 
 		// Build date expression based on database driver
 		if (str_contains($driverClass, 'Sqlite')) {
-			if ($period === '24h') {
-				$dateExpr = "strftime('%Y-%m-%d %H', created)";
-			} else {
-				$dateExpr = "strftime('%Y-%m-%d', created)";
-			}
+			$dateExpr = $period === '24h' ? "strftime('%Y-%m-%d %H', created)" : "strftime('%Y-%m-%d', created)";
 		} elseif (str_contains($driverClass, 'Postgres')) {
-			if ($period === '24h') {
-				$dateExpr = "to_char(created, 'YYYY-MM-DD HH24')";
-			} else {
-				$dateExpr = "to_char(created, 'YYYY-MM-DD')";
-			}
-		} else {
+			$dateExpr = $period === '24h' ? "to_char(created, 'YYYY-MM-DD HH24')" : "to_char(created, 'YYYY-MM-DD')";
+		} elseif ($period === '24h') {
 			// MySQL
-			if ($period === '24h') {
-				$dateExpr = "DATE_FORMAT(created, '%Y-%m-%d %H')";
-			} else {
-				$dateExpr = "DATE_FORMAT(created, '%Y-%m-%d')";
-			}
+			$dateExpr = "DATE_FORMAT(created, '%Y-%m-%d %H')";
+		} else {
+			$dateExpr = "DATE_FORMAT(created, '%Y-%m-%d')";
 		}
 
 		// Query grouped data
@@ -344,7 +334,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 		$logs = $query->find('all', ...$options)->disableHydration()->toArray();
 
 		$count = 0;
-		foreach ($logs as $key => $log) {
+		foreach ($logs as $log) {
 			if ($log['count'] <= 1) {
 				continue;
 			}
@@ -471,9 +461,8 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 		if ($log->refer) {
 			$content .= ' - Referer: ' . $log->refer;
 		}
-		$content .= PHP_EOL . $log->message . PHP_EOL;
 
-		return $content;
+		return $content . (PHP_EOL . $log->message . PHP_EOL);
 	}
 
 	/**
@@ -483,7 +472,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 		$config = $this->getConnection()->config();
 		$type = $config['driver'];
 
-		return substr($type, strrpos($type, '\\') + 1);
+		return substr((string)$type, strrpos((string)$type, '\\') + 1);
 	}
 
 	/**

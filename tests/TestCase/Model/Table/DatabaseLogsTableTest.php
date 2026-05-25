@@ -95,7 +95,7 @@ class DatabaseLogsTableTest extends TestCase {
 		$log = $this->Logs->find()->orderByDesc('id')->firstOrFail();
 
 		$this->assertNotEmpty($log->message);
-		$this->assertSame(255, mb_strlen($log->summary));
+		$this->assertSame(255, mb_strlen((string)$log->summary));
 	}
 
 	/**
