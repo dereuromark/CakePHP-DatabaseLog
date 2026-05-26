@@ -179,6 +179,29 @@ $nonceAttr = $cspNonce !== '' ? ' nonce="' . h($cspNonce) . '"' : '';
 			color: var(--dblog-secondary);
 		}
 
+		.table-dblog thead th a {
+			color: inherit;
+			display: inline-flex;
+			align-items: center;
+			gap: 0.35rem;
+			text-decoration: none;
+		}
+
+		.table-dblog thead th a.asc,
+		.table-dblog thead th a.desc {
+			color: var(--dblog-dark);
+		}
+
+		.table-dblog thead th a.asc::after {
+			content: "\2191";
+			font-size: 0.875em;
+		}
+
+		.table-dblog thead th a.desc::after {
+			content: "\2193";
+			font-size: 0.875em;
+		}
+
 		.table-dblog tbody tr:hover {
 			background-color: rgba(13, 110, 253, 0.05);
 		}
