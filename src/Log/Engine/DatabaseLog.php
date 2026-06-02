@@ -47,7 +47,7 @@ class DatabaseLog extends BaseLog {
 	 * @param array<mixed> $context
 	 * @return void
 	 */
-	public function log($level, string|Stringable $message, array $context = []): void {
+	public function log($level, Stringable|string $message, array $context = []): void {
 		if ($this->getConfig('type')) {
 			$level = $this->getConfig('type');
 		} elseif ($this->getConfig('file')) {
