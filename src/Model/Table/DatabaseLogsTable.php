@@ -88,7 +88,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	public function log($level, $message, array $context = []) {
 		$message = trim($message);
 		$summary = Text::truncate($message, 255);
-		$context = json_encode($context, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?: '';
+		$context = json_encode($context, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) ?: '';
 
 		if (mb_strlen($message) > 65535) {
 			$message = mb_substr($message, 0, 65535);
