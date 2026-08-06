@@ -16,6 +16,7 @@ use Cake\TestSuite\TestCase;
 use Cake\View\View;
 use DatabaseLog\Log\Engine\DatabaseLog;
 use DatabaseLog\Model\Table\DatabaseLogsTable;
+use TestApp\Log\Engine\RejectingDatabaseLog;
 use TestApp\Log\Engine\UnreachableDatabaseLog;
 
 class DatabaseLogTest extends TestCase {
@@ -107,6 +108,23 @@ class DatabaseLogTest extends TestCase {
 		$this->assertSame('error', $engine->fallbacks[0][0]);
 		$this->assertSame('the original problem', $engine->fallbacks[0][1]);
 		$this->assertStringContainsString('Connection refused', $engine->fallbacks[0][2]);
+	}
+
+	/**
+	 * The table reports a rejected save as false rather than throwing, so an entry dropped by
+	 * validation would otherwise vanish just as quietly as a failed write.
+	 *
+	 * @return void
+	 */
+	public function testLogFallsBackWhenTheRowIsRejected() {
+		$engine = new RejectingDatabaseLog();
+
+		$engine->log('error', 'the original problem');
+
+		$this->assertCount(1, $engine->fallbacks);
+		$this->assertSame('error', $engine->fallbacks[0][0]);
+		$this->assertSame('the original problem', $engine->fallbacks[0][1]);
+		$this->assertSame('the row was rejected', $engine->fallbacks[0][2]);
 	}
 
 	/**

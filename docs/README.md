@@ -297,7 +297,7 @@ The log engine never throws. If the write fails for any reason - the database is
 connection is misconfigured, the table is missing - the entry goes to PHP's `error_log()` instead,
 prefixed so you can find it:
 
-```
+```text
 [DatabaseLog fallback][error] the original message | could not write to database: SQLSTATE[HY000] [2002] Connection refused
 ```
 
