@@ -271,7 +271,9 @@ If disabled, it will at least still be able to filter by error type.
 For convenience the plugin can create its `database_logs` table on the fly, the first time the
 table class is instantiated. **This happens in `debug` mode only.** In production you are expected
 to have run the migration:
-
+```
+bin/cake migrations migrate -p DatabaseLog
+```
 
 The `DatabaseLog.disableAutoTable` config key overrides the default in both directions:
 

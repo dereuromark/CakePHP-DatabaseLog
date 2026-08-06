@@ -35,12 +35,21 @@ class DatabaseLogsTableTest extends TestCase {
 	];
 
 	/**
+	 * @var array<string, mixed>
+	 */
+	protected array $configBackup = [];
+
+	/**
 	 * Setup
 	 *
 	 * @return void
 	 */
 	public function setUp(): void {
 		parent::setUp();
+
+		foreach (['debug', 'DatabaseLog.disableAutoTable'] as $key) {
+			$this->configBackup[$key] = Configure::check($key) ? Configure::read($key) : null;
+		}
 
 		$this->Logs = $this->fetchTable('DatabaseLog.DatabaseLogs');
 		$this->Logs->truncate();
@@ -50,8 +59,15 @@ class DatabaseLogsTableTest extends TestCase {
 	 * @return void
 	 */
 	public function tearDown(): void {
-		Configure::write('debug', true);
-		Configure::delete('DatabaseLog.disableAutoTable');
+		foreach ($this->configBackup as $key => $value) {
+			if ($value === null) {
+				Configure::delete($key);
+
+				continue;
+			}
+
+			Configure::write($key, $value);
+		}
 
 		parent::tearDown();
 	}
