@@ -13,7 +13,6 @@ namespace TestApp\Log\Engine;
 use DatabaseLog\Log\Engine\DatabaseLog;
 use RuntimeException;
 use Stringable;
-use Throwable;
 
 /**
  * Stands in for a log engine whose database cannot be reached, and records what the fallback
@@ -36,11 +35,11 @@ class UnreachableDatabaseLog extends DatabaseLog {
 	/**
 	 * @param string $level
 	 * @param \Stringable|string $message
-	 * @param \Throwable $exception
+	 * @param string $reason
 	 * @return void
 	 */
-	protected function fallback(string $level, Stringable|string $message, Throwable $exception): void {
-		$this->fallbacks[] = [$level, (string)$message, $exception->getMessage()];
+	protected function fallback(string $level, Stringable|string $message, string $reason): void {
+		$this->fallbacks[] = [$level, (string)$message, $reason];
 	}
 
 }

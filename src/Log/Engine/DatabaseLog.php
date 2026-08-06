@@ -54,9 +54,13 @@ class DatabaseLog extends BaseLog {
 		}
 
 		try {
-			$this->getLogsTable()->log($level, $message, $context);
+			// The table reports a rejected save as false rather than throwing, so an entry
+			// dropped by validation would otherwise vanish just as quietly as a failed write.
+			if ($this->getLogsTable()->log($level, $message, $context) === false) {
+				$this->fallback((string)$level, $message, 'the row was rejected');
+			}
 		} catch (Throwable $e) {
-			$this->fallback((string)$level, $message, $e);
+			$this->fallback((string)$level, $message, $e->getMessage());
 		}
 	}
 
@@ -76,19 +80,19 @@ class DatabaseLog extends BaseLog {
 	}
 
 	/**
-	 * Last resort when the database is not writable.
+	 * Last resort when the entry could not be stored.
 	 *
 	 * @param string $level
 	 * @param \Stringable|string $message
-	 * @param \Throwable $exception
+	 * @param string $reason
 	 * @return void
 	 */
-	protected function fallback(string $level, Stringable|string $message, Throwable $exception): void {
+	protected function fallback(string $level, Stringable|string $message, string $reason): void {
 		error_log(sprintf(
 			'[DatabaseLog fallback][%s] %s | could not write to database: %s',
 			$level,
 			(string)$message,
-			$exception->getMessage(),
+			$reason,
 		));
 	}
 
