@@ -11,7 +11,11 @@
 namespace DatabaseLog\Test\TestCase\Model\Table;
 
 use Cake\Cache\Cache;
+use Cake\Core\Configure;
 use Cake\TestSuite\TestCase;
+use Closure;
+use DatabaseLog\Model\Table\DatabaseLogsTable;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * @coversDefaultClass \DatabaseLog\Model\Table\DatabaseLogsTable
@@ -40,6 +44,16 @@ class DatabaseLogsTableTest extends TestCase {
 
 		$this->Logs = $this->fetchTable('DatabaseLog.DatabaseLogs');
 		$this->Logs->truncate();
+	}
+
+	/**
+	 * @return void
+	 */
+	public function tearDown(): void {
+		Configure::write('debug', true);
+		Configure::delete('DatabaseLog.disableAutoTable');
+
+		parent::tearDown();
 	}
 
 	/**
@@ -180,6 +194,41 @@ class DatabaseLogsTableTest extends TestCase {
 
 		$resAfter = $this->Logs->find()->count();
 		$this->assertSame($resBefore - 1, $resAfter, 'Res after is ' . $resAfter . ' but expected ' . ($resBefore - 1));
+	}
+
+	/**
+	 * Auto-creation of the logs table defaults to debug mode only, and the explicit
+	 * `disableAutoTable` config wins in both directions.
+	 *
+	 * @param bool $debug
+	 * @param bool|null $disableAutoTable
+	 * @param bool $expected
+	 * @return void
+	 */
+	#[DataProvider('autoTableProvider')]
+	public function testIsAutoTableEnabled(bool $debug, ?bool $disableAutoTable, bool $expected) {
+		Configure::write('debug', $debug);
+		Configure::write('DatabaseLog.disableAutoTable', $disableAutoTable);
+
+		$result = Closure::bind(
+			fn () => $this->isAutoTableEnabled(),
+			$this->Logs,
+			DatabaseLogsTable::class,
+		)();
+
+		$this->assertSame($expected, $result);
+	}
+
+	/**
+	 * @return array<string, array{bool, bool|null, bool}>
+	 */
+	public static function autoTableProvider(): array {
+		return [
+			'debug on, not configured' => [true, null, true],
+			'debug off, not configured' => [false, null, false],
+			'debug off, explicitly enabled' => [false, false, true],
+			'debug on, explicitly disabled' => [true, true, false],
+		];
 	}
 
 }

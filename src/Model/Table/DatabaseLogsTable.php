@@ -65,8 +65,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 			]);
 		}
 
-		$callback = Configure::read('DatabaseLog.disableAutoTable');
-		if ($callback !== true) {
+		if ($this->isAutoTableEnabled()) {
 			$this->ensureTables(['DatabaseLog.DatabaseLogs']);
 		}
 
@@ -75,6 +74,31 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 			return;
 		}
 		$this->getEventManager()->on('DatabaseLog.alert', $callback);
+	}
+
+	/**
+	 * Whether the logs table may be created lazily at runtime.
+	 *
+	 * Defaults to `debug` mode only. Auto-creation issues a `listTables()` call on every
+	 * instantiation of this table, and that goes through the connection's schema cache. If
+	 * the cache engine backing `_cake_model_` is unreachable, the engine logs its own
+	 * connection failure, which builds this log engine, which instantiates this table, which
+	 * asks for the schema cache again - an unbounded recursion that only ends when the
+	 * process runs out of memory. Restricting auto-creation to debug mode keeps that path out
+	 * of production entirely.
+	 *
+	 * `DatabaseLog.disableAutoTable` still wins when set explicitly: `true` forces it off,
+	 * `false` forces it on regardless of debug mode.
+	 *
+	 * @return bool
+	 */
+	protected function isAutoTableEnabled(): bool {
+		$disabled = Configure::read('DatabaseLog.disableAutoTable');
+		if ($disabled !== null) {
+			return !$disabled;
+		}
+
+		return (bool)Configure::read('debug');
 	}
 
 	/**

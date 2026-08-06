@@ -75,7 +75,9 @@ return [
 
 			$databaseLog->message .= PHP_EOL . 'Language: ' . $currentSessionLanguage;
 		},
-		'disableAutoTable' => null, // Set to true to avoid lazy auto logs table creation
+		// Lazy auto-creation of the logs table. null (default) enables it in debug mode only.
+		// Set to true to disable it everywhere, false to force it on also in production.
+		'disableAutoTable' => null,
 		'isSearchEnabled' => null, // Auto-detect
 		'notificationInterval' => 4 * HOUR, // In seconds
 
