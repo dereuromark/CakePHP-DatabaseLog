@@ -30,14 +30,26 @@ use RuntimeException;
 trait LazyTableTrait {
 
 	/**
+	 * Whether a schema lookup is currently in flight, see ensureTables().
+	 *
 	 * @var bool
 	 */
-	protected static $invoked = false;
+	protected static bool $ensuring = false;
 
 	/**
 	 * Ensures the tables for the given fixtures exist in the schema.
 	 *
 	 * If the tables do not exist, they will be created on the current model's connection.
+	 *
+	 * Reentrant calls return without doing anything. Looking up the schema goes through the
+	 * connection's metadata cache, and a cache engine that cannot reach its backend logs that
+	 * failure - which builds the log engine, which instantiates this table, which lands back
+	 * here. The table is not in the ORM locator yet at that point (the locator only stores the
+	 * instance once the constructor has returned), so nothing else stops the cycle. Without
+	 * this guard it repeats until the process hits its memory limit.
+	 *
+	 * The flag tracks "currently inside a lookup" rather than "has run once", so a failed run
+	 * is still retried on the next call and a table dropped at runtime is still recreated.
 	 *
 	 * @param array<string> $tableNames The table names to check and/or insert.
 	 *
@@ -45,6 +57,25 @@ trait LazyTableTrait {
 	 * @return void
 	 */
 	public function ensureTables(array $tableNames) {
+		if (static::$ensuring) {
+			return;
+		}
+
+		static::$ensuring = true;
+		try {
+			$this->ensureTablesInternal($tableNames);
+		} finally {
+			static::$ensuring = false;
+		}
+	}
+
+	/**
+	 * @param array<string> $tableNames The table names to check and/or insert.
+	 *
+	 * @throws \RuntimeException When fixtures are missing/unknown/fail.
+	 * @return void
+	 */
+	protected function ensureTablesInternal(array $tableNames): void {
 		/** @var \Cake\Database\Connection $connection */
 		$connection = $this->getConnection();
 		$schema = $connection->getSchemaCollection();
