@@ -18,6 +18,12 @@ or restore the old behavior explicitly:
 See [Auto-creation of the logs table](README.md#auto-creation-of-the-logs-table) for why the
 default changed.
 
+Also for v4.7+, the log engine no longer throws. A write that cannot reach the database goes to
+PHP's `error_log()` instead of raising out of `Log::write()` into the calling code. If you were
+relying on a failed log write surfacing as an exception, it will now show up in the process error
+log prefixed with `[DatabaseLog fallback]`. See
+[When the database is not writable](README.md#when-the-database-is-not-writable).
+
 For v4.1+, the `datasource` key has been renamed to `connection` to be consistent
 with naming conventions in general here.
 

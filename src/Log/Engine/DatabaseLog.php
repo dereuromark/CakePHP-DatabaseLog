@@ -13,6 +13,7 @@ namespace DatabaseLog\Log\Engine;
 use Cake\Log\Engine\BaseLog;
 use Cake\ORM\TableRegistry;
 use Stringable;
+use Throwable;
 
 /**
  * DatabaseLog Engine
@@ -22,25 +23,23 @@ class DatabaseLog extends BaseLog {
 	/**
 	 * Model object
 	 *
-	 * @var \DatabaseLog\Model\Table\DatabaseLogsTable
+	 * Resolved on first write rather than in the constructor, so that an unreachable database
+	 * cannot make constructing the log engine fail. Log engines get built lazily from inside
+	 * arbitrary code paths, including ones that are themselves reporting a failure.
+	 *
+	 * Deliberately not natively typed: the `model` config may point at any table that exposes a
+	 * compatible `log()` method, and it does not have to extend DatabaseLogsTable.
+	 *
+	 * @var \DatabaseLog\Model\Table\DatabaseLogsTable|null
 	 */
 	public $Logs;
 
 	/**
-	 * Construct the model class
-	 *
-	 * @param array<string, mixed> $config
-	 */
-	public function __construct($config = []) {
-		parent::__construct($config);
-		$model = empty($config['model']) ? 'DatabaseLog.DatabaseLogs' : $config['model'];
-		/** @var \DatabaseLog\Model\Table\DatabaseLogsTable $Logs */
-		$Logs = TableRegistry::getTableLocator()->get($model);
-		$this->Logs = $Logs;
-	}
-
-	/**
 	 * Write the log to database
+	 *
+	 * Never throws. A logger that can take the application down turns any outage into a larger
+	 * one, and the caller of `Log::error()` has no way to handle it. When the write cannot
+	 * happen the entry goes to `error_log()` instead, so the information is not lost.
 	 *
 	 * @param string $level
 	 * @param \Stringable|string $message
@@ -54,7 +53,43 @@ class DatabaseLog extends BaseLog {
 			$level = $this->getConfig('file');
 		}
 
-		$this->Logs->log($level, $message, $context);
+		try {
+			$this->getLogsTable()->log($level, $message, $context);
+		} catch (Throwable $e) {
+			$this->fallback((string)$level, $message, $e);
+		}
+	}
+
+	/**
+	 * @return \DatabaseLog\Model\Table\DatabaseLogsTable
+	 */
+	protected function getLogsTable() {
+		if ($this->Logs !== null) {
+			return $this->Logs;
+		}
+
+		$model = $this->getConfig('model') ?: 'DatabaseLog.DatabaseLogs';
+		/** @var \DatabaseLog\Model\Table\DatabaseLogsTable $Logs */
+		$Logs = TableRegistry::getTableLocator()->get($model);
+
+		return $this->Logs = $Logs;
+	}
+
+	/**
+	 * Last resort when the database is not writable.
+	 *
+	 * @param string $level
+	 * @param \Stringable|string $message
+	 * @param \Throwable $exception
+	 * @return void
+	 */
+	protected function fallback(string $level, Stringable|string $message, Throwable $exception): void {
+		error_log(sprintf(
+			'[DatabaseLog fallback][%s] %s | could not write to database: %s',
+			$level,
+			(string)$message,
+			$exception->getMessage(),
+		));
 	}
 
 }

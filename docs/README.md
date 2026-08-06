@@ -291,6 +291,24 @@ The result is an unbounded recursion that stops only when the process exhausts i
 turning a cache outage into an application outage. Keeping the schema lookup out of the production
 logging path removes that cycle.
 
+## When the database is not writable
+
+The log engine never throws. If the write fails for any reason - the database is down, the
+connection is misconfigured, the table is missing - the entry goes to PHP's `error_log()` instead,
+prefixed so you can find it:
+
+```
+[DatabaseLog fallback][error] the original message | could not write to database: SQLSTATE[HY000] [2002] Connection refused
+```
+
+Where that ends up depends on your `error_log` ini setting: the web server's error log under
+mod_php/FPM, or stderr under most CLI and container setups.
+
+This matters because the caller has no way to handle a logging failure. Code that calls
+`Log::error()` is usually already reporting a problem, and if the logger throws there, a
+recoverable situation becomes a fatal one. The database connection is also resolved on the first
+write rather than while constructing the engine, so building the engine cannot fail either.
+
 ## Tips
 
 ### 404 logs should not be part of your error log.
