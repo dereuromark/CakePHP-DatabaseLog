@@ -266,6 +266,31 @@ Now you can see all those in a specific new type category in your backend (proba
 This is auto-detected based on [Search](https://github.com/FriendsOfCake/search) plugin being available/loaded if not disabled.
 If disabled, it will at least still be able to filter by error type.
 
+## Auto-creation of the logs table
+
+For convenience the plugin can create its `database_logs` table on the fly, the first time the
+table class is instantiated. **This happens in `debug` mode only.** In production you are expected
+to have run the migration:
+```
+bin/cake migrations migrate -p DatabaseLog
+```
+
+The `DatabaseLog.disableAutoTable` config key overrides the default in both directions:
+
+| Value | Behavior |
+|---|---|
+| `null` (default) | Auto-create in debug mode, never in production |
+| `true` | Never auto-create |
+| `false` | Always auto-create, including production |
+
+Auto-creation is off in production on purpose. Each instantiation of the table triggers a
+`listTables()` call, which goes through the connection's schema cache. If the cache engine backing
+`_cake_model_` (Redis, Memcached) is unreachable, that engine logs its own connection failure -
+which builds this log engine, which instantiates this table, which asks for the schema cache again.
+The result is an unbounded recursion that stops only when the process exhausts its memory limit,
+turning a cache outage into an application outage. Keeping the schema lookup out of the production
+logging path removes that cycle.
+
 ## Tips
 
 ### 404 logs should not be part of your error log.
