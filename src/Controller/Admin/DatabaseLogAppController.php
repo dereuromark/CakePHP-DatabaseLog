@@ -136,7 +136,7 @@ class DatabaseLogAppController extends AppController {
 		if ($this->components()->has('Authorization') && method_exists($this->components()->get('Authorization'), 'skipAuthorization')) {
 			$this->components()->get('Authorization')->skipAuthorization();
 		} else {
-			if (is_object($authorization) && is_callable([$authorization, 'skipAuthorization'])) {
+			if (is_callable([$authorization, 'skipAuthorization'])) {
 				$authorization->skipAuthorization();
 			}
 		}
