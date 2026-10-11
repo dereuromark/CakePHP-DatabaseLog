@@ -41,3 +41,9 @@ Cleanup preserves the counts of previously merged rows and counts legacy zero-co
 ### Monitor delivery
 
 Monitoring records its query boundary before notification delivery, preserving entries created during the callback at or after that boundary. The next run includes entries on that second boundary, so a boundary entry may appear in two notifications. See [monitoring](../reference/monitoring) for delayed-commit limitations.
+
+## Cleanup method contracts prepared for CakePHP 6
+
+The `cake6` development work adds native declarations to `removeDuplicates(bool $strict = false): int` and `garbageCollector(): int`. Pass an actual boolean to `removeDuplicates()`, including from files with strict types enabled. Null and other non-boolean inputs are not part of that future contract.
+
+CakePHP 5 retains the released method declarations. This preparation still uses CakePHP 5 dependencies for verification and does not promise CakePHP 6 runtime support.
