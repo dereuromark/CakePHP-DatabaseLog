@@ -6,10 +6,10 @@ use Cake\Console\TestSuite\ConsoleIntegrationTestTrait;
 use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
+use DatabaseLog\Command\ExportCommand;
+use PHPUnit\Framework\Attributes\UsesClass;
 
-/**
- * @uses \DatabaseLog\Command\ShowCommand
- */
+#[UsesClass(ExportCommand::class)]
 class ExportCommandTest extends TestCase {
 
 	use ConsoleIntegrationTestTrait;

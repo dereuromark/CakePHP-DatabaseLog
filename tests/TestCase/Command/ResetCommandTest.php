@@ -6,10 +6,10 @@ use Cake\Console\TestSuite\ConsoleIntegrationTestTrait;
 use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
+use DatabaseLog\Command\ResetCommand;
+use PHPUnit\Framework\Attributes\UsesClass;
 
-/**
- * @uses \DatabaseLog\Command\MonitorCommand
- */
+#[UsesClass(ResetCommand::class)]
 class ResetCommandTest extends TestCase {
 
 	use ConsoleIntegrationTestTrait;

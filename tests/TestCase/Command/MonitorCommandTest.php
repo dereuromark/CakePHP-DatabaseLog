@@ -7,10 +7,10 @@ use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
+use DatabaseLog\Command\MonitorCommand;
+use PHPUnit\Framework\Attributes\UsesClass;
 
-/**
- * @uses \DatabaseLog\Command\MonitorCommand
- */
+#[UsesClass(MonitorCommand::class)]
 class MonitorCommandTest extends TestCase {
 
 	use ConsoleIntegrationTestTrait;

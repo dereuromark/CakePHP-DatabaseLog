@@ -7,10 +7,10 @@ use Cake\Core\Configure;
 use Cake\Log\Log;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
+use DatabaseLog\Command\CleanupCommand;
+use PHPUnit\Framework\Attributes\UsesClass;
 
-/**
- * @uses \DatabaseLog\Command\MonitorCommand
- */
+#[UsesClass(CleanupCommand::class)]
 class CleanupCommandTest extends TestCase {
 
 	use ConsoleIntegrationTestTrait;

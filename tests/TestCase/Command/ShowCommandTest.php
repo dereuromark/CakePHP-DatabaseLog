@@ -5,10 +5,10 @@ namespace DatabaseLog\Test\TestCase\Command;
 use Cake\Console\TestSuite\ConsoleIntegrationTestTrait;
 use Cake\Log\Log;
 use Cake\TestSuite\TestCase;
+use DatabaseLog\Command\ShowCommand;
+use PHPUnit\Framework\Attributes\UsesClass;
 
-/**
- * @uses \DatabaseLog\Command\ShowCommand
- */
+#[UsesClass(ShowCommand::class)]
 class ShowCommandTest extends TestCase {
 
 	use ConsoleIntegrationTestTrait;

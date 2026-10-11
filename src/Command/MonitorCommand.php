@@ -55,7 +55,7 @@ class MonitorCommand extends Command {
 
 		$checkedAt = time();
 		$query = $this->fetchTable('DatabaseLog.DatabaseLogs')->find()
-			->where(['type IN' => $types, 'created <=' => date('Y-m-d H:i:s', $checkedAt)]);
+			->where(['type IN' => $types, 'created <' => date('Y-m-d H:i:s', $checkedAt + 1)]);
 		if ($time) {
 			$query->andWhere(['created >=' => date('Y-m-d H:i:s', $time)]);
 		}

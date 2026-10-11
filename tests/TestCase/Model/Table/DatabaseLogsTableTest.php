@@ -15,11 +15,10 @@ use Cake\Core\Configure;
 use Cake\TestSuite\TestCase;
 use Closure;
 use DatabaseLog\Model\Table\DatabaseLogsTable;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * @coversDefaultClass \DatabaseLog\Model\Table\DatabaseLogsTable
- */
+#[CoversClass(DatabaseLogsTable::class)]
 class DatabaseLogsTableTest extends TestCase {
 
 	/**
@@ -131,7 +130,6 @@ class DatabaseLogsTableTest extends TestCase {
 	/**
 	 * Tests the textSearch method
 	 *
-	 * @covers ::textSearch
 	 * @return void
 	 */
 	public function testTextSearch() {
@@ -145,7 +143,6 @@ class DatabaseLogsTableTest extends TestCase {
 	/**
 	 * Tests the getTypes method
 	 *
-	 * @covers ::getTypes
 	 * @return void
 	 */
 	public function testGetTypes() {
@@ -178,7 +175,6 @@ class DatabaseLogsTableTest extends TestCase {
 	/**
 	 * Tests the removeDuplicates method
 	 *
-	 * @covers ::removeDuplicates
 	 * @return void
 	 */
 	public function testRemoveDuplicates() {

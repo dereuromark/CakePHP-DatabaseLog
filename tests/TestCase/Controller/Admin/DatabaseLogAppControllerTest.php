@@ -7,11 +7,11 @@ use Cake\Core\Configure;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
+use DatabaseLog\Controller\Admin\DatabaseLogAppController;
+use PHPUnit\Framework\Attributes\UsesClass;
 use RuntimeException;
 
-/**
- * @uses \DatabaseLog\Controller\Admin\DatabaseLogAppController
- */
+#[UsesClass(DatabaseLogAppController::class)]
 class DatabaseLogAppControllerTest extends TestCase {
 
 	use IntegrationTestTrait;
