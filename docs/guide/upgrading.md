@@ -52,4 +52,4 @@ Monitoring records its query boundary before notification delivery, preserving e
 
 The `cake6` development work adds native declarations to `removeDuplicates(bool $strict = false): int` and `garbageCollector(): int`. Pass an actual boolean to `removeDuplicates()`, including from files with strict types enabled. Null and other non-boolean inputs are not part of that future contract.
 
-CakePHP 5 retains the released method declarations. This preparation still uses CakePHP 5 dependencies for verification and does not promise CakePHP 6 runtime support.
+CakePHP 5 retains the released method declarations. The `cake6` branch verifies these methods against CakePHP 6 dependencies.

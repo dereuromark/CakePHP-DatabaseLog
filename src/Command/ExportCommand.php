@@ -36,7 +36,7 @@ class ExportCommand extends DatabaseLogCommand {
 
 			$query = $this->logs()->find();
 
-				$logs = $query->where(['type' => $type])
+			$logs = $query->where(['type' => $type])
 				->limit($limit)
 				->orderBy(['created' => 'DESC'])
 				->all();
