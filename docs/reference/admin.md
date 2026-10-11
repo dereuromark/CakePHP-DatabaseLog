@@ -60,6 +60,6 @@ The plugin uses core helpers unless Tools is loaded, in which case it selects th
 
 ## Type labels
 
-`DatabaseLog.typeMap` maps types to CSS classes, and `typeDefaultClass` defaults to `secondary`. The default mapping uses `danger` for `error` and `cli-error`, `warning` for `warning` and `notice`, and `info` for `info`.
+`DatabaseLog.typeMap` merges custom mappings into the default map, and `typeDefaultClass` defaults to `secondary`. The default mapping uses `danger` for `error` and `cli-error`, `warning` for `warning` and `notice`, and `info` for `info`.
 
-`typeTemplate` defaults to `<span class="badge badge-%s bg-%s">%s</span>`. Its placeholders receive the CSS class twice and the escaped type. Set `typeMap = false` to render only the escaped type text.
+`typeTemplate` defaults to `<span class="badge badge-%s bg-%s">%s</span>`. Its placeholders receive the CSS class twice and the escaped type. Override individual mappings to change them; omitting a default key does not remove it. Set `typeMap = false` to render only the escaped type text.

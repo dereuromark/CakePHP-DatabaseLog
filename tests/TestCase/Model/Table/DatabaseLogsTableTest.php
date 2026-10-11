@@ -263,4 +263,19 @@ class DatabaseLogsTableTest extends TestCase {
 		$this->assertSame(8, $this->Logs->find()->firstOrFail()->count);
 	}
 
+	public function testRemoveDuplicatesCountsLegacyZeroCountRows(): void {
+		$this->Logs->deleteAll([]);
+		foreach (range(1, 2) as $index) {
+			$this->Logs->saveOrFail($this->Logs->newEntity([
+				'type' => 'error',
+				'summary' => 'Legacy message',
+				'message' => 'Legacy message',
+				'count' => 0,
+			]));
+		}
+
+		$this->assertSame(1, $this->Logs->removeDuplicates());
+		$this->assertSame(2, $this->Logs->find()->firstOrFail()->count);
+	}
+
 }

@@ -11,12 +11,12 @@ Replace the `debug` and `error` entries in your existing `Log` configuration in 
     'debug' => [
         'className' => 'DatabaseLog.Database',
         'levels' => ['notice', 'info', 'debug'],
-        'scopes' => [],
+        'scopes' => null,
     ],
     'error' => [
         'className' => 'DatabaseLog.Database',
         'levels' => ['warning', 'error', 'critical', 'alert', 'emergency'],
-        'scopes' => [],
+        'scopes' => null,
     ],
 ],
 ```

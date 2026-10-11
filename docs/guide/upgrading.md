@@ -24,4 +24,12 @@ Set `DatabaseLog.adminAccess` to a closure returning the boolean `true` for perm
 
 ## Duplicate counts
 
-Cleanup preserves the counts of previously merged rows. Its output reports duplicate groups merged rather than claiming that each group represents a single removed row. Default grouping remains log type plus summary; use strict grouping from application code when complete messages must match.
+On the current branch, cleanup preserves the counts of previously merged rows. Its output reports duplicate groups merged rather than claiming that each group represents a single removed row. Default grouping remains log type plus summary; use strict grouping from application code when complete messages must match.
+
+## Custom table subclasses
+
+On the current branch, `removeDuplicates()` declares a boolean parameter and integer return type; `garbageCollector()` declares an integer return type. Update matching overrides in custom subclasses before upgrading.
+
+## Monitor delivery
+
+On the current branch, monitoring records its query boundary before notification delivery, preserving entries written while the callback runs. The next run includes entries on that second boundary, so a boundary entry may appear in two notifications.

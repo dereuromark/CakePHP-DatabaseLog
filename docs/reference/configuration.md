@@ -35,7 +35,7 @@ Runtime auto-creation uses schema inspection. Keeping it disabled in production 
 | `file` | Unset | Legacy type override, used only when `type` is empty. It does not create a file. |
 | `model` | `DatabaseLog.DatabaseLogs` | Table alias used for writes. A replacement must provide a compatible `log()` method. |
 
-Use `null` rather than the deprecated `false` value for unscoped-only logging. The engine stores the original message and JSON context; it does not interpolate context placeholders or apply file-log formatting and rotation settings.
+Use `null` rather than the deprecated `false` value for unscoped-only logging. Keep query logging disabled on the logging datasource, and avoid routing its query-log scope back to this engine: inserting a log must not create another log insert. The engine stores the original message and JSON context; it does not interpolate context placeholders or apply file-log formatting and rotation settings.
 
 For a custom category, add a separate engine:
 

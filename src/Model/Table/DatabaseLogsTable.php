@@ -359,7 +359,6 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 				continue;
 			}
 			$entries = $this->find('list', keyField: 'id', valueField: 'count')
-				->select(['id', 'count'])
 				->where(['type' => $log['type'], $field => $log[$field]])
 				->orderByDesc('created')
 				->orderByDesc('id')
@@ -374,7 +373,12 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 				$this->deleteAll(['id IN' => array_keys($entries)]);
 
 				return $this->updateAll(
-					['count' => new QueryExpression('count + ' . array_sum($entries))],
+					[
+						'count' => new QueryExpression(
+							'CASE WHEN count < 1 THEN 1 ELSE count END + '
+							. array_sum(array_map(static fn (int|string $occurrences): int => max(1, (int)$occurrences), $entries)),
+						),
+					],
 					['id' => $keep],
 				);
 			});

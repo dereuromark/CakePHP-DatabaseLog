@@ -82,6 +82,9 @@ return [
 		// Set to true to disable it everywhere, false to force it on also in production.
 		'disableAutoTable' => null,
 		'isSearchEnabled' => null, // Auto-detect
+		// 'typeMap' => ['error' => 'danger'], // Merges with default label mappings; false disables labels
+		// 'typeDefaultClass' => 'secondary',
+		// 'typeTemplate' => '<span class="badge badge-%s bg-%s">%s</span>',
 		'notificationInterval' => 14400, // Four hours, in seconds
 
 		// Cleanup options (used by CleanupCommand / garbageCollector)
