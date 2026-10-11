@@ -10,3 +10,5 @@ phpunit.xml.dist export-ignore
 tests/test_app export-ignore
 tests/bootstrap.php export-ignore
 .github/ export-ignore
+
+/docs/ export-ignore

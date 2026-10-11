@@ -20,10 +20,7 @@ use RuntimeException;
 /**
  * A set of methods for building a database table when it is missing.
  *
- * Because the debugkit doesn't come with a pre-built SQLite database,
- * we'll need to make it as we need it.
- *
- * This trait lets us dump fixture schema into a given database at runtime.
+ * Builds missing plugin tables from the schema configuration at runtime.
  *
  * @mixin \DatabaseLog\Model\Table\DatabaseLogsTable
  */

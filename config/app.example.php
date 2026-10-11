@@ -16,11 +16,11 @@ return [
 		'connection' => null, // Connection to use, 'default' will use your live DB instead of SQLite
 		// 'datasource' => null, // DEPRECATED fallback alias for 'connection'. Used only when 'connection' is empty. Use 'connection' instead. When both are empty, defaults to the 'database_log' connection.
 
-		// Backend routing (opt-in; defaults to /database-log for BC)
+		// Admin route mount (defaults to /database-log)
 		'routePath' => '/database-log', // Path segment mounted under /admin (e.g. '/logs' for /admin/logs)
 
 		// Admin dashboard options
-		'standalone' => false, // Set to true for isolated admin that doesn't depend on the host app
+		'standalone' => false, // Skip host controller initialization and lifecycle callbacks
 		'adminLayout' => null, // null = plugin layout, false = app layout, string = custom layout
 		'dashboardAutoRefresh' => 0, // Auto-refresh interval in seconds (0 = disabled)
 
@@ -63,11 +63,14 @@ return [
 				$content .= $logsTable->format($log);
 			}
 
+			// Replace these addresses and configure the application's mail transport.
 			$mailer = new Mailer();
-			$subject = count($logs) . ' new error log entries';
-			// TODO Implement
+			$mailer->setFrom('logs@example.com');
+			$mailer->setTo('admin@example.com');
+			$mailer->setSubject(count($logs) . ' new log entries');
+			$mailer->deliver($content);
 		},
-		'saveCallback' => function (DatabaseLog $databaseLog) {
+		'saveCallback' => function (DatabaseLog $databaseLog): void {
 			if (empty($_SESSION) || empty($_SESSION['language'])) {
 				return;
 			}
@@ -79,11 +82,14 @@ return [
 		// Set to true to disable it everywhere, false to force it on also in production.
 		'disableAutoTable' => null,
 		'isSearchEnabled' => null, // Auto-detect
-		'notificationInterval' => 4 * HOUR, // In seconds
+		// 'typeMap' => ['error' => 'danger'], // Merges with default label mappings; false disables labels
+		// 'typeDefaultClass' => 'secondary',
+		// 'typeTemplate' => '<span class="badge badge-%s bg-%s">%s</span>',
+		'notificationInterval' => 14400, // Four hours, in seconds
 
 		// Cleanup options (used by CleanupCommand / garbageCollector)
 		'maxLength' => null, // Global max age, e.g., '-90 days' (null = no limit)
-		'limit' => null, // Max number of logs to keep (null = no limit)
+		'limit' => null, // Max rows to keep (null uses the default limit of 999999)
 		'retention' => [ // Per-type retention policies (overrides maxLength for specific types)
 			// 'error' => '-90 days',   // Keep errors for 90 days
 			// 'warning' => '-30 days', // Keep warnings for 30 days

@@ -15,11 +15,10 @@ use Cake\Core\Configure;
 use Cake\TestSuite\TestCase;
 use Closure;
 use DatabaseLog\Model\Table\DatabaseLogsTable;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * @coversDefaultClass \DatabaseLog\Model\Table\DatabaseLogsTable
- */
+#[CoversClass(DatabaseLogsTable::class)]
 class DatabaseLogsTableTest extends TestCase {
 
 	/**
@@ -131,7 +130,6 @@ class DatabaseLogsTableTest extends TestCase {
 	/**
 	 * Tests the textSearch method
 	 *
-	 * @covers ::textSearch
 	 * @return void
 	 */
 	public function testTextSearch() {
@@ -145,7 +143,6 @@ class DatabaseLogsTableTest extends TestCase {
 	/**
 	 * Tests the getTypes method
 	 *
-	 * @covers ::getTypes
 	 * @return void
 	 */
 	public function testGetTypes() {
@@ -178,7 +175,6 @@ class DatabaseLogsTableTest extends TestCase {
 	/**
 	 * Tests the removeDuplicates method
 	 *
-	 * @covers ::removeDuplicates
 	 * @return void
 	 */
 	public function testRemoveDuplicates() {
@@ -245,6 +241,37 @@ class DatabaseLogsTableTest extends TestCase {
 			'debug off, explicitly enabled' => [false, false, true],
 			'debug on, explicitly disabled' => [true, true, false],
 		];
+	}
+
+	public function testRemoveDuplicatesPreservesPreviouslyMergedCounts(): void {
+		$this->Logs->deleteAll([]);
+		foreach ([3, 5] as $count) {
+			$this->Logs->saveOrFail($this->Logs->newEntity([
+				'type' => 'error',
+				'summary' => 'Repeated message',
+				'message' => 'Repeated message',
+				'count' => $count,
+			]));
+		}
+
+		$this->assertSame(1, $this->Logs->removeDuplicates());
+		$this->assertSame(1, $this->Logs->find()->count());
+		$this->assertSame(8, $this->Logs->find()->firstOrFail()->count);
+	}
+
+	public function testRemoveDuplicatesCountsLegacyZeroCountRows(): void {
+		$this->Logs->deleteAll([]);
+		foreach (range(1, 2) as $index) {
+			$this->Logs->saveOrFail($this->Logs->newEntity([
+				'type' => 'error',
+				'summary' => 'Legacy message',
+				'message' => 'Legacy message',
+				'count' => 0,
+			]));
+		}
+
+		$this->assertSame(1, $this->Logs->removeDuplicates());
+		$this->assertSame(2, $this->Logs->find()->firstOrFail()->count);
 	}
 
 }

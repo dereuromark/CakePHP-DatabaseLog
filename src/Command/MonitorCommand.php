@@ -53,10 +53,11 @@ class MonitorCommand extends Command {
 			$io->abort('No DatabaseLog.monitor types defined.');
 		}
 
+		$checkedAt = time();
 		$query = $this->fetchTable('DatabaseLog.DatabaseLogs')->find()
-			->where(['type IN' => $types]);
+			->where(['type IN' => $types, 'created <' => date('Y-m-d H:i:s', $checkedAt + 1)]);
 		if ($time) {
-			$query->andWhere(['created >' => date('Y-m-d H:i:s', $time)]);
+			$query->andWhere(['created >=' => date('Y-m-d H:i:s', $time)]);
 		}
 
 		/** @var array<\DatabaseLog\Model\Entity\DatabaseLog> $logs */
@@ -70,7 +71,7 @@ class MonitorCommand extends Command {
 		}
 
 		$this->fetchTable('DatabaseLog.DatabaseLogs')->notify($logs);
-		file_put_contents(LOGS . 'export', time());
+		file_put_contents(LOGS . 'export', $checkedAt);
 
 		$io->out(count($logs) . ' new log entries reported.');
 	}

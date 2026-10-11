@@ -13,10 +13,10 @@ namespace DatabaseLog\Test\TestCase\Controller;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
+use DatabaseLog\Controller\Admin\LogsController;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @coversDefaultClass \DatabaseLog\Controller\Admin\LogsController
- */
+#[CoversClass(LogsController::class)]
 class LogsControllerTest extends TestCase {
 
 	use IntegrationTestTrait;
