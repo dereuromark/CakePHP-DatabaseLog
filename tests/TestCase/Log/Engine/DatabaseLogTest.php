@@ -16,6 +16,8 @@ use Cake\TestSuite\TestCase;
 use Cake\View\View;
 use DatabaseLog\Log\Engine\DatabaseLog;
 use DatabaseLog\Model\Table\DatabaseLogsTable;
+use RuntimeException;
+use Stringable;
 use TestApp\Log\Engine\RejectingDatabaseLog;
 use TestApp\Log\Engine\UnreachableDatabaseLog;
 
@@ -165,6 +167,33 @@ class DatabaseLogTest extends TestCase {
 		$content = (string)file_get_contents($file);
 		$this->assertStringContainsString('[DatabaseLog fallback][error]', $content);
 		$this->assertStringContainsString('the original problem', $content);
+	}
+
+	public function testUnprintableMessageDoesNotEscapeFallback(): void {
+		$file = TMP . 'unprintable_log_fallback.log';
+		if (file_exists($file)) {
+			unlink($file);
+		}
+		$previous = ini_get('error_log');
+		ini_set('error_log', $file);
+		$message = new class implements Stringable {
+			public function __toString(): string {
+				throw new RuntimeException('Message conversion failed');
+			}
+		};
+
+		try {
+			(new DatabaseLog())->log('error', $message);
+			$content = (string)file_get_contents($file);
+			$this->assertStringContainsString('[DatabaseLog fallback][error]', $content);
+			$this->assertStringContainsString('[unprintable log message]', $content);
+			$this->assertStringContainsString('Message conversion failed', $content);
+		} finally {
+			ini_set('error_log', $previous === false ? '' : $previous);
+			if (file_exists($file)) {
+				unlink($file);
+			}
+		}
 	}
 
 }

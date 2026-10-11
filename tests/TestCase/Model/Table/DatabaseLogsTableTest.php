@@ -247,4 +247,20 @@ class DatabaseLogsTableTest extends TestCase {
 		];
 	}
 
+	public function testRemoveDuplicatesPreservesPreviouslyMergedCounts(): void {
+		$this->Logs->deleteAll([]);
+		foreach ([3, 5] as $count) {
+			$this->Logs->saveOrFail($this->Logs->newEntity([
+				'type' => 'error',
+				'summary' => 'Repeated message',
+				'message' => 'Repeated message',
+				'count' => $count,
+			]));
+		}
+
+		$this->assertSame(1, $this->Logs->removeDuplicates());
+		$this->assertSame(1, $this->Logs->find()->count());
+		$this->assertSame(8, $this->Logs->find()->firstOrFail()->count);
+	}
+
 }

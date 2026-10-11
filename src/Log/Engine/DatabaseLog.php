@@ -88,10 +88,17 @@ class DatabaseLog extends BaseLog {
 	 * @return void
 	 */
 	protected function fallback(string $level, Stringable|string $message, string $reason): void {
+		try {
+			$content = (string)$message;
+		} catch (Throwable $e) {
+			$content = '[unprintable log message]';
+			$reason .= '; message conversion failed: ' . $e->getMessage();
+		}
+
 		error_log(sprintf(
 			'[DatabaseLog fallback][%s] %s | could not write to database: %s',
 			$level,
-			(string)$message,
+			$content,
 			$reason,
 		));
 	}

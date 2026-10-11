@@ -344,45 +344,40 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	 * @param bool $strict
 	 * @return int
 	 */
-	public function removeDuplicates($strict = false) {
+	public function removeDuplicates(bool $strict = false): int {
 		$field = $strict ? 'message' : 'summary';
 
 		$query = $this->find();
-		$options = [
-			'fields' => ['type', $field, 'count' => $query->func()->count('*')],
-			'conditions' => [],
-			'group' => ['type', $field],
-			//'having' => $this->alias . '__count > 0',
-			//'order' => ['created' => 'DESC']
-		];
-		$logs = $query->find('all', ...$options)->disableHydration()->toArray();
+		$logs = $query->select(['type', $field, 'count' => $query->func()->count('*')])
+			->groupBy(['type', $field])
+			->disableHydration()
+			->toArray();
 
 		$count = 0;
 		foreach ($logs as $log) {
 			if ($log['count'] <= 1) {
 				continue;
 			}
-			$options = [
-				'fields' => ['id'],
-				'keyField' => 'id',
-				'valueField' => 'id',
-				'conditions' => [
-					'type' => $log['type'],
-					$field => $log[$field],
-				],
-				'order' => ['created' => 'DESC'],
-			];
-			$entries = $this->find('list', ...$options)->toArray();
+			$entries = $this->find('list', keyField: 'id', valueField: 'count')
+				->select(['id', 'count'])
+				->where(['type' => $log['type'], $field => $log[$field]])
+				->orderByDesc('created')
+				->orderByDesc('id')
+				->toArray();
 
-			// keep the newest entry
-			$keep = array_shift($entries);
-			if ($entries) {
-				$this->deleteAll(['id IN' => $entries]);
+			$keep = array_key_first($entries);
+			if ($keep === null || count($entries) < 2) {
+				continue;
 			}
-			$count += $this->updateAll(
-				['count' => new QueryExpression('count + ' . count($entries))],
-				['id' => $keep],
-			);
+			unset($entries[$keep]);
+			$count += $this->getConnection()->transactional(function () use ($entries, $keep): int {
+				$this->deleteAll(['id IN' => array_keys($entries)]);
+
+				return $this->updateAll(
+					['count' => new QueryExpression('count + ' . array_sum($entries))],
+					['id' => $keep],
+				);
+			});
 		}
 
 		return $count;
@@ -391,7 +386,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	/**
 	 * @return int
 	 */
-	public function garbageCollector() {
+	public function garbageCollector(): int {
 		$deleted = $this->_cleanByAge();
 
 		$query = $this->find()

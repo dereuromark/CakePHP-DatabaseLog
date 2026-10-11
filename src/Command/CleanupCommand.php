@@ -28,7 +28,7 @@ class CleanupCommand extends Command {
 		$io->success($count . ' outdated logs removed (garbage collector)');
 
 		$count = $this->fetchTable('DatabaseLog.DatabaseLogs')->removeDuplicates();
-		$io->success($count . ' duplicates removed (merging)');
+		$io->success($count . ' duplicate groups merged');
 	}
 
 	/**

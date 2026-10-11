@@ -32,7 +32,7 @@ class CleanupCommandTest extends TestCase {
 
 		$output = $this->_out->output();
 		$this->assertStringContainsString('outdated logs removed', $output);
-		$this->assertStringContainsString('duplicates removed', $output);
+		$this->assertStringContainsString('duplicate groups merged', $output);
 		$this->assertExitCode(0);
 	}
 
@@ -62,7 +62,7 @@ class CleanupCommandTest extends TestCase {
 		$this->assertNotEmpty($output);
 
 		$this->assertStringContainsString('10 outdated logs removed', $output);
-		$this->assertStringContainsString('1 duplicates removed', $output);
+		$this->assertStringContainsString('1 duplicate groups merged', $output);
 
 		$count = $Logs->find()->count();
 		$this->assertSame(1, $count);
