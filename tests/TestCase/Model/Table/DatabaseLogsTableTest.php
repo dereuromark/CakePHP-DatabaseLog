@@ -274,4 +274,29 @@ class DatabaseLogsTableTest extends TestCase {
 		$this->assertSame(2, $this->Logs->find()->firstOrFail()->count);
 	}
 
+	/**
+	 * @return void
+	 */
+	public function testReleasedSubclassDeclarationsRemainSupported(): void {
+		$table = new class (['connection' => $this->Logs->getConnection(), 'table' => 'database_logs', 'alias' => 'DatabaseLogs']) extends DatabaseLogsTable {
+			/**
+			 * @param bool $strict
+			 * @return int
+			 */
+			public function removeDuplicates($strict = false) {
+				return parent::removeDuplicates($strict);
+			}
+
+			/**
+			 * @return int
+			 */
+			public function garbageCollector() {
+				return parent::garbageCollector();
+			}
+		};
+		$this->assertSame(0, $table->removeDuplicates());
+		$this->assertSame(0, $table->removeDuplicates('1'));
+		$this->assertSame(0, $table->garbageCollector());
+	}
+
 }

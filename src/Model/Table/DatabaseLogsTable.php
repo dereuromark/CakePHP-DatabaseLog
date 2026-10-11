@@ -344,7 +344,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	 * @param bool $strict
 	 * @return int
 	 */
-	public function removeDuplicates(bool $strict = false): int {
+	public function removeDuplicates($strict = false) {
 		$field = $strict ? 'message' : 'summary';
 
 		$query = $this->find();
@@ -390,7 +390,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 	/**
 	 * @return int
 	 */
-	public function garbageCollector(): int {
+	public function garbageCollector() {
 		$deleted = $this->_cleanByAge();
 
 		$query = $this->find()
