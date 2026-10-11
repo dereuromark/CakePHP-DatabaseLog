@@ -82,6 +82,7 @@ class DatabaseLogAppController extends AppController {
 				$event->setResult($result);
 			}
 			if ($event->getResult() instanceof ResponseInterface) {
+				$this->skipAdminAuthorizationCheck();
 				$event->stopPropagation();
 
 				return;
@@ -90,14 +91,7 @@ class DatabaseLogAppController extends AppController {
 
 		// Coexist with cakephp/authorization: this gate IS the authorization
 		// decision for these controllers, so silence the policy check.
-		if ($this->components()->has('Authorization') && method_exists($this->components()->get('Authorization'), 'skipAuthorization')) {
-			$this->components()->get('Authorization')->skipAuthorization();
-		} else {
-			$authorization = $this->request->getAttribute('authorization');
-			if (is_object($authorization) && is_callable([$authorization, 'skipAuthorization'])) {
-				$authorization->skipAuthorization();
-			}
-		}
+		$this->skipAdminAuthorizationCheck();
 
 		$gate = Configure::read('DatabaseLog.adminAccess');
 		if (!($gate instanceof Closure)) {
@@ -131,6 +125,17 @@ class DatabaseLogAppController extends AppController {
 		}
 
 		return ['Controller.initialize' => 'beforeFilter'];
+	}
+
+	protected function skipAdminAuthorizationCheck(): void {
+		if ($this->components()->has('Authorization') && method_exists($this->components()->get('Authorization'), 'skipAuthorization')) {
+			$this->components()->get('Authorization')->skipAuthorization();
+		} else {
+			$authorization = $this->request->getAttribute('authorization');
+			if (is_object($authorization) && is_callable([$authorization, 'skipAuthorization'])) {
+				$authorization->skipAuthorization();
+			}
+		}
 	}
 
 }
