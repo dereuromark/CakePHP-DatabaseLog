@@ -51,6 +51,21 @@ class StandaloneAdminControllerTest extends TestCase {
 		}
 	}
 
+	public function testHostBeforeFilterEventRedirectStopsAction(): void {
+		Configure::write('DatabaseLog.standalone', false);
+		Configure::write('Test.hostRedirectViaEvent', true);
+		Configure::write('DatabaseLog.adminAccess', function (): bool {
+			$this->fail('The plugin gate must not run after a host redirect.');
+		});
+
+		try {
+			$this->get(['prefix' => 'Admin', 'plugin' => 'DatabaseLog', 'controller' => 'DatabaseLog', 'action' => 'index']);
+			$this->assertRedirect('/login');
+		} finally {
+			Configure::delete('Test.hostRedirectViaEvent');
+		}
+	}
+
 	public function testStandaloneMarksRequestAuthorizationChecked(): void {
 		$service = new class {
 			public bool $skipped = false;
