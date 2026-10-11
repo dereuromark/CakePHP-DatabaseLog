@@ -36,7 +36,7 @@ class ExportCommandTest extends TestCase {
 
 		$this->exec('database_logs export');
 
-		$output = $this->_out->output();
+		$output = $this->out->output();
 		$this->assertStringContainsString('Nothing to do...', $output);
 		$this->assertExitCode(0);
 	}
@@ -48,7 +48,7 @@ class ExportCommandTest extends TestCase {
 
 		$this->exec('database_logs export');
 
-		$output = $this->_out->output();
+		$output = $this->out->output();
 		$this->assertStringContainsString('entries written to export-info.txt', $output);
 		$this->assertExitCode(0);
 	}

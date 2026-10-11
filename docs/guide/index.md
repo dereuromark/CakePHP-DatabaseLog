@@ -1,6 +1,6 @@
 # Overview
 
-These pages describe the current CakePHP 5 branch. The [upgrading guide](./upgrading) identifies fixes that are still unreleased.
+These pages describe the CakePHP 6 development branch. The [upgrading guide](./upgrading) identifies fixes that are still unreleased.
 
 DatabaseLog is a CakePHP log engine with an admin viewer and maintenance commands. It stores the message, JSON context, log type, timestamp, and available request or command-line metadata.
 

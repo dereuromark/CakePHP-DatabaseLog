@@ -2,15 +2,13 @@
 
 namespace DatabaseLog\Command;
 
-use Cake\Command\Command;
-use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Cake\I18n\Number;
 use Cake\Log\Log;
 use Cake\Utility\Text;
 
-class ShowCommand extends Command {
+class ShowCommand extends DatabaseLogCommand {
 
 	/**
 	 * @return string
@@ -21,12 +19,11 @@ class ShowCommand extends Command {
 
 	/**
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
-	 * @param \Cake\Console\Arguments $args The command arguments.
-	 * @param \Cake\Console\ConsoleIo $io The console io
 	 * @return int|null|void The exit code or null for success
 	 */
-	public function execute(Arguments $args, ConsoleIo $io) {
-		parent::execute($args, $io);
+	public function execute() {
+		$args = $this->args;
+		$io = $this->io;
 
 		if ($args->getOption('test-entry')) {
 			$errorType = (string)$args->getOption('test-entry');
@@ -41,16 +38,16 @@ class ShowCommand extends Command {
 		}
 
 		if ($args->getOption('verbose')) {
-			$dbType = $this->fetchTable('DatabaseLog.DatabaseLogs')->databaseType();
+			$dbType = $this->logs()->databaseType();
 			$out = 'DB type: ' . $dbType;
-			$dbSize = $this->fetchTable('DatabaseLog.DatabaseLogs')->databaseSize();
+			$dbSize = $this->logs()->databaseSize();
 			if ($dbSize !== null) {
 				$out .= ' (' . Number::toReadableSize($dbSize) . ')';
 			}
 			$io->out($out);
 		}
 
-		$query = $this->fetchTable('DatabaseLog.DatabaseLogs')->find();
+		$query = $this->logs()->find();
 
 		$type = $args->getArgument('type');
 		if ($type) {
@@ -67,7 +64,6 @@ class ShowCommand extends Command {
 			$limit = (int)$elements[1];
 		}
 
-		/** @var array<\DatabaseLog\Model\Entity\DatabaseLog> $logs */
 		$logs = $query->orderBy(['created' => 'DESC'])
 			->limit((int)$limit)
 			->offset($offset)

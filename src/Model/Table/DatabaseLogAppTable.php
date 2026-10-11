@@ -14,6 +14,10 @@ use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\ORM\Table;
 
+/**
+ * @template TEntity of \Cake\Datasource\EntityInterface = \Cake\Datasource\EntityInterface
+ * @extends \Cake\ORM\Table<array{}, TEntity>
+ */
 abstract class DatabaseLogAppTable extends Table {
 
 	/**

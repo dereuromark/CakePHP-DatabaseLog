@@ -18,11 +18,11 @@ use DatabaseLog\Model\Table\DatabaseLogsTable;
 	<?php if ($currentType): ?>
 	<div>
 		<?= $this->Form->postButton(
-			'<i class="fas fa-trash me-1"></i>' . __d('database_log', 'Reset {0} Logs', '"' . $currentType . '"'),
+			'<i class="fas fa-trash me-1"></i>' . __d('database_log', 'Reset {0} Logs', '"' . h($currentType) . '"'),
 			['action' => 'reset', '?' => ['type' => $currentType]],
 			[
 				'class' => 'btn btn-outline-danger btn-sm',
-				'escapeTitle' => false,
+				'escape' => false,
 				'form' => [
 					'class' => 'd-inline',
 					'data-confirm-message' => __d('database_log', 'Delete all {0} logs? This cannot be undone.', $currentType),
@@ -116,7 +116,7 @@ use DatabaseLog\Model\Table\DatabaseLogsTable;
 								['action' => 'delete', $log->id],
 								[
 									'class' => 'btn btn-outline-danger',
-									'escapeTitle' => false,
+									'escape' => false,
 									'title' => __d('database_log', 'Delete'),
 									'form' => [
 										'class' => 'd-inline',

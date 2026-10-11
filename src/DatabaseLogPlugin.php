@@ -29,11 +29,11 @@ class DatabaseLogPlugin extends BasePlugin {
 	public function routes(RouteBuilder $routes): void {
 		$path = Configure::read('DatabaseLog.routePath', '/database-log');
 		$routes->prefix('Admin', function (RouteBuilder $routes) use ($path): void {
-			$routes->plugin('DatabaseLog', ['path' => $path], function (RouteBuilder $routes): void {
+			$routes->plugin('DatabaseLog', function (RouteBuilder $routes): void {
 				$routes->connect('/', ['controller' => 'DatabaseLog', 'action' => 'index']);
 
 				$routes->fallbacks();
-			});
+			}, ['path' => $path]);
 		});
 	}
 

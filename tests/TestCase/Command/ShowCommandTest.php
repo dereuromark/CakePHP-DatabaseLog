@@ -28,7 +28,7 @@ class ShowCommandTest extends TestCase {
 	public function testExecute(): void {
 		$this->exec('database_logs show -v');
 
-		$output = $this->_out->output();
+		$output = $this->out->output();
 		$this->assertStringContainsString('DB type:', $output);
 		$this->assertExitCode(0);
 	}
@@ -41,7 +41,7 @@ class ShowCommandTest extends TestCase {
 
 		$this->exec('database_logs show');
 
-		$output = $this->_out->output();
+		$output = $this->out->output();
 		$this->assertStringContainsString(': info - one', $output);
 		$this->assertExitCode(0);
 	}

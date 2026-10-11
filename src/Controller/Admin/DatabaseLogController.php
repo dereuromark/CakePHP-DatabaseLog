@@ -37,7 +37,7 @@ class DatabaseLogController extends DatabaseLogAppController {
 			->groupBy('summary')
 			->orderByDesc('MAX(id)')
 			->limit(10)
-			->disableHydration()
+			->enableHydration(false)
 			->all()->toArray();
 
 		// Time-based statistics

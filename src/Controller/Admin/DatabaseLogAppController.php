@@ -77,10 +77,7 @@ class DatabaseLogAppController extends AppController {
 		if (Configure::read('DatabaseLog.standalone')) {
 			Controller::beforeFilter($event);
 		} else {
-			$result = parent::beforeFilter($event);
-			if ($result instanceof ResponseInterface) {
-				$event->setResult($result);
-			}
+			parent::beforeFilter($event);
 			if ($event->getResult() instanceof ResponseInterface) {
 				$this->skipAdminAuthorizationCheck();
 				$event->stopPropagation();
