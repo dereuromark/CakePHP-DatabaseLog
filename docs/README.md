@@ -343,3 +343,11 @@ There are a few guidelines:
 
 - Coding standards passing: `composer cs-check` to check and `composer cs-fix` to fix.
 - Tests passing for Windows and Unix: `composer test` to run them.
+
+### Standalone callback behavior
+
+Standalone mode skips the host AppController's initialization and lifecycle
+callbacks, including beforeFilter, beforeRender, beforeRedirect, and afterFilter.
+The plugin still loads Flash, its helpers, and the configured admin layout.
+Application middleware still runs. The required `DatabaseLog.adminAccess` Closure
+remains responsible for the full access decision in both modes.
