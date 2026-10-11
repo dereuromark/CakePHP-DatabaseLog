@@ -18,7 +18,7 @@ use DatabaseLog\Model\Table\DatabaseLogsTable;
 	<?php if ($currentType): ?>
 	<div>
 		<?= $this->Form->postButton(
-			'<i class="fas fa-trash me-1"></i>' . __d('database_log', 'Reset {0} Logs', '"' . $currentType . '"'),
+			'<i class="fas fa-trash me-1"></i>' . __d('database_log', 'Reset {0} Logs', '"' . h($currentType) . '"'),
 			['action' => 'reset', '?' => ['type' => $currentType]],
 			[
 				'class' => 'btn btn-outline-danger btn-sm',

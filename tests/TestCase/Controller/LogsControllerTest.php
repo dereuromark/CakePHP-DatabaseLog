@@ -66,6 +66,15 @@ class LogsControllerTest extends TestCase {
 		$this->assertResponseCode(200);
 	}
 
+	public function testIndexEscapesTypeInResetButton(): void {
+		$type = '<img src=x onerror=alert(1)>';
+		$this->get(['prefix' => 'Admin', 'plugin' => 'DatabaseLog', 'controller' => 'Logs', 'action' => 'index', '?' => ['type' => $type]]);
+
+		$this->assertResponseCode(200);
+		$this->assertResponseNotContains($type);
+		$this->assertResponseContains('&lt;img src=x onerror=alert(1)&gt;');
+	}
+
 	/**
 	 * Tests the view action
 	 *
