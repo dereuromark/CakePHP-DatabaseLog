@@ -45,7 +45,7 @@ class MonitorCommandTest extends TestCase {
 
 		$this->exec('database_logs monitor');
 
-		$output = $this->_out->output();
+		$output = $this->out->output();
 		$this->assertStringContainsString('All good...', $output);
 		$this->assertExitCode(0);
 	}
@@ -57,7 +57,7 @@ class MonitorCommandTest extends TestCase {
 		file_put_contents(LOGS . 'export', time() - 2);
 
 		$this->exec('database_logs monitor');
-		$output = $this->_out->output();
+		$output = $this->out->output();
 
 		$this->assertStringContainsString('Just ran... Will run again in 1 min', $output, $output);
 	}

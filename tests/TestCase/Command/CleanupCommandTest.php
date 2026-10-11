@@ -30,7 +30,7 @@ class CleanupCommandTest extends TestCase {
 	public function testExecute(): void {
 		$this->exec('database_logs cleanup');
 
-		$output = $this->_out->output();
+		$output = $this->out->output();
 		$this->assertStringContainsString('outdated logs removed', $output);
 		$this->assertStringContainsString('duplicate groups merged', $output);
 		$this->assertExitCode(0);
@@ -45,7 +45,7 @@ class CleanupCommandTest extends TestCase {
 		Log::write('info', 'three');
 
 		$Logs = TableRegistry::getTableLocator()->get('DatabaseLog.DatabaseLogs');
-		$Logs->updateAll(['created' => date('Y-m-d H:i:s', time() - DAY)], '1 = 1');
+		$Logs->updateAll(['created' => date('Y-m-d H:i:s', time() - 86400)], '1 = 1');
 
 		Log::write('info', 'four');
 		Log::write('info', 'five');
@@ -58,7 +58,7 @@ class CleanupCommandTest extends TestCase {
 		Configure::write('DatabaseLog.maxLength', '-1 hour');
 
 		$this->exec('database_logs cleanup');
-		$output = $this->_out->output();
+		$output = $this->out->output();
 		$this->assertNotEmpty($output);
 
 		$this->assertStringContainsString('10 outdated logs removed', $output);

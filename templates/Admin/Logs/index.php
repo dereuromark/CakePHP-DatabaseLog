@@ -22,7 +22,7 @@ use DatabaseLog\Model\Table\DatabaseLogsTable;
 			['action' => 'reset', '?' => ['type' => $currentType]],
 			[
 				'class' => 'btn btn-outline-danger btn-sm',
-				'escapeTitle' => false,
+				'escape' => false,
 				'form' => [
 					'class' => 'd-inline',
 					'data-confirm-message' => __d('database_log', 'Delete all {0} logs? This cannot be undone.', $currentType),
@@ -116,7 +116,7 @@ use DatabaseLog\Model\Table\DatabaseLogsTable;
 								['action' => 'delete', $log->id],
 								[
 									'class' => 'btn btn-outline-danger',
-									'escapeTitle' => false,
+									'escape' => false,
 									'title' => __d('database_log', 'Delete'),
 									'form' => [
 										'class' => 'd-inline',

@@ -29,7 +29,7 @@ class ResetCommandTest extends TestCase {
 	public function testExecute(): void {
 		$this->exec('database_logs reset', ['y']);
 
-		$output = $this->_out->output();
+		$output = $this->out->output();
 		$this->assertStringContainsString('Reset done', $output);
 		$this->assertExitCode(0);
 	}

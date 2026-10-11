@@ -2,13 +2,10 @@
 
 namespace DatabaseLog\Command;
 
-use Cake\Command\Command;
-use Cake\Console\Arguments;
-use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Cake\Utility\Text;
 
-class ExportCommand extends Command {
+class ExportCommand extends DatabaseLogCommand {
 
 	/**
 	 * @return string
@@ -18,15 +15,14 @@ class ExportCommand extends Command {
 	}
 
 	/**
-	 * @param \Cake\Console\Arguments $args The command arguments.
-	 * @param \Cake\Console\ConsoleIo $io The console io
 	 * @return int|null|void The exit code or null for success
 	 */
-	public function execute(Arguments $args, ConsoleIo $io) {
-		parent::execute($args, $io);
+	public function execute() {
+		$args = $this->args;
+		$io = $this->io;
 
 		$type = $args->getArgument('type');
-		$types = $type ? Text::tokenize($type) : $this->fetchTable('DatabaseLog.DatabaseLogs')->getTypes();
+		$types = $type ? Text::tokenize($type) : $this->logs()->getTypes();
 
 		$limit = (int)$args->getOption('limit') ?: 100;
 
@@ -38,16 +34,15 @@ class ExportCommand extends Command {
 				continue;
 			}
 
-			$query = $this->fetchTable('DatabaseLog.DatabaseLogs')->find();
+			$query = $this->logs()->find();
 
-			/** @var array<\DatabaseLog\Model\Entity\DatabaseLog> $logs */
-			$logs = $query->where(['type' => $type])
+				$logs = $query->where(['type' => $type])
 				->limit($limit)
 				->orderBy(['created' => 'DESC'])
 				->all();
 			$contentArray = [];
 			foreach ($logs as $log) {
-				$content = $this->fetchTable('DatabaseLog.DatabaseLogs')->format($log) . PHP_EOL;
+				$content = $this->logs()->format($log) . PHP_EOL;
 
 				$contentArray[] = $content;
 			}

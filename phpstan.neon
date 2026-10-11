@@ -8,5 +8,3 @@ parameters:
 		- identifier: missingType.iterableValue
 		- identifier: missingType.generics
 
-includes:
-	- vendor/cakedc/cakephp-phpstan/extension.neon

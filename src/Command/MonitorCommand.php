@@ -2,14 +2,11 @@
 
 namespace DatabaseLog\Command;
 
-use Cake\Command\Command;
-use Cake\Console\Arguments;
-use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Cake\Core\Configure;
 use RuntimeException;
 
-class MonitorCommand extends Command {
+class MonitorCommand extends DatabaseLogCommand {
 
 	/**
 	 * @return string
@@ -24,12 +21,10 @@ class MonitorCommand extends Command {
 	protected ?string $defaultTable = 'DatabaseLog.DatabaseLogs';
 
 	/**
-	 * @param \Cake\Console\Arguments $args The command arguments.
-	 * @param \Cake\Console\ConsoleIo $io The console io
 	 * @return int|null|void The exit code or null for success
 	 */
-	public function execute(Arguments $args, ConsoleIo $io) {
-		parent::execute($args, $io);
+	public function execute() {
+		$io = $this->io;
 
 		$interval = (int)Configure::read('DatabaseLog.notificationInterval');
 		if (!$interval) {
@@ -54,13 +49,12 @@ class MonitorCommand extends Command {
 		}
 
 		$checkedAt = time();
-		$query = $this->fetchTable('DatabaseLog.DatabaseLogs')->find()
+		$query = $this->logs()->find()
 			->where(['type IN' => $types, 'created <' => date('Y-m-d H:i:s', $checkedAt + 1)]);
 		if ($time) {
 			$query->andWhere(['created >=' => date('Y-m-d H:i:s', $time)]);
 		}
 
-		/** @var array<\DatabaseLog\Model\Entity\DatabaseLog> $logs */
 		$logs = $query->orderBy(['created' => 'DESC'])
 			->all()->toArray();
 
@@ -70,7 +64,7 @@ class MonitorCommand extends Command {
 			return;
 		}
 
-		$this->fetchTable('DatabaseLog.DatabaseLogs')->notify($logs);
+		$this->logs()->notify($logs);
 		file_put_contents(LOGS . 'export', $checkedAt);
 
 		$io->out(count($logs) . ' new log entries reported.');

@@ -38,7 +38,7 @@ $formatted = $this->request->getQuery('formatted');
 			['action' => 'delete', $log->id],
 			[
 				'class' => 'btn btn-outline-danger btn-sm',
-				'escapeTitle' => false,
+				'escape' => false,
 				'form' => [
 					'class' => 'd-inline',
 					'data-confirm-message' => __d('database_log', 'Delete this log entry?'),

@@ -25,6 +25,7 @@ use DatabaseLog\Model\Filter\DatabaseLogsCollection;
 use DateInterval;
 
 /**
+ * @extends \DatabaseLog\Model\Table\DatabaseLogAppTable<\DatabaseLog\Model\Entity\DatabaseLog>
  * @method \DatabaseLog\Model\Entity\DatabaseLog get(mixed $primaryKey, array|string $finder = 'all', \Psr\SimpleCache\CacheInterface|string|null $cache = null, \Closure|string|null $cacheKey = null, mixed ...$args)
  * @method \DatabaseLog\Model\Entity\DatabaseLog newEntity(array $data, array $options = [])
  * @method array<\DatabaseLog\Model\Entity\DatabaseLog> newEntities(array $data, array $options = [])
@@ -219,7 +220,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 			->select(['type', 'count' => $query->func()->count('*')])
 			->groupBy('type')
 			->orderByAsc('type')
-			->disableHydration()
+			->enableHydration(false)
 			->toArray();
 
 		return Hash::combine($types, '{n}.type', '{n}.count');
@@ -299,7 +300,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 			])
 			->where(['created >=' => $start])
 			->groupBy([$periodExpr, 'type'])
-			->disableHydration()
+			->enableHydration(false)
 			->all()
 			->toArray();
 
@@ -331,7 +332,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 			->select(['type'])
 			->distinct('type')
 			->orderByAsc('type')
-			->disableHydration()
+			->enableHydration(false)
 			->toArray();
 
 		return Hash::combine($types, '{n}.type', '{n}.type');
@@ -350,7 +351,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 		$query = $this->find();
 		$logs = $query->select(['type', $field, 'count' => $query->func()->count('*')])
 			->groupBy(['type', $field])
-			->disableHydration()
+			->enableHydration(false)
 			->toArray();
 
 		$count = 0;
@@ -358,10 +359,12 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 			if ($log['count'] <= 1) {
 				continue;
 			}
-			$entries = $this->find('list', keyField: 'id', valueField: 'count')
+			$entries = $this->find()->select(['id', 'count'])
 				->where(['type' => $log['type'], $field => $log[$field]])
 				->orderByDesc('created')
 				->orderByDesc('id')
+				->all()
+				->combine('id', 'count')
 				->toArray();
 
 			$keep = array_key_first($entries);
@@ -376,7 +379,7 @@ class DatabaseLogsTable extends DatabaseLogAppTable {
 					[
 						'count' => new QueryExpression(
 							'CASE WHEN count < 1 THEN 1 ELSE count END + '
-							. array_sum(array_map(static fn (int|string $occurrences): int => max(1, (int)$occurrences), $entries)),
+							. array_sum(array_map(static fn (mixed $occurrences): int => is_scalar($occurrences) ? max(1, (int)$occurrences) : 1, $entries)),
 						),
 					],
 					['id' => $keep],

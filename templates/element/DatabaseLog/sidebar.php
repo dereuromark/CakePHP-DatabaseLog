@@ -44,7 +44,7 @@ $isActive = function (string $c, ?array $actions = null) use ($controller, $acti
 				['plugin' => 'DatabaseLog', 'prefix' => 'Admin', 'controller' => 'Logs', 'action' => 'removeDuplicates'],
 				[
 					'class' => 'nav-link btn btn-link text-start w-100',
-					'escapeTitle' => false,
+					'escape' => false,
 					'form' => [
 						'class' => 'd-inline',
 						'data-confirm-message' => __d('database_log', 'Remove all duplicate log entries?'),
@@ -56,7 +56,7 @@ $isActive = function (string $c, ?array $actions = null) use ($controller, $acti
 				['plugin' => 'DatabaseLog', 'prefix' => 'Admin', 'controller' => 'Logs', 'action' => 'removeDuplicates', '?' => ['strict' => true]],
 				[
 					'class' => 'nav-link btn btn-link text-start w-100',
-					'escapeTitle' => false,
+					'escape' => false,
 					'form' => [
 						'class' => 'd-inline',
 						'data-confirm-message' => __d('database_log', 'Remove all duplicate log entries (strict mode)?'),
@@ -68,7 +68,7 @@ $isActive = function (string $c, ?array $actions = null) use ($controller, $acti
 				['plugin' => 'DatabaseLog', 'prefix' => 'Admin', 'controller' => 'Logs', 'action' => 'reset'],
 				[
 					'class' => 'nav-link text-warning btn btn-link text-start w-100',
-					'escapeTitle' => false,
+					'escape' => false,
 					'form' => [
 						'class' => 'd-inline',
 						'data-confirm-message' => __d('database_log', 'Delete all log entries? This cannot be undone.'),

@@ -1,5 +1,11 @@
 # Upgrading
 
+## CakePHP 6 development branch
+
+The `cake6` branch targets CakePHP 6. Custom commands override `execute()` without arguments and read `$this->args` and `$this->io`. Host controller lifecycle callbacks return `void`; use `$event->setResult($response)` for an authentication redirect. DatabaseLog preserves that response before applying its own access callback.
+
+Entity mass-assignment configuration uses `$patchable`, helper defaults use `$defaultConfig`, and queries use `enableHydration(false)` for array results. Update application overrides to the corresponding CakePHP 6 contracts.
+
 ## Schema and connection
 
 Run plugin migrations against the connection used for logging:
