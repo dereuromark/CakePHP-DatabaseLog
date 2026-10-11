@@ -33,7 +33,7 @@ Run the command periodically:
 */5 * * * * cd /var/www/my-app && bin/cake database_logs monitor -q
 ```
 
-The command stores its last checked timestamp in `LOGS . 'export'`. The first run examines all matching entries. Subsequent runs select entries at or after that timestamp and respect the notification interval. The saved timestamp is captured before querying, so entries written during notification delivery remain eligible for the next run. Stored timestamps have second precision; entries on the boundary can be reported again on the next run. With no matching entries, it reports nothing and leaves the timestamp unchanged. The marker is local to the server and must be writable; do not run overlapping monitor jobs.
+The command stores its last checked timestamp in `LOGS . 'export'`. The first run examines all matching entries. Subsequent runs select entries at or after that timestamp and respect the notification interval. The saved timestamp is captured before querying, so entries created at or after that boundary during notification delivery remain eligible for the next run. Entries committed later with a creation timestamp older than the saved boundary can still be missed; the monitor does not track transaction commit times. Stored timestamps have second precision; entries on the boundary can be reported again on the next run. With no matching entries, it reports nothing and leaves the timestamp unchanged. The marker is local to the server and must be writable; do not run overlapping monitor jobs.
 
 The event contains the selected entities in its `logs` data key and the table as its subject. Instead of a configured callback, register an application listener:
 

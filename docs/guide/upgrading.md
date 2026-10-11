@@ -18,18 +18,26 @@ Since v4.7, table auto-creation defaults to debug mode only. Production should h
 
 Failed writes now use PHP's `error_log()` rather than escaping into application code. Check the process error log for `[DatabaseLog fallback]` entries during deployment and database outages.
 
-## Admin access and standalone mode
+## Admin access
 
-Set `DatabaseLog.adminAccess` to a closure returning the boolean `true` for permitted callers. Standalone mode bypasses host controller initialization and lifecycle callbacks; application middleware still runs. Ensure the callback and middleware enforce the full access rule. See [admin interface](../reference/admin).
+Set `DatabaseLog.adminAccess` to a closure returning the boolean `true` for permitted callers. See [admin interface](../reference/admin).
 
-## Duplicate counts
+## Unreleased fixes
 
-On the current branch, cleanup preserves the counts of previously merged rows. Its output reports duplicate groups merged rather than claiming that each group represents a single removed row. Default grouping remains log type plus summary; use strict grouping from application code when complete messages must match.
+The following fixes are on the development branch and are not included in v4.7.0.
 
-## Custom table subclasses
+### Standalone lifecycle
 
-On the current branch, `removeDuplicates()` declares a boolean parameter and integer return type; `garbageCollector()` declares an integer return type. Update matching overrides in custom subclasses before upgrading.
+Standalone mode now bypasses host controller initialization and lifecycle callbacks; application middleware still runs. In v4.7.0, host initialization is skipped but host lifecycle callbacks still run. Ensure the callback and middleware enforce the full access rule before upgrading.
 
-## Monitor delivery
+### Duplicate counts
 
-On the current branch, monitoring records its query boundary before notification delivery, preserving entries written while the callback runs. The next run includes entries on that second boundary, so a boundary entry may appear in two notifications.
+Cleanup preserves the counts of previously merged rows and counts legacy zero-count rows as one occurrence each. Its output reports duplicate groups merged rather than claiming that each group represents a single removed row. Default grouping remains log type plus summary; use strict grouping from application code when complete messages must match.
+
+### Custom table subclasses
+
+`removeDuplicates()` declares a boolean parameter and integer return type; `garbageCollector()` declares an integer return type. Update matching overrides in custom subclasses before upgrading.
+
+### Monitor delivery
+
+Monitoring records its query boundary before notification delivery, preserving entries created during the callback at or after that boundary. The next run includes entries on that second boundary, so a boundary entry may appear in two notifications. See [monitoring](../reference/monitoring) for delayed-commit limitations.
