@@ -66,6 +66,25 @@ class StandaloneAdminControllerTest extends TestCase {
 		}
 	}
 
+	public function testHostRedirectStopsLaterListeners(): void {
+		Configure::write('DatabaseLog.standalone', false);
+		Configure::write('Test.hostRedirectViaEvent', true);
+		Configure::write('DatabaseLog.adminAccess', function (): bool {
+			$this->fail('The plugin gate must not run after a host redirect.');
+		});
+		$listener = function (EventInterface $event): void {
+			$this->fail('Later listeners must not replace the host redirect.');
+		};
+		EventManager::instance()->on('Controller.initialize', ['priority' => 100], $listener);
+
+		try {
+			$this->get(['prefix' => 'Admin', 'plugin' => 'DatabaseLog', 'controller' => 'DatabaseLog', 'action' => 'index']);
+			$this->assertRedirect('/login');
+		} finally {
+			EventManager::instance()->off('Controller.initialize', $listener);
+		}
+	}
+
 	public function testStandaloneMarksRequestAuthorizationChecked(): void {
 		$service = new class {
 			public bool $skipped = false;
