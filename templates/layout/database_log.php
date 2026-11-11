@@ -15,7 +15,7 @@ $request = $this->getRequest();
 if ($request && $request->getParam('controller') === 'DatabaseLog' && $request->getParam('action') === 'index') {
 	$autoRefresh = (int)Configure::read('DatabaseLog.dashboardAutoRefresh') ?: 0;
 }
-$cspNonce = (string)$this->getRequest()->getAttribute('cspNonce', '');
+$cspNonce = (string)($this->getRequest()->getAttribute('cspScriptNonce') ?? $this->getRequest()->getAttribute('cspNonce', ''));
 $nonceAttr = $cspNonce !== '' ? ' nonce="' . h($cspNonce) . '"' : '';
 ?>
 <!DOCTYPE html>

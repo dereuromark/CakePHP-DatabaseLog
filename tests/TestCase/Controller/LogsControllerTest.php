@@ -10,11 +10,17 @@
 
 namespace DatabaseLog\Test\TestCase\Controller;
 
+use Cake\Event\EventInterface;
+use Cake\Event\EventManager;
+use Cake\Http\MiddlewareQueue;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 use DatabaseLog\Controller\Admin\LogsController;
 use PHPUnit\Framework\Attributes\CoversClass;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
 #[CoversClass(LogsController::class)]
 class LogsControllerTest extends TestCase {
@@ -87,6 +93,36 @@ class LogsControllerTest extends TestCase {
 
 		$this->assertResponseNotEmpty();
 		$this->assertResponseCode(200);
+	}
+
+	/**
+	 * CakePHP's CspMiddleware stores the nonce as `cspScriptNonce`.
+	 *
+	 * @return void
+	 */
+	public function testViewUsesCspScriptNonce(): void {
+		$this->withRequestAttribute('cspScriptNonce', 'core-nonce');
+
+		$this->get(['prefix' => 'Admin', 'plugin' => 'DatabaseLog', 'controller' => 'Logs', 'action' => 'view', '1']);
+
+		$this->assertResponseCode(200);
+		$this->assertResponseContains('<script nonce="core-nonce">');
+		$this->assertResponseNotRegExp('/<script>/');
+	}
+
+	/**
+	 * A custom middleware may still provide the nonce as `cspNonce`.
+	 *
+	 * @return void
+	 */
+	public function testViewFallsBackToCspNonce(): void {
+		$this->withRequestAttribute('cspNonce', 'custom-nonce');
+
+		$this->get(['prefix' => 'Admin', 'plugin' => 'DatabaseLog', 'controller' => 'Logs', 'action' => 'view', '1']);
+
+		$this->assertResponseCode(200);
+		$this->assertResponseContains('<script nonce="custom-nonce">');
+		$this->assertResponseNotRegExp('/<script>/');
 	}
 
 	/**
@@ -170,6 +206,22 @@ class LogsControllerTest extends TestCase {
 		$count = $logModel->find()->count();
 
 		$this->assertSame(1, $count);
+	}
+
+	/**
+	 * Adds a middleware that sets a request attribute, like a CSP middleware would.
+	 *
+	 * @param string $name
+	 * @param string $value
+	 *
+	 * @return void
+	 */
+	protected function withRequestAttribute(string $name, string $value): void {
+		EventManager::instance()->on('Server.buildMiddleware', function (EventInterface $event, MiddlewareQueue $queue) use ($name, $value): void {
+			$queue->prepend(function (ServerRequestInterface $request, RequestHandlerInterface $handler) use ($name, $value): ResponseInterface {
+				return $handler->handle($request->withAttribute($name, $value));
+			});
+		});
 	}
 
 }
