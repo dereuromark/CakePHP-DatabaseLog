@@ -149,7 +149,7 @@ $this->append('script');
 $cspNonce = (string)($this->getRequest()->getAttribute('cspScriptNonce') ?? $this->getRequest()->getAttribute('cspNonce', ''));
 $nonceAttr = $cspNonce !== '' ? ' nonce="' . h($cspNonce) . '"' : '';
 ?>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script<?= $nonceAttr ?> src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <script<?= $nonceAttr ?>>
 document.addEventListener('DOMContentLoaded', function() {
 	var ctx = document.getElementById('logActivityChart').getContext('2d');
