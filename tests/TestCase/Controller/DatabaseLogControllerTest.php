@@ -10,10 +10,16 @@
 
 namespace DatabaseLog\Test\TestCase\Controller;
 
+use Cake\Event\EventInterface;
+use Cake\Event\EventManager;
+use Cake\Http\MiddlewareQueue;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
 class DatabaseLogControllerTest extends TestCase {
 
@@ -62,6 +68,27 @@ class DatabaseLogControllerTest extends TestCase {
 
 		$this->assertResponseNotEmpty();
 		$this->assertResponseCode(200);
+	}
+
+	/**
+	 * External scripts (Chart.js, Bootstrap) need the nonce too under a nonce-only CSP.
+	 *
+	 * @return void
+	 */
+	public function testIndexAddsCspNonceToScripts(): void {
+		$this->Logs->log('warning', 'Recent Warning');
+		EventManager::instance()->on('Server.buildMiddleware', function (EventInterface $event, MiddlewareQueue $queue): void {
+			$queue->prepend(function (ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface {
+				return $handler->handle($request->withAttribute('cspScriptNonce', 'core-nonce'));
+			});
+		});
+
+		$this->get(['prefix' => 'Admin', 'plugin' => 'DatabaseLog', 'controller' => 'DatabaseLog', 'action' => 'index']);
+
+		$this->assertResponseCode(200);
+		$this->assertResponseContains('<script nonce="core-nonce" src="https://cdn.jsdelivr.net/npm/chart.js');
+		$this->assertResponseContains('<script nonce="core-nonce" src="https://cdn.jsdelivr.net/npm/bootstrap');
+		$this->assertResponseNotRegExp('/<script(?![^>]*nonce=)/');
 	}
 
 	/**
